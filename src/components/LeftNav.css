@@ -1,58 +1,62 @@
-.navbar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 10%;
-  height: 100%;
-  background-color: #f3f3f3;
-  overflow: hidden;
-}
-
-.logo {
-  width: max-content;
-  height: max-content;
-  margin: 30px 0 100px;
-  font-size: 32px;
-  padding-left: 30px;
-  font-weight: 600;
-  color: var(--Green-text-color);
-}
-
-.links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+nav {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 40px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.5);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+}
+nav p {
+  color: white;
+  margin-left: 20px;
+}
+.nav-links {
+  flex-grow: 1;
+  text-align: center;
+}
+.nav-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.links a {
-  color: var(--Green-text-color);
+.nav-links ul li {
+  display: inline-block;
+  padding: 20px 40px;
+  position: relative;
+}
+
+.nav-links ul li a {
+  color: white;
   text-decoration: none;
-  flex-basis: 8%;
+}
+
+.nav-links ul li::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: lightblue;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
   width: 100%;
-  padding: 20px 0 20px 40px;
-  
-  font-weight: 500;
 }
-.links a div{
-  display:flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 7px;
+
+.nav-links ul ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(51, 51, 51, 0.5);
 }
-.links a div p{
-  font-size: 16px;
+
+.nav-links ul ul li {
+  display: block;
 }
-.Topic{
-  padding-top: 10px;
-  padding-left: 30px;
-  font-weight: 500;
-}
-.links a.active {
-  background-color: #77d0b0;
-  color:black;
+.nav-links button {
+  color: white;
 }

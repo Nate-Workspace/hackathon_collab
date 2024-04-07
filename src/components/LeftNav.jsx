@@ -1,91 +1,61 @@
-import "./LeftNav.css";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import {
-  House,
-  Bag,
-  Gear,
-  Calendar,
-  ShoppingBag,
-  Tag,
-  Compass,
-} from "phosphor-react";
+import "./LeftNav.css";
+function LeftNav() {
+  const [showExploreDropdown, setShowExploreDropdown] = useState(false);
+  const [showStudioDropdown, setShowStudioDropdown] = useState(false);
 
-export const LeftNav = () => {
-  const [activeLink, setActiveLink] = useState(null);
-
-  const handleClick = (index) => {
-    setActiveLink(index);
+  const handleExploreClick = () => {
+    setShowExploreDropdown(!showExploreDropdown);
+    setShowStudioDropdown(false);
   };
+
+  const handleStudioClick = () => {
+    setShowStudioDropdown(!showStudioDropdown);
+    setShowExploreDropdown(false);
+  };
+
   return (
-    <div className="navbar">
-      <div className="logo">Logo</div>
-      {/* <hr /> */}
-      <div className="links">
-        <p className="Topic">Primary</p>
-        <Link
-          to="/"
-          className={activeLink === 0 ? "active" : ""}
-          onClick={() => handleClick(0)}
-        >
-          <div>
-            <House size={18} />
-            <p>Dashboard</p>
-          </div>
-        </Link>
-        <p className="Topic">Explore</p>
-        <Link
-          to="/Products"
-          className={activeLink === 1 ? "active" : ""}
-          onClick={() => handleClick(1)}
-        >
-          <div>
-            <ShoppingBag size={18} />
-            <p>Products</p>
-          </div>
-        </Link>
-        <Link
-          to="/Service"
-          className={activeLink === 2 ? "active" : ""}
-          onClick={() => handleClick(2)}
-        >
-          <div>
-            <Gear size={18} />
-            <p>Services</p>
-          </div>
-        </Link>
-        <Link
-          to="/Events"
-          className={activeLink === 3 ? "active" : ""}
-          onClick={() => handleClick(3)}
-        >
-          <div>
-            <Calendar size={18} />
-            <p>Events</p>
-          </div>
-        </Link>
-        <p className="Topic">Studio</p>
-        <Link
-          to="/Saved"
-          className={activeLink === 4 ? "active" : ""}
-          onClick={() => handleClick(4)}
-        >
-          <div>
-            <Bag size={18} />
-            <p>Saved</p>
-          </div>
-        </Link>
-        <Link
-          to="/Create"
-          className={activeLink === 5 ? "active" : ""}
-          onClick={() => handleClick(5)}
-        >
-          <div>
-            <Compass size={18} />
-            <p>Create</p>
-          </div>
-        </Link>
+    <nav>
+      <p>logo</p>
+      <div className="nav-links">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <button onClick={handleExploreClick}>Explore</button>
+            {showExploreDropdown && (
+              <ul>
+                <li>
+                  <Link to="/Products">Products</Link>
+                </li>
+                <li>
+                  <Link to="/Services">Services</Link>
+                </li>
+                <li>
+                  <Link to="/Events">Events</Link>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li>
+            <button onClick={handleStudioClick}>Studio</button>
+            {showStudioDropdown && (
+              <ul>
+                <li>
+                  <Link to="/Saved">Saved</Link>
+                </li>
+                <li>
+                  <Link to="/Create">Create</Link>
+                </li>
+              </ul>
+            )}
+          </li>
+        </ul>
       </div>
-    </div>
+    </nav>
   );
-};
+}
+
+export default LeftNav;
