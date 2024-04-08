@@ -2,12 +2,23 @@ import React from "react";
 import laptop from '../../../public/Images/laptop.jpg';
 
 const SingleProduct = (props) => {
+
+  const handleMouseEnter = (productId) => {
+    setIsHovered(true);
+    setHoveredImage(productId);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setHoveredImage(null);
+  };
+
   return (
     <div 
               key={props.id} 
               className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
-              // onMouseEnter={() => handleMouseEnter(props.id)}
-              // onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => handleMouseEnter(props.id)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="flex flex-col items-center relative">
                 <div className="w-64 h-64 overflow-hidden mb-2 relative">

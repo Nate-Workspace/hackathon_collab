@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FaCaretLeft, FaCaretRight, FaSave  } from 'react-icons/fa';
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
-import SingleProduct from './SingleProduct';
+import SingleProduct from '../ui/SingleProduct';
 
-function TopRatedProducts() {
+function TopProducts(props) {
   const [topRatedProducts, setTopRatedProducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -78,8 +78,8 @@ function TopRatedProducts() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="font-light text-lg">PRODUCTS</span><br />
-          Top Rated
+          <span className="font-light text-lg">{props.smallTitle}</span><br />
+          {props.title}
         </p>
         <span style={lineStyle}></span>
       </div>
@@ -117,4 +117,4 @@ function TopRatedProducts() {
   );
 }
 
-export default TopRatedProducts;
+export default TopProducts;
