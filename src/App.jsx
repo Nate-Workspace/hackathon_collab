@@ -3,6 +3,9 @@ import {BrowserRouter as Router,Routes, Route} from "react-router-dom"
 import Product from './Pages/Product'
 import Service from './Pages/Service'
 import Event from './Pages/Event'
+import './App.css'
+import Home from './Pages/Home'
+
 function App() {
 
   return (
@@ -10,7 +13,7 @@ function App() {
       <Router>
         <LeftNav/>
         <Routes>
-          <Route path='/'/>
+          <Route path='/'element={<Home/>}/>
           <Route path='/Products' element={<Product />}/>
           <Route path='/Services' element={<Service />}/>
           <Route path='/Events' element={<Event />}/>

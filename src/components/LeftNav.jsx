@@ -6,14 +6,18 @@ function LeftNav() {
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
 
   const handleExploreClick = () => {
-    setShowExploreDropdown(!showExploreDropdown);
-    setShowStudioDropdown(false);
+    setShowExploreDropdown(true);
   };
 
   const handleStudioClick = () => {
-    setShowStudioDropdown(!showStudioDropdown);
-    setShowExploreDropdown(false);
+    setShowStudioDropdown(true);
   };
+  const handleEventLeave=()=>{
+    setShowExploreDropdown(false)
+  }
+  const handleStudioLeave=()=>{
+    setShowStudioDropdown(false)
+  }
 
   return (
     <nav>
@@ -23,8 +27,8 @@ function LeftNav() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <button onClick={handleExploreClick}>Explore</button>
+          <li onMouseEnter={handleExploreClick} onMouseLeave={handleEventLeave}>
+            <button>Explore</button>
             {showExploreDropdown && (
               <ul>
                 <li>
@@ -39,8 +43,8 @@ function LeftNav() {
               </ul>
             )}
           </li>
-          <li>
-            <button onClick={handleStudioClick}>Studio</button>
+          <li onMouseEnter={handleStudioClick} onMouseLeave={handleStudioLeave}>
+            <button >Studio</button>
             {showStudioDropdown && (
               <ul>
                 <li>

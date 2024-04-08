@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaCaretLeft, FaCaretRight, FaSave  } from 'react-icons/fa';
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import SingleProduct from './SingleProduct';
 
 function TopRatedProducts() {
   const [topRatedProducts, setTopRatedProducts] = useState([]);
@@ -92,27 +93,11 @@ function TopRatedProducts() {
         </button>
         <div
           id="scroll-content"
-          className="flex overflow-x-hidden space-x-4 relative"
+          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >
          {topRatedProducts.map((product) => (
-            <div 
-              key={product.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative"
-              onMouseEnter={() => handleMouseEnter(product.id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="flex flex-col items-center relative">
-                <div className="w-64 h-64 overflow-hidden mb-2 relative">
-                  <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                  <img src={isSaved(product.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(product.id)}/>
-
-                </div>
-                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{product.title}</p>
-                <p className="text-gray-600">{product.rating.rate} stars</p>
-                <p className="text-gray-600 text-center">Price: ${product.price}</p>
-              </div>
-            </div>
+            <SingleProduct id= {product.id} image={product.image} title={product.title} rating={product.rating.rate} price={product.price}/>
           ))}
         </div>
         <button

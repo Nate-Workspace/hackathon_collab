@@ -8,13 +8,21 @@ function Product() {
   return (
     <div>
       <div className="bg-gray-900 text-white py-40 px-20" style={{ backgroundImage: `url(${producthero})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-  <div className="max-w-6xl mx-auto text-center">
-    <h1 className="text-4xl font-bold mb-4">Discover Our Amazing Products</h1>
-    <p className="text-lg mb-8">Explore our wide range of high-quality products at unbeatable prices.</p>
-    <button className="bg-green-700 hover:bg-green-800  text-white py-2 px-6 rounded-md shadow-lg font-semibold transition duration-300">
+      <div className="max-w-6xl mx-auto text-center relative">
+
+        {/* -------------------Editing the banner -------------------- */}
+  <div className="absolute inset-0 bg-slate-400 opacity-70 backdrop-filter backdrop-blur-lg"></div>
+  <div className="relative py-5">
+    <h1 className="text-4xl font-bold mb-4 text-black">Discover Our Amazing Products</h1>
+    <p className="text-lg mb-8 text-gray-950">Explore our wide range of high-quality products at unbeatable prices.</p>
+    {/* <button className="bg-green-700 hover:bg-green-800 text-white py-2 px-6 rounded-md shadow-lg font-semibold transition duration-300">
       Shop Now
-    </button>
+    </button> */}
+    <input placeholder='Search for products' className='bg-white rounded-full pl-6 py-1.5 w-96 text-black'/>
   </div>
+</div>
+
+{/* --------------------------------------------------------- */}
 </div>
       <Topratedproducts/>
       <Latestproduct/>

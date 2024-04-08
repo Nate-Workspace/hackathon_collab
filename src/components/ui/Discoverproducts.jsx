@@ -117,14 +117,14 @@ function DiscoverProducts() {
         {currentProducts.map((product) => (
           <div 
               key={product.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative"
+              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
             >
               <div className="flex flex-col items-center relative">
                 <div className="w-64 h-64 overflow-hidden mb-2 relative">
                   <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                 <img src={isSaved(product.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(product.id)}/>
+                  {isHovered && hoveredImage==product.id ? <img src={isSaved(product.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(product.id)}/> : ""}
                  
                 </div>
                 <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{product.title}</p>

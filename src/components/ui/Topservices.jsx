@@ -92,7 +92,7 @@ function Topservices() {
         </button>
         <div
           id="scroll-content"
-          className="flex overflow-x-hidden space-x-4"
+          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >
           {featuredServices.map((service) => (
