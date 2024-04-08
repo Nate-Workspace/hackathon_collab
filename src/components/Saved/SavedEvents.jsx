@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
-import SingleProduct from "./SingleProduct";
+import SingleProduct from "../Single/SingleProduct";
 
-function TopratedProducts() {
+function SavedEvents(props) {
   const [latestProducts, setLatestProducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -76,9 +76,9 @@ function TopratedProducts() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="font-light text-lg">SHOP</span>
+          <span className="font-light text-lg">Events</span>
           <br />
-          Latest Products
+          {props.title}
         </p>
         <span style={lineStyle}></span>
       </div>
@@ -123,4 +123,4 @@ function TopratedProducts() {
   );
 }
 
-export default TopratedProducts;
+export default SavedEvents;

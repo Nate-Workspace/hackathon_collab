@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Topratedproducts from '../components/ui/Topratedproducts'
-import  Latestproduct from '../components/ui/Latestproduct'
-import  Discoverproducts from '../components/ui/Discoverproducts'
+import Topratedproducts from '../components/Products/Topratedproducts'
+import  Latestproduct from '../components/Products/Latestproduct'
+import  Discoverproducts from '../components/Products/Discoverproducts'
 import producthero from "../Assets/producthero.jpeg"
 import producthero2 from "../Assets/producthero2.jpeg"
 

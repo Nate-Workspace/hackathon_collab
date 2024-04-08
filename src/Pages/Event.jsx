@@ -1,5 +1,5 @@
 import React from 'react'
-import UpcomingEvents from '../components/ui/UpcomingEvents'
+import UpcomingEvents from '../components/Events/UpcomingEvents'
 import eventhero from "../Assets/eventhero.jpg"
 function Event() {
   return (
