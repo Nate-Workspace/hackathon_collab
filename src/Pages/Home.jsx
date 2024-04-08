@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Home/Header";
-import SavedEvents from "../components/Home/SavedEvents";
-import TopProducts from "../components/Home/TopProducts";
+import SavedEvents from "../components/Saved/SavedEvents";
+import TopProducts from "../components/Products/Topratedproducts";
 
 const Home = () => {
   return (
