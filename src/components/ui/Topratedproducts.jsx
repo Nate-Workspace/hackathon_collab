@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { FaCaretLeft, FaCaretRight, FaSave  } from 'react-icons/fa';
-import saveIcon from '../../Assets/saveicon.png';
-import savedIcon from '../../Assets/savedicon.png';
-import SingleProduct from './SingleProduct';
+import React, { useEffect, useState } from "react";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import SingleProduct from "./SingleProduct";
 
-function TopRatedProducts() {
-  const [topRatedProducts, setTopRatedProducts] = useState([]);
+function TopratedProducts() {
+  const [latestProducts, setLatestProducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
 
-  const getTopRatedProducts = async () => {
+  const getLatestProducts = async () => {
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
+      const response = await fetch("https://fakestoreapi.com/products");
       const data = await response.json();
-      setTopRatedProducts(data);
+      setLatestProducts(data);
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
-    getTopRatedProducts();
+    getLatestProducts();
   }, []);
 
   const scrollContainer = (scrollValue) => {
     setScrollLeft(scrollLeft + scrollValue);
-    document.getElementById('scroll-content').scrollLeft += scrollValue;
+    document.getElementById("scroll-content").scrollLeft += scrollValue;
   };
 
   const handleMouseEnter = (productId) => {
@@ -39,7 +37,7 @@ function TopRatedProducts() {
     setIsHovered(false);
     setHoveredImage(null);
   };
-  
+
   const toggleSaved = (productId) => {
     if (savedProducts.includes(productId)) {
       setSavedProducts(savedProducts.filter((id) => id !== productId));
@@ -51,25 +49,25 @@ function TopRatedProducts() {
   const isSaved = (productId) => savedProducts.includes(productId);
 
   const lineStyle = {
-    width: isHovered ? '35%' : '0%',
-    height: '2px',
-    backgroundColor: 'rgb(11, 11, 63)',
-    display: 'block',
-    margin: '8px auto',
-    transition: 'width 0.7s',
+    width: isHovered ? "35%" : "0%",
+    height: "2px",
+    backgroundColor: "rgb(11, 11, 63)",
+    display: "block",
+    margin: "8px auto",
+    transition: "width 0.7s",
   };
   const saveIconStyle = {
-    display: isHovered ? 'block' : 'none',
-    position: 'absolute',
-    top: '8px',
-    right: '8px',
-    backgroundColor: 'white' ,
-    borderRadius: '50%',
-    padding: '5px',
-    cursor: 'pointer',
-    transition: 'opacity 0.3s',
+    display: isHovered ? "block" : "none",
+    position: "absolute",
+    top: "8px",
+    right: "8px",
+    backgroundColor: "white",
+    borderRadius: "50%",
+    padding: "5px",
+    cursor: "pointer",
+    transition: "opacity 0.3s",
   };
-  
+
   return (
     <div className="p-8 relative">
       <div className="text-center font-bold text-3xl my-8 relative">
@@ -78,8 +76,9 @@ function TopRatedProducts() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="font-light text-lg">PRODUCTS</span><br />
-          Top Rated
+          <span className="font-light text-lg">SHOP</span>
+          <br />
+          Latest Products
         </p>
         <span style={lineStyle}></span>
       </div>
@@ -94,16 +93,23 @@ function TopRatedProducts() {
         <div
           id="scroll-content"
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
-          style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
+          style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
-         {topRatedProducts.map((product) => (
-
-
-          //------------------ Creting a single component to use across all pages-------------------------
-          
-            <SingleProduct id= {product.id} image={product.image} title={product.title} rating={product.rating.rate} price={product.price}/>
-
-            //---------------------Not finished yet-----------------------
+          {latestProducts.map((product) => (
+            <SingleProduct
+              id={product.id}
+              title={product.title}
+              image={product.image}
+              rating={product.rating.rate}
+              price={product.price}
+              saveIconStyle={saveIconStyle}
+              toggleSaved={toggleSaved}
+              isHovered={isHovered}
+              hoveredImage={hoveredImage}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+              isSaved={isSaved}
+            />
           ))}
         </div>
         <button
@@ -117,4 +123,4 @@ function TopRatedProducts() {
   );
 }
 
-export default TopRatedProducts;
+export default TopratedProducts;

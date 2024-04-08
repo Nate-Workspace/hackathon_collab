@@ -1,23 +1,41 @@
-import React from "react";
-import laptop from '../../../public/Images/laptop.jpg';
+import React, { useContext } from "react";
+import { HoverContext } from "../../Context/HoverContext";
 
-const SingleEvent = (props) => {
+import saveIcon from "../../Assets/saveicon.png";
+import savedIcon from "../../Assets/savedicon.png";
+
+const Singleevent = (props) => {
   return (
-    <div className="w-48 border border-gray-300 rounded-lg mb-4 ">
-        <div className="w-full h-32 overflow-hidden mb-2">
+    <div
+      key={props.id}
+      className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
+      onMouseEnter={() => props.handleMouseEnter(props.id)}
+      onMouseLeave={props.handleMouseLeave}
+    >
+      <div className="flex flex-col items-center relative">
+        <div className="w-64 h-64 overflow-hidden mb-2 relative">
           <img
             src={props.image}
-            alt="Laptop"
+            alt={props.title}
             className="w-full h-full object-cover"
           />
+          {props.isHovered && props.hoveredImage == props.id ? (
+            <img
+              src={props.isSaved(props.id) ? savedIcon : saveIcon}
+              alt="Save"
+              style={props.saveIconStyle}
+              onClick={() => props.toggleSaved(props.id)}
+            />
+          ) : (
+            ""
+          )}
         </div>
-      <div className="flex pl-3 pb-3 flex-col items-start">
-        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal">
+        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
           {props.title}
         </p>
-        <p className="text-gray-600">Date: {props.date}</p>
+        <p className="text-gray-600">date: {props.date}</p>
         <p className="text-gray-600 text-center">Place: {props.place}</p>
-        <p className="text-gray-600 text-center">Host: {props.hostName}</p>
+        <p className="text-gray-600 text-center">Host Name: {props.hostName}</p>
       </div>
     </div>
   );

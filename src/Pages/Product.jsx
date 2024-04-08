@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Topratedproducts from '../components/ui/Topratedproducts'
 import  Latestproduct from '../components/ui/Latestproduct'
 import  Discoverproducts from '../components/ui/Discoverproducts'
 import producthero from "../Assets/producthero.jpeg"
 import producthero2 from "../Assets/producthero2.jpeg"
+
+
+import { HoverContext } from '../Context/HoverContext'
+
 function Product() {
+
+  const [isHovered, setIsHovered]= useState(false);
+  const [hoveredImage, setHoveredImage] = useState(null);
+
+
   return (
     <div>
+      <HoverContext.Provider value={{isHovered,setIsHovered,hoveredImage,setHoveredImage}}>
       <div className="bg-gray-900 text-white py-40 px-20" style={{ backgroundImage: `url(${producthero})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="max-w-6xl mx-auto text-center relative">
 
@@ -36,6 +46,9 @@ function Product() {
   </div>
 </div>
       <Discoverproducts/>
+
+      
+      </HoverContext.Provider>
       
     </div>
   )
