@@ -1,5 +1,4 @@
 import React from "react";
-import laptop from '../../../public/Images/laptop.jpg';
 
 const SingleEvent = (props) => {
   return (
@@ -12,7 +11,7 @@ const SingleEvent = (props) => {
           />
         </div>
       <div className="flex pl-3 pb-3 flex-col items-start">
-        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal">
+        <p className="text-start mt-2 max-h-16 overflow-hidden whitespace-normal">
           {props.title}
         </p>
         <p className="text-gray-600">Date: {props.date}</p>

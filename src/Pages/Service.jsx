@@ -1,6 +1,6 @@
 import React from 'react';
-import Topservices from '../components/ui/Topservices'
-import OurServices from '../components/ui/OurServices'
+import Topservices from '../components/Services/Topservices'
+import OurServices from '../components/Services/OurServices'
 import servicehero from "../Assets/servicehero.jpg"
 function Service() {
   return (

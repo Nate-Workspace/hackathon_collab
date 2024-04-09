@@ -1,4 +1,4 @@
-import  LeftNav from './components/LeftNav'
+import  LeftNav from './components/Navbar/LeftNav'
 import {BrowserRouter as Router,Routes, Route} from "react-router-dom"
 import Product from './Pages/Product'
 import Service from './Pages/Service'
@@ -18,6 +18,7 @@ function App() {
         <LeftNav/>
         <Routes>
           <Route path='/'element={<Home/>}/>
+          <Route path="/Profile" element={<ProfilePage/>} />
           <Route path='/Products' element={<Product />}/>
           <Route path='/Services' element={<Service />}/>
           <Route path='/Events' element={<Event />}/>

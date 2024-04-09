@@ -11,6 +11,11 @@ const Home = () => {
       <TopProducts title='Discover Products' smallTitle='Products'/>
       <SavedEvents title='Book upcoming events'/>
       <TopProducts title='Top Services' smallTitle='Services'/>
+      <Header/>
+      <SavedEvents title='Saved Events Reminder'/>
+      <TopProducts title='Discover Products' smallTitle='Products'/>
+      <SavedEvents title='Book upcoming events'/>
+      <TopProducts title='Top Services' smallTitle='Services'/>
     </div>
   );
 };

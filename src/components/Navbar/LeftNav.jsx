@@ -54,6 +54,9 @@ function LeftNav() {
                 <li>
                   <Link to="/Create">Create</Link>
                 </li>
+                <li>
+                  <Link to="/Profile">Profile</Link>
+                </li>
               </ul>
             )}
           </li>
