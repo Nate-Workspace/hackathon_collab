@@ -5,6 +5,10 @@ import Service from './Pages/Service'
 import Event from './Pages/Event'
 import './App.css'
 import Home from './Pages/Home'
+import Saved from './Pages/Saved'
+import MainContent from './Pages/MainContent'
+import ProfilePage from './Pages/ProfilePage'
+import LoginTab from './components/ui/LoginTab'
 
 function App() {
 
@@ -17,8 +21,9 @@ function App() {
           <Route path='/Products' element={<Product />}/>
           <Route path='/Services' element={<Service />}/>
           <Route path='/Events' element={<Event />}/>
-          <Route path='/Saved'/>
-          <Route path='/Create'/>
+          <Route path='/Saved' element={<Saved/>}/>
+          <Route path='/Create'element={<MainContent/>}/>
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
       </Router>
     </div>

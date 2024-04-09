@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LeftNav.css";
+import LoginTab from "./ui/LoginTab";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
@@ -58,6 +59,7 @@ function LeftNav() {
           </li>
         </ul>
       </div>
+      <LoginTab/>
     </nav>
   );
 }

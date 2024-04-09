@@ -3,7 +3,7 @@ import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
 
-function TopRatedProducts() {
+function ProductsSaved() {
   const [latestProducts, setLatestProducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -78,7 +78,7 @@ function TopRatedProducts() {
           onMouseLeave={handleMouseLeave}
           >
     <span className="font-light text-lg">Products</span><br />
-    Top Rated Products
+    Saved Products
   </p>
   <span style={lineStyle}></span>
 </div>
@@ -127,4 +127,4 @@ function TopRatedProducts() {
 }
 
 
-export default TopRatedProducts
+export default ProductsSaved
