@@ -1,16 +1,30 @@
-import React from "react";
-import Header from "../components/Home/Header";
-import SavedEvents from "../components/Saved/SavedEvents";
-import TopProducts from "../components/Products/Topratedproducts";
-
+import "../app.scss";
+import Contact from "../components/contact/Contact";
+import Hero from "../components/hero/Hero";
+import Parallax from "../components/parallax/Parallax";
+import Portfolio from "../components/portfolio/Portfolio";
+import Services from "../components/section/Section";
 const Home = () => {
   return (
     <div>
-      <Header/>
-      <SavedEvents title='Saved Events Reminder'/>
-      <TopProducts title='Discover Products' smallTitle='Products'/>
-      <SavedEvents title='Book upcoming events'/>
-      <TopProducts title='Top Services' smallTitle='Services'/>
+      <div>
+      <section id="Homepage">
+        <Hero />
+      </section>
+      <section id="Section">
+        <Parallax type="section" />
+      </section>
+      <section>
+        <Services />
+      </section>
+      <section id="Portfolio">
+        <Parallax type="portfolio" />
+      </section>
+      <Portfolio />
+      <section id="Contact">
+        <Contact />
+      </section>
+      </div>
     </div>
   );
 };

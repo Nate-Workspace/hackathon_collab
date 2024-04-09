@@ -1,39 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Topratedproducts from '../components/Products/Topratedproducts'
 import  Latestproduct from '../components/Products/Latestproduct'
 import  Discoverproducts from '../components/Products/Discoverproducts'
 import producthero from "../Assets/producthero.jpeg"
 import producthero2 from "../Assets/producthero2.jpeg"
-
-
-import { HoverContext } from '../Context/HoverContext'
-
 function Product() {
+  const [searchValue, setSearchValue] = useState('');
 
-  const [isHovered, setIsHovered]= useState(false);
-  const [hoveredImage, setHoveredImage] = useState(null);
-
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Searching for products:', searchValue);
+  };
   return (
     <div>
-      <HoverContext.Provider value={{isHovered,setIsHovered,hoveredImage,setHoveredImage}}>
       <div className="bg-gray-900 text-white py-40 px-20" style={{ backgroundImage: `url(${producthero})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      <div className="max-w-6xl mx-auto text-center relative">
-
-        {/* -------------------Editing the banner -------------------- */}
-  <div className="absolute inset-0 bg-slate-400 opacity-70 backdrop-filter backdrop-blur-lg"></div>
-  <div className="relative py-5">
-    <h1 className="text-4xl font-bold mb-4 text-black">Discover Our Amazing Products</h1>
-    <p className="text-lg mb-8 text-gray-950">Explore our wide range of high-quality products at unbeatable prices.</p>
-    {/* <button className="bg-green-700 hover:bg-green-800 text-white py-2 px-6 rounded-md shadow-lg font-semibold transition duration-300">
-      Shop Now
-    </button> */}
-    <input placeholder='Search for products' className='bg-white rounded-full pl-6 py-1.5 w-96 text-black'/>
+      <div className="max-w-6xl mx-auto text-center">
+        <h1 className="text-4xl font-bold mb-4">Discover Our Amazing Products</h1>
+        <p className="text-lg mb-8">Explore our wide range of high-quality products at unbeatable prices.</p>
+<form onSubmit={handleSubmit}>
+  <div className="flex items-center justify-center">
+    <div className="relative flex items-stretch w-full">
+      <input
+        type="text"
+        placeholder="Search products"
+        className="rounded-full py-2 px-4 border border-gray-200 text-gray-800 bg-white w-full pr-12"
+        value={searchValue}
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
+      <button type="submit" className="absolute inset-y-0 right-0 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full px-4">
+        <svg className="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M21.71 20.29l-5.23-5.23A7.93 7.93 0 0018 10c0-4.42-3.58-8-8-8s-8 3.58-8 8 3.58 8 8 8a7.93 7.93 0 004.06-1.11l5.23 5.23a1 1 0 001.42 0 1 1 0 000-1.42zM4 10a6 6 0 116 6 6 6 0 01-6-6z"/>
+        </svg>
+        <span className="font-bold">Search</span>
+      </button>
+    </div>
   </div>
-</div>
+</form>
 
-{/* --------------------------------------------------------- */}
-</div>
+      </div>
+    </div>
       <Topratedproducts/>
       <Latestproduct/>
       <div className="bg-gray-900 text-black py-32 px-10" style={{ backgroundImage: `url(${producthero2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -46,9 +51,6 @@ function Product() {
   </div>
 </div>
       <Discoverproducts/>
-
-      
-      </HoverContext.Provider>
       
     </div>
   )

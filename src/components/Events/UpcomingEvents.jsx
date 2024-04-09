@@ -117,7 +117,7 @@ function UpcomingEvents() {
         {currentEvents.map((event) => (
           <div 
               key={event.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative"
+              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
               onMouseEnter={() => handleMouseEnter(event.id)}
               onMouseLeave={handleMouseLeave}
             >

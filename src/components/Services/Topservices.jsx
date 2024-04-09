@@ -98,7 +98,7 @@ function Topservices() {
           {featuredServices.map((service) => (
             <div 
               key={service.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative"
+              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
               onMouseEnter={() => handleMouseEnter(service.id)}
               onMouseLeave={handleMouseLeave}
             >
