@@ -8,6 +8,7 @@ import Home from './Pages/Home'
 import ProfilePage from "./Pages/ProfilePage";
 import MainContent from "./Pages/MainContent";
 import Saved from "./Pages/Saved";
+import Dashboard from './Pages/Dashboard'
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/Events' element={<Event />}/>
           <Route path='/Saved'  element={<Saved />}/>
           <Route path='/Create'  element={<MainContent />}/>
+          <Route path='/Logout' element={<Dashboard/>} />
         </Routes>
       </Router>
     </div>

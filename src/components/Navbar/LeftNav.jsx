@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { IoCartOutline } from 'react-icons/io5';
+import { MdClose } from 'react-icons/md';
+import { FiMenu } from 'react-icons/fi';
 import "./LeftNav.css";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
+
+  //--------------------NavBar scroll state--------------------
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      const threshold = 20; // Adjust this value to set the scroll threshold for changing the background color
+
+      setIsScrolled(scrollTop > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  //-------------------------------------------
 
   const handleExploreClick = () => {
     setShowExploreDropdown(true);
@@ -12,57 +36,90 @@ function LeftNav() {
   const handleStudioClick = () => {
     setShowStudioDropdown(true);
   };
-  const handleEventLeave=()=>{
-    setShowExploreDropdown(false)
-  }
-  const handleStudioLeave=()=>{
-    setShowStudioDropdown(false)
+  const handleEventLeave = () => {
+    setShowExploreDropdown(false);
+  };
+  const handleStudioLeave = () => {
+    setShowStudioDropdown(false);
+  };
+
+  const handleClose=()=>{
+    setMenuOpen(false)
+    console.log(menuOpen)
   }
 
   return (
-    <nav>
-      <p>logo</p>
+    <nav
+      className={`${isScrolled ? "scrolled" : ""} ${
+        showStudioDropdown ? "hovered" : ""
+      } ${showExploreDropdown ? "hovered" : ""}`}
+    >
       <div className="nav-links">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
+        <p className="logo">LOGO</p>
+
+        <ul className="ul">
+          <li className="home">
+            <Link to="/">HOME</Link>
           </li>
-          <li onMouseEnter={handleExploreClick} onMouseLeave={handleEventLeave}>
-            <button>Explore</button>
+          <li className="button" id="button1" onMouseEnter={handleExploreClick} onMouseLeave={handleEventLeave}>
+            EXPLORE
             {showExploreDropdown && (
-              <ul>
+              <ul
+                className="dropdown"
+                onMouseEnter={handleExploreClick}
+                onMouseLeave={handleEventLeave}
+              >
+                {/* <hr /> */}
                 <li>
-                  <Link to="/Products">Products</Link>
+                  <Link to="/Products">PRODUCTS</Link>
                 </li>
                 <li>
-                  <Link to="/Services">Services</Link>
+                  <Link to="/Services">SERVICES</Link>
                 </li>
                 <li>
-                  <Link to="/Events">Events</Link>
+                  <Link to="/Events">EVENTS</Link>
                 </li>
               </ul>
             )}
           </li>
-          <li onMouseEnter={handleStudioClick} onMouseLeave={handleStudioLeave}>
-            <button >Studio</button>
+
+          <li className="button" id="button2" onMouseEnter={handleStudioClick} onMouseLeave={handleStudioLeave}>
+            STUDIO
             {showStudioDropdown && (
-              <ul>
+              <ul
+                className="dropdown"
+                onMouseEnter={handleStudioClick}
+                onMouseLeave={handleStudioLeave}
+              >
+                {/* <hr /> */}
                 <li>
-                  <Link to="/Saved">Saved</Link>
+                  <Link to="/Saved">SAVED</Link>
                 </li>
                 <li>
-                  <Link to="/Create">Create</Link>
+                  <Link to="/Create">CREATE</Link>
                 </li>
                 <li>
-                  <Link to="/Profile">Profile</Link>
+                  <Link to="/Profile">PROFILE</Link>
                 </li>
               </ul>
             )}
           </li>
         </ul>
+        <li className="logout">
+          <Link to="/Logout">LOGOUT</Link>
+        </li>
       </div>
     </nav>
   );
 }
+
+// const Dropnav=()=>{
+//   return(
+//     <div className="flex flex-row justify-center items-center">
+//     <IoCartOutline size={20} color="gray"/>
+//     <p className="ml-1.5">PRODUCTS</p>
+//     </div>
+//   )
+// }
 
 export default LeftNav;
