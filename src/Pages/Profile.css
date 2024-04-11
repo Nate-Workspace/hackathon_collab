@@ -38,31 +38,36 @@
 .left_col h2 {
   margin-top: 60px;
   font-weight: 600;
-  font-size: 22px;
-  margin-bottom: 5px;
+  font-size: 24px;
+  margin-bottom: 7px;
   color: black;
+}
+.basic_data{
+  padding-top: 10px;
 }
 .left_col p {
   font-size: 0.9rem;
   color: #818181;
   margin: 0;
+  margin-top: 2px;
 }
 .left_col hr {
   position: absolute;
   background: #ccc;
-  height: 2px;
+  height: 1px;
   width: 100%;
 }
 .left_col .basic_data {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .left_col .content {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 .content p {
   font-size: 1rem;
-  color: #1d1d1d;
+  color:#818181;
   line-height: 1.8rem;
+  margin-bottom: 20px;
 }
 /* ----------Right column------------- */
 
@@ -88,6 +93,9 @@
   text-transform: uppercase;
   color: #818181;
 }
+.right_col .nav .ul li:hover{
+  cursor: pointer;
+}
 
 /* ------------------ Right col Scroll effect------------- */
 .right_col .photos {
@@ -109,6 +117,10 @@
 
 .right_col .photos::-webkit-scrollbar-thumb {
   background-color: transparent;
+}
+.active{
+  color:rgb(9, 124, 177);
+  font-size: 18px;
 }
 
 /* ------------------------------------- */

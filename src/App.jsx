@@ -7,11 +7,9 @@ import './App.css'
 import Home from './Pages/Home'
 
 import Saved from './Pages/Saved'
-import LoginTab from './components/ui/LoginTab'
 
 import ProfilePage from "./Pages/ProfilePage";
 import MainContent from "./Pages/MainContent";
-import Saved from "./Pages/Saved";
 import Dashboard from './Pages/Dashboard'
 import ProductDetails from './components/Details/ProductDetails';
 import EventDetails from './components/Details/EventDetails';
@@ -29,8 +27,6 @@ function App() {
           <Route path='/Products' element={<Product />}/>
           <Route path='/Services' element={<Service />}/>
           <Route path='/Events' element={<Event />}/>
-
-          <Route path="/profile" element={<ProfilePage/>} />
 
           <Route path='/product/:id' element={<ProductDetails />}/>
           <Route path='/event/:id' element={<EventDetails  />}/>

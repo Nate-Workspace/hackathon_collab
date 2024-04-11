@@ -139,36 +139,26 @@ import './Profile.css'
 const ProfilePage = () => {
 
   const [render, setRender] = useState([]);
+  const [selectedPage, setSelectedPage] = useState('products'); // Initialize the selected page state
 
-const productsClick = async () => {
-  try {
-    const response = await fetch('https://fakestoreapi.com/products');
-    const data = await response.json();
-    setRender(data);
-  } catch (err) {
-    console.error(err);
-  }
-};
-  
-  
-  const servicesClick= async()=>{
-    try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      setRender(data);
-    } catch (err) {
-      console.error(err);
+    const apiCall= async()=>{
+      try {
+        setSelectedPage(page); 
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        setRender(data);// Set the selected page based on the button clicked
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }
-  const eventsClick= async()=>{
-    try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      setRender(data);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+
+  useEffect(()=>{
+    apiCall()
+  })
+  
+  const handleClick = async (page) => {
+      setSelectedPage(page); // Set the selected page based on the button clicked
+  };
   console.log(render);
   return (
     <div className="body">
@@ -198,6 +188,8 @@ const productsClick = async () => {
                 eveniet rerum ex suscipit.
               </p>
 
+              <hr />
+
               <p className="residence">Residence: somewhere</p>
             </div>
           </div>
@@ -205,9 +197,24 @@ const productsClick = async () => {
           <div className="right_col">
             <div className="nav">
               <ul className="ul">
-                <li onClick={productsClick}><a href="#">Products</a></li>
-                <li onClick={servicesClick}><a href="#">Services</a></li>
-                <li onClick={eventsClick}><a href="#">Events</a></li>
+              <li
+              className={selectedPage === 'products' ? 'active' : ''}
+              onClick={() => handleClick('products')}
+            >
+              PRODUCTS
+            </li>
+            <li
+              className={selectedPage === 'services' ? 'active' : ''}
+              onClick={() => handleClick('services')}
+            >
+              SERVICES
+            </li>
+            <li
+              className={selectedPage === 'events' ? 'active' : ''}
+              onClick={() => handleClick('events')}
+            >
+              EVENTS
+            </li>
               </ul>
             </div>
 
@@ -217,10 +224,6 @@ const productsClick = async () => {
                   <PostItem image={each.image} title={each.title}/>
                 )
               })}
-              
-              <PostItem/>
-              <PostItem/>
-              <PostItem/>
             </div>
 
           </div>

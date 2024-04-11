@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import Header from "../components/Home/Header";
-import SavedEvents from "../components/Home/SavedEvents";
-import TopProducts from "../components/Home/TopProducts";
-
-const Home = () => {
-  return (
-    <div>
-      <Header/>
-      <SavedEvents title='Saved Events Reminder'/>
-      <TopProducts title='Discover Products' smallTitle='Products'/>
-      <SavedEvents title='Book upcoming events'/>
-      <TopProducts title='Top Services' smallTitle='Services'/>
-      <Header/>
-      <SavedEvents title='Saved Events Reminder'/>
-      <TopProducts title='Discover Products' smallTitle='Products'/>
-      <SavedEvents title='Book upcoming events'/>
-      <TopProducts title='Top Services' smallTitle='Services'/>
-=======
 import "../app.scss";
 import Contact from "../components/contact/Contact";
 import Hero from "../components/hero/Hero";
@@ -45,7 +25,6 @@ const Home = () => {
         <Contact />
       </section>
       </div>
->>>>>>> e8b3d9d0653fa1eb08bd97ab20114b068cb387ce
     </div>
   );
 };
