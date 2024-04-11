@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import saveIcon from '../../Assets/saveicon.png';
-import savedIcon from '../../Assets/savedicon.png';
+import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 function SavedProducts() {
   const [savedProducts, setSavedProducts] = useState([]);
@@ -56,7 +57,7 @@ function SavedProducts() {
     margin: '8px auto',
     transition: 'width 0.7s',
   };
-  const saveIconStyle = {
+  const removeIconStyle = {
     display: isHovered ? 'block' : 'none',
     position: 'absolute',
     top: '8px',
@@ -67,6 +68,12 @@ function SavedProducts() {
     cursor: 'pointer',
     transition: 'opacity 0.3s',
   };
+
+  const scrollButtonStyle = {
+    marginTop: '-100px', 
+    fontSize: '40px', 
+  };
+
 
   return (
     <div className="p-8 relative">
@@ -84,10 +91,11 @@ function SavedProducts() {
 
       <div className="flex items-center justify-center space-x-4">
         <button
-          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200"
+          className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
+          style={scrollButtonStyle}
         >
-         <FaCaretLeft />
+        <FaChevronLeft />
         </button>
         <div
           id="scroll-content"
@@ -95,16 +103,23 @@ function SavedProducts() {
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >
           {savedProducts.map((product) => (
+             <Link to={`/product/${product.id}`} key={product.id}>
             <div 
               key={product.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
+              className="w-64  rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
             >
               <div className="flex flex-col items-center relative">
                 <div className="w-64 h-64 overflow-hidden mb-2 relative">
                   <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                  {isHovered && hoveredImage==product.id ? <img src={isSaved(product.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(product.id)}/> : ""}
+                 {isHovered && hoveredImage === product.id && (
+  < MdDeleteOutline 
+    size={30}
+    style={removeIconStyle}
+    onClick={() => toggleSaved(product.id)}
+  />
+)}
 
                 </div>
                 <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{product.title}</p>
@@ -112,13 +127,15 @@ function SavedProducts() {
                 <p className="text-gray-600 text-center">Price: ${product.price}</p>
               </div>
             </div>
+            </Link>
           ))}
         </div>
         <button
-          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200"
+          className="px-4 py-2"
           onClick={() => scrollContainer(100)}
+          style={scrollButtonStyle}
         >
-        <FaCaretRight />
+         <FaChevronRight />
         </button>
       </div>
     </div>
