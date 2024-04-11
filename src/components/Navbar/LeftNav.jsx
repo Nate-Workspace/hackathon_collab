@@ -4,6 +4,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { MdClose } from 'react-icons/md';
 import { FiMenu } from 'react-icons/fi';
 import "./LeftNav.css";
+import LoginTab from "./ui/LoginTab";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
@@ -109,6 +110,7 @@ function LeftNav() {
           <Link to="/Logout">LOGOUT</Link>
         </li>
       </div>
+      <LoginTab/>
     </nav>
   );
 }
