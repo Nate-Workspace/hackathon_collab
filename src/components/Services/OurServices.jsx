@@ -3,6 +3,8 @@ import { IoFilterSharp } from "react-icons/io5";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function OurServices() {
   const [services, setServices] = useState([]);
@@ -10,17 +12,22 @@ function OurServices() {
   const [showCategories, setShowCategories] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
- const [savedServices, setSavedServices] = useState([]);
+  const [savedServices, setSavedServices] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const getServices = async () => {
+  const getServices = async (category = null) => {
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      setServices(data);
-    } catch (err) {
-      console.error(err);
+      let apiUrl = 'https://aguero.pythonanywhere.com/service/';
+    if (category) {
+      apiUrl += `?type=${category}`;
     }
-  };
+      console.log("API URL:", apiUrl);
+    const response = await axios.get(apiUrl);
+    setServices(response.data);
+  } catch (err) {
+    console.error('Error fetching products:', err);
+  }
+};
 
   useEffect(() => {
     getServices();
@@ -84,8 +91,14 @@ function OurServices() {
   const indexOfFirstItem = indexOfLastItem - 8;
   const currentServices = services.slice(indexOfFirstItem, indexOfLastItem);
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setShowCategories(false);
+    getServices(category);
+  };
+
   return (
-    <div className="p-8  relative">
+    <div className="p-8 bg-sky-50 relative">
        <div className="text-center font-bold text-3xl my-8 relative">
   <p
     className="inline-block relative group"
@@ -93,36 +106,74 @@ function OurServices() {
           onMouseLeave={handleMouseLeave}
   >
     <span className="font-light text-lg">DISCOVER</span><br />
-    Our Services
+    <span className=" text-5xl">Our Services</span>
   </p>
   <span style={lineStyle}></span>
 </div>
 
       <div className="flex justify-end mr-20 mb-4 relative">
-        <button onClick={toggleCategories} className="flex items-center font-bold py-2 px-4 rounded-full border border-green-600 ">
+        <button onClick={toggleCategories} 
+        className="flex items-center font-bold py-2 px-4 rounded-full hover:bg-gray-300 relative border-2 border-black"
+         style={{ zIndex: showCategories ? '20' : 'auto' }}
+        >
            <IoFilterSharp className="mr-2" />
               Filters
         </button>
       </div>
-       {showCategories && (
-  <ul className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-md py-2 px-4 z-10">
-    <li className="cursor-pointer py-1 px-2 hover:bg-[#77D0B0]">Category 1</li>
-    <li className="cursor-pointer py-1 px-2 hover:bg-[#77D0B0]">Category 2</li>
-  </ul>
-)}
+      <div className={`absolute left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
+         <h2 className="text-3xl font-light mb-4">Filters</h2>
+         <div>
+      <h3 className="text-md font-semibold mb-1">Categories</h3>
+        <ul>
+          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
+            <input type="radio" id="delivery" name="category" checked={selectedCategory === "DL"}  />
+            <label htmlFor="delivery">Delivery</label>
+          </li>
+          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
+            <input type="radio" id="Repair Electronics" name="category" checked={selectedCategory === "DL"}  />
+            <label htmlFor="Repair Electronics">Repair Electronics</label>
+          </li>
+          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
+            <input type="radio" id="other" name="category" checked={selectedCategory === "DL"}  />
+            <label htmlFor="other">Other</label>
+          </li>
+        </ul>
+      </div>
+       <div>
+    <h3 className="text-md font-semibold mb-1 mt-2">Price ($)</h3>
+    {/* <ul>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
+            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
+            <label htmlFor="clothes">Clothes</label>
+      </li>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
+            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
+            <label htmlFor="clothes">Clothes</label>
+          </li>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
+            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
+            <label htmlFor="clothes">Clothes</label>
+          </li>
+    </ul> */}
+  </div>
+</div>
+
+
 
       <div className="flex flex-wrap justify-center gap-4">
         {currentServices.map((service) => (
+          <Link to={`/service/${service.id}`} key={service.id}>
           <div 
               key={service.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer"
+              className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
               onMouseEnter={() => handleMouseEnter(service.id)}
               onMouseLeave={handleMouseLeave}
+              style={{ backgroundColor: isHovered && hoveredImage === service.id ? "#E5E7EB" : "white" }}
             >
               <div className="flex flex-col items-center relative">
-                <div className="w-64 h-64 overflow-hidden mb-2 relative">
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
-                  <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)}/>
+                <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover rounded-lg" />
+                   {isHovered && hoveredImage==service.id ? <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)}/> : ""}
 
                 </div>
                 <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
@@ -130,7 +181,11 @@ function OurServices() {
                 <p className="text-gray-600 text-center">Price: ${service.price}</p>
               </div>
             </div>
-          
+          </Link>
+        ))}
+         {/* Render empty placeholders if there are less than 8 products */}
+        {currentServices.length < 8 && [...Array(8 - currentServices.length)].map((_, index) => (
+          <div key={`placeholder-${index}`} className="w-64 h-64"></div>
         ))}
       </div>
       <div className="flex justify-center mt-4">

@@ -22,6 +22,7 @@ const MainContent = () => {
   };
 
   return (
+    
     <div
       style={{
         backgroundImage: `url(${backgroundImage})`,
@@ -75,6 +76,7 @@ const MainContent = () => {
         {renderPage()}
       </div>
     </div>
+
   );
 };
 

@@ -1,17 +1,16 @@
-import SavedEvents from "../components/Saved/SavedEvents";
-import SavedProducts from "../components/Saved/SavedProducts";
-import SavedServices from "../components/Saved/SavedServices";
+import React from "react";
+import ProductsSaved from "../components/Saved/ProductsSaved";
+import EventsSaved from "../components/Saved/EventsSaved";
+import ServicesSaved from "../components/Saved/ServicesSaved";
 
-
-function Saved() {
+const Saved = () => {
   return (
-    <div className="flex-col gap-0">
-      <SavedEvents />
-      <SavedServices />
-      <SavedProducts />
-      
+    <div>
+      <EventsSaved />
+      <ProductsSaved />
+      <ServicesSaved/>
     </div>
   );
-}
+};
 
 export default Saved;
