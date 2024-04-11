@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Topservices() {
   const [featuredServices, setFeaturedServices] = useState([]);
@@ -12,9 +15,8 @@ function Topservices() {
 
   const getFeaturedServices = async () => {
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      setFeaturedServices(data);
+      const response = await axios.get('https://aguero.pythonanywhere.com/service/?ordering=-posted_time ');
+      setFeaturedServices(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -70,8 +72,13 @@ function Topservices() {
     transition: 'opacity 0.3s',
   };
 
+   const scrollButtonStyle = {
+    marginTop: '-100px', 
+    fontSize: '30px', 
+  };
+
   return (
-    <div className="p-8 relative">
+    <div className="p-8 bg-sky-50 relative">
              <div className="text-center font-bold text-3xl my-8 relative">
   <p 
           className="inline-block relative group"
@@ -79,47 +86,53 @@ function Topservices() {
           onMouseLeave={handleMouseLeave}
   >
     <span className="font-light text-lg">SERVICES</span><br />
-    Top Services
+    <span className=" text-5xl">  Top Services</span>
   </p>
  <span style={lineStyle}></span>
 </div>
       <div className="flex items-center justify-center space-x-4">
         <button
-          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200"
+          className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
+           style={scrollButtonStyle}
         >
-          <FaCaretLeft />
+          <FaChevronLeft />
         </button>
         <div
           id="scroll-content"
-          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4"
+          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
-        >
-          {featuredServices.map((service) => (
-            <div 
-              key={service.id} 
-              className="w-64 border border-gray-300 rounded-lg p-2 mb-4 relative"
-              onMouseEnter={() => handleMouseEnter(service.id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="flex flex-col items-center relative">
-                <div className="w-64 h-64 overflow-hidden mb-2 relative">
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
-                  <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)}/>
+        >{featuredServices.map((service) => (
+  <Link to={`/service/${service.id}`} key={service.id}>
+    <div 
+      key={service.id} 
+      className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+      onMouseEnter={() => handleMouseEnter(service.id)}
+      onMouseLeave={handleMouseLeave}
+      style={{ backgroundColor: isHovered && hoveredImage === service.id ? "#E5E7EB" : "white" }}
+    >
+      <div className="flex flex-col items-center relative">
+        <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
+          <img src={service.image} alt={service.title} className="w-full h-full object-cover rounded-lg" />
+          {isHovered && hoveredImage === service.id && (
+            <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)} />
+          )}
+        </div>
+        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
+        <p className="text-gray-600">{service.rating.rate} stars</p>
+        <p className="text-gray-600 text-center">Price: ${service.price}</p>
+      </div>
+    </div>
+  </Link>
+))}
 
-                </div>
-                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
-                <p className="text-gray-600">{service.rating.rate} stars</p>
-                <p className="text-gray-600 text-center">Price: ${service.price}</p>
-              </div>
-            </div>
-          ))}
         </div>
         <button
-          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200"
+          className="px-4 py-2 "
           onClick={() => scrollContainer(100)}
+           style={scrollButtonStyle}
         >
-          <FaCaretRight />
+           <FaChevronRight />
         </button>
       </div>
     </div>
