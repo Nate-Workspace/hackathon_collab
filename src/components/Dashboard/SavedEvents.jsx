@@ -12,7 +12,7 @@ function SavedEvents() {
 
   const getTopRatedProducts = async () => {
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
+      const response = await fetch('https://aguero.pythonanywhere.com/product');
       const data = await response.json();
       setTopRatedProducts(data);
     } catch (err) {

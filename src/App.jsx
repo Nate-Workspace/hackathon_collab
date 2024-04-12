@@ -10,7 +10,6 @@ import Saved from './Pages/Saved'
 
 import ProfilePage from "./Pages/ProfilePage";
 import MainContent from "./Pages/MainContent";
-import Dashboard from './Pages/Dashboard'
 import ProductDetails from './components/Details/ProductDetails';
 import EventDetails from './components/Details/EventDetails';
 import ServiceDetails from './components/Details/ServiceDetails';
@@ -33,6 +32,7 @@ function App() {
           <Route path='/service/:id' element={<ServiceDetails  />}/>
           <Route path='/Saved'  element={<Saved />}/>
           <Route path='/Create'  element={<MainContent />}/>
+          <Route path='/Logout'/>
         </Routes>
       </Router>
     </div>

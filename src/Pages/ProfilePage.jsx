@@ -139,14 +139,16 @@ import './Profile.css'
 const ProfilePage = () => {
 
   const [render, setRender] = useState([]);
-  const [selectedPage, setSelectedPage] = useState('products'); // Initialize the selected page state
+  const [selectedPage, setSelectedPage] = useState('products'); 
+  const [page, setPage]=useState('Profile');
 
     const apiCall= async()=>{
       try {
         setSelectedPage(page); 
-        const response = await fetch('https://fakestoreapi.com/products');
+        const response = await fetch('https://aguero.pythonanywhere.com/product/');
         const data = await response.json();
-        setRender(data);// Set the selected page based on the button clicked
+        setRender(data);
+        console.log(data)
       } catch (err) {
         console.error(err);
       }
@@ -154,10 +156,11 @@ const ProfilePage = () => {
 
   useEffect(()=>{
     apiCall()
-  })
+  },[])
   
   const handleClick = async (page) => {
-      setSelectedPage(page); // Set the selected page based on the button clicked
+      setSelectedPage(page);
+      setPage(page)
   };
   console.log(render);
   return (
@@ -219,11 +222,13 @@ const ProfilePage = () => {
             </div>
 
             <div className="photos">
-              {render.map(each=>{
-                return(
-                  <PostItem image={each.image} title={each.title}/>
-                )
-              })}
+            {render.length > 0 ? (
+            render.map((each) => (
+              <PostItem key={each.id} image={each.image} title={each.title} />
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
             </div>
 
           </div>
@@ -234,12 +239,8 @@ const ProfilePage = () => {
 };
 
 const PostItem = (props) => (
-  <div className="bg-white rounded-md shadow-md overflow-hidden">
-    <img
-      src={props.image}
-      alt='item'
-      className="w-full h-48 object-cover"
-    />
+  <div className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer">
+    <img src={props.image} alt="item" className="w-full h-48 object-cover" />
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-1">{props.title}</h3>
       <p className="text-gray600">Rating: Rating</p>
