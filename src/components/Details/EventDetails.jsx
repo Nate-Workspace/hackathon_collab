@@ -88,7 +88,7 @@ function EventDetails() {
 )}
 
             <p
-              className="text-[#11875C] text-2xl font-bold mb-4">Date:
+              className="text-[#222831] text-2xl font-bold mb-4">Date:
               {event.event_date}</p>
             <div className="description-wrapper w-110">
               <p
@@ -98,7 +98,7 @@ function EventDetails() {
             <p className="text-l text-[#11875C] font-bold mb-14">Time: {event.event_time}</p>
             <div className="flex">
               <button
-                className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24}/>
                 <span className="ml-2">Save</span>
               </button>
@@ -106,11 +106,10 @@ function EventDetails() {
 
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Reviews Section */}
         <div className="mt-20">
-          <h2 className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
+          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
           <div className="flex overflow-x-scroll">
             {reviews.map((review, index) => (
               <ReviewsCard
@@ -122,18 +121,17 @@ function EventDetails() {
             ))}
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Related Section */}
         <div className="mt-20 ">
           <h2
-            className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Related Events</h2>
-          <div className="flex flex-wrap justify-center">
+            className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Related Events</h2>
+          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
             {relatedEvents.map((relatedEvent) => (
               <Link to={`/Events/details/${relatedEvent.id}`} key={relatedEvent.id}>
                 <div
     key={relatedEvent.id}
-    className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+    className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
     onMouseEnter={() => handleMouseEnter(relatedEvent.id)}
     onMouseLeave={handleMouseLeave}
     style={{ backgroundColor: isHovered && hoveredImage === relatedEvent.id ? "#E5E7EB" : "white" }}
@@ -154,7 +152,7 @@ function EventDetails() {
         )}
       </div>
       <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{relatedEvent.title}</p>
-      <p className="text-gray-600">{relatedEvent.organizer} </p>
+      <p className="text-gray-600"> Organizer:{relatedEvent.organizer} </p>
       <p className="text-gray-600 text-center">{relatedEvent.event_date}</p>
     </div>
   </div>

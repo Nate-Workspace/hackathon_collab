@@ -3,6 +3,7 @@ import { IoFilterSharp } from "react-icons/io5";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import cancel from '../../Assets/cancel.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ function DiscoverProducts() {
   const [savedProducts, setSavedProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
  const [priceFilter, setPriceFilter] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const getDiscoverProducts = async (category = null, priceFilter = null) => {
   try {
@@ -26,12 +28,12 @@ function DiscoverProducts() {
     }
 
     if (priceFilter) {
-  apiUrl += (category ? '&' : '') + priceFilter;
-}
+      Object.entries(priceFilter).forEach(([key, value]) => {
+        params.append(key, value);
+      });
+    }
 
-    
-apiUrl += (category || priceFilter) ? '?' : '';
-apiUrl += params.toString();
+    apiUrl += params.toString() ? `?${params.toString()}` : '';
 
     console.log("API URL:", apiUrl);
     const response = await axios.get(apiUrl);
@@ -41,12 +43,19 @@ apiUrl += params.toString();
   }
 };
 
+
   useEffect(() => {
     getDiscoverProducts();
   }, []);
 
   const toggleCategories = () => {
     setShowCategories(!showCategories);
+    setIsFilterOpen(!isFilterOpen);
+    if (!showCategories) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling when filter menu is open
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling when filter menu is closed
+    }
   };
 
   const handleNextPage = () => {
@@ -97,6 +106,15 @@ apiUrl += params.toString();
     transition: 'opacity 0.3s',
   };
 
+  const cancelIconStyle = {
+    position: 'absolute',
+    top: '10px',
+    right: '8px',
+    cursor: 'pointer',
+    width: '30px', 
+    height: '30px'
+  };
+
   const indexOfLastItem = currentPage * 8;
   const indexOfFirstItem = indexOfLastItem - 8;
   const currentProducts = discoverProducts.slice(indexOfFirstItem, indexOfLastItem);
@@ -104,71 +122,101 @@ apiUrl += params.toString();
   const handleCategoryChange = (category, priceFilter = null) => {
     setSelectedCategory(category);
     setShowCategories(false);
+    setIsFilterOpen(false);
     getDiscoverProducts(category, priceFilter);
+    document.body.style.overflow = 'auto';
+  };
+
+  const handleCancelClick = () => {
+    setShowCategories(false);
+    document.body.style.overflow = 'auto'; // Enable scrolling when filter menu is closed
   };
 
 
-
-
-  
-  return (
+   return (
     <div className="p-8 bg-sky-50 relative">
-      <div className="text-center font-bold text-3xl my-8 relative">
-        <p 
-          className="inline-block relative group"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <span className="font-light text-lg">Shop by category</span><br />
-          <span className=" text-5xl">Shop by category</span>
-        </p>
-        <span style={lineStyle}></span>
-      </div>
+      
+<div className="text-center font-bold text-3xl my-8 relative">
+  <p className=" sm:inline-block relative group">
+    <span className="font-light text-lg">Shop by category</span><br />
+    <span className="text-5xl text-gray-900">Shop by category</span>
+  </p>
+  <span style={lineStyle}></span>
+  <div className="sm:hidden">
+    <select
+      className="block w-full border border-gray-300 p-2 rounded-md"
+      onChange={(e) => handleCategoryChange(e.target.value)}
+      value={selectedCategory}
+      style={{ fontSize: '18px' }}
+    >
+      <option value="All">All</option>
+      <option value="FD">Food</option>
+      <option value="ST">Stationery</option>
+      <option value="PC">Personal Computer</option>
+      <option value="MB">Mobile</option>
+      <option value="SK">Sticker</option>
+      <option value="CL">Bag</option>
+      <option value="CL">Clothes</option>
+      <option value="PC">Other Electronics</option>
+    </select>
+  </div>
+</div>
 
-      <div className="flex justify-end mr-20 mb-4 relative">
-        <button onClick={toggleCategories} 
-        className="flex items-center font-bold py-1 px-2 rounded-full hover:bg-gray-300 relative border-2 border-black "
-        style={{ zIndex: showCategories ? '20' : 'auto' }}
-        >
-          <IoFilterSharp className="mr-2" />
-          Filters
-        </button>
-        </div>
-        <div className={`absolute left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
-         <h2 className="text-3xl font-light mb-4">Filters</h2>
+
+      
+<div className="flex justify-end sm:mr-20 mb-6 relative">
+  <button
+    onClick={toggleCategories}
+    className="flex items-center font-bold py-1 px-2 rounded-full border-2 border-black transition-transform duration-300"
+    style={{
+      zIndex: showCategories ? '30' : 'auto',
+      transform: showCategories ? 'translateY(-7px)' : 'none',
+      boxShadow: 'none',
+    }}
+    onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
+    onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
+  >
+    <IoFilterSharp className="mr-2" />
+    Filters
+  </button>
+</div>
+
+        <div className={`fixed bottom-0 right-0 left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
+          <img src={cancel} alt="Cancel" style={cancelIconStyle} onClick={handleCancelClick}/>
+       <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
          <div>
       <h3 className="text-md font-semibold mb-1">Categories</h3>
         <ul>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("FD")}>
-            <input type="radio" id="Food" name="category" checked={selectedCategory === "FD"}  />
+            <input type="radio" id="Food" name="category" checked={selectedCategory === "FD"} onChange={() => handleCategoryChange("FD")} />
             <label htmlFor="Food">Food</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("ST")}>
-            <input type="radio" id="Stationery" name="category" checked={selectedCategory === "ST"}  />
+            <input type="radio" id="Stationery" name="category" checked={selectedCategory === "ST"} onChange={() => handleCategoryChange("ST")} />
             <label htmlFor="Stationery">Stationery</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("PC")}>
-            <input type="radio" id="Personal Computer" name="category" checked={selectedCategory === "PC"}  />
+            <input type="radio" id="Personal Computer" name="category" checked={selectedCategory === "PC"} onChange={() => handleCategoryChange("PC")} />
             <label htmlFor="Personal Computer">Personal Computer</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("MB")}>
-            <input type="radio" id="Mobile" name="category" checked={selectedCategory === "MB"}  />
+            <input type="radio" id="Mobile" name="category" checked={selectedCategory === "MB"}  onChange={() => handleCategoryChange("MB")}/>
             <label htmlFor="Mobile">Mobile</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("SK")}>
-            <input type="radio" id="Sticker" name="category" checked={selectedCategory === "SK"}  />
+            <input type="radio" id="Sticker" name="category" checked={selectedCategory === "SK"} onChange={() => handleCategoryChange("SK")} />
             <label htmlFor="Sticker">Sticker</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("CL")}>
-            <input type="radio" id="Bag" name="category" checked={selectedCategory === "CL"}  />
+            <input type="radio" id="Bag" name="category" checked={selectedCategory === "CL"} onChange={() => handleCategoryChange("CL")} />
             <label htmlFor="Bag">Bag</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("CL")}>
-            <input type="radio" id="Clothes" name="category" checked={selectedCategory === "CL"}  />
+            <input type="radio" id="Clothes" name="category" checked={selectedCategory === "CL"} onChange={() => handleCategoryChange("CL")} />
             <label htmlFor="Clothes">Clothes</label>
           </li>
            <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("PC")}>
-            <input type="radio" id="Other Electronics" name="category" checked={selectedCategory === "PC"}  />
+            <input type="radio" id="Other Electronics" name="category" checked={selectedCategory === "PC"} onChange={() => handleCategoryChange("PC")} />
             <label htmlFor="Other Electronics">Other Electronics</label>
           </li>
         </ul>
@@ -176,15 +224,15 @@ apiUrl += params.toString();
        <div>
     <h3 className="text-md font-semibold mb-1 mt-2">Price (Birr)</h3>
     <ul>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, "?price__gt=1000")}>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, { price__gt: 1000 })}>
             <input type="radio" id="over 1000" name="category"  />
             <label htmlFor="over 1000">Over Birr 1000 </label>
       </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, "?price__lt=300")}>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, { price__lt: 300 })}>
             <input type="radio" id="under 300" name="category" />
             <label htmlFor="under 300">Under Birr 300</label>
           </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, "?price__gt=500&price__lt=1000")}>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null,  { price__gt: 500, price__lt: 1000 })}>
             <input type="radio" id="bwt 500&1000" name="category" />
             <label htmlFor="bwt 500&1000">Birr 500 to Birr 1000</label>
           </li>
@@ -193,12 +241,12 @@ apiUrl += params.toString();
 </div>
 
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {currentProducts.map((product) => (
           <Link to={`/product/${product.id}`} key={product.id}>
             <div
               key={product.id}
-              className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+              className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
               style={{ backgroundColor: isHovered && hoveredImage === product.id ? "#E5E7EB" : "white" }}
