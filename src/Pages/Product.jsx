@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import { FaChevronLeft } from "react-icons/fa";
+
 import saveIcon from '../Assets/saveicon.png';
 import savedIcon from '../Assets/savedicon.png';
 import bag from '../Assets/bag.jpg';
@@ -14,39 +15,44 @@ import Topratedproducts from '../components/Products/Topratedproducts'
 import Latestproduct from '../components/Products/Latestproduct'
 import Discoverproducts from '../components/Products/Discoverproducts'
 import axios from 'axios';
+import { useAuth } from "../Context/AuthContext";
+
 
 function Product() {
-  const [searchValue, setSearchValue] = useState('');
- const [searchResults, setSearchResults] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
-
+  const { user } = useAuth();
+  console.log("user", user);
   const handleSubmit = async (product) => {
     product.preventDefault();
-    console.log('Searching for events:', searchValue);
+    console.log("Searching for events:", searchValue);
     try {
-      const response = await axios.get(`https://aguero.pythonanywhere.com/product/?search=${searchValue}`);
+      const response = await axios.get(
+        `https://aguero.pythonanywhere.com/product/?search=${searchValue}`
+      );
       setSearchResults(response.data);
     } catch (error) {
-      console.error('Error searching products:', error);
+      console.error("Error searching products:", error);
     }
   };
- const scrollButtonStyle = {
+  const scrollButtonStyle = {
     marginTop: "-100px",
     fontSize: "30px",
   };
   const saveIconStyle = {
-    display: isHovered ? 'block' : 'none',
-    position: 'absolute',
-    top: '8px',
-    right: '8px',
-    backgroundColor: 'white' ,
-    borderRadius: '50%',
-    padding: '5px',
-    cursor: 'pointer',
-    transition: 'opacity 0.3s',
+    display: isHovered ? "block" : "none",
+    position: "absolute",
+    top: "8px",
+    right: "8px",
+    backgroundColor: "white",
+    borderRadius: "50%",
+    padding: "5px",
+    cursor: "pointer",
+    transition: "opacity 0.3s",
   };
   const scrollContainer = (scrollValue) => {
     setScrollLeft(scrollLeft + scrollValue);
@@ -73,9 +79,9 @@ function Product() {
 
   const isSaved = (productId) => savedProducts.includes(productId);
 
-
   return (
     <div>
+    
      <div className="bg-gray-900 text-white py-32 px-10 relative"> 
   <div className="max-w-6xl mx-auto text-center">
     <form onSubmit={handleSubmit}>
@@ -117,7 +123,7 @@ function Product() {
 
 </div>
 
-<div className="flex items-center bg-sky-50 justify-center space-x-4">
+      <div className="flex items-center bg-sky-50 justify-center space-x-4">
         <button
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
@@ -137,7 +143,12 @@ function Product() {
                 className="w-64 rounded-lg p-2 mb-4 mt-8 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
                 onMouseEnter={() => handleMouseEnter(product.id)}
                 onMouseLeave={handleMouseLeave}
-                style={{ backgroundColor: isHovered && hoveredImage === product.id ? "#E5E7EB" : "white" }}
+                style={{
+                  backgroundColor:
+                    isHovered && hoveredImage === product.id
+                      ? "#E5E7EB"
+                      : "white",
+                }}
               >
                 <div className="flex flex-col items-center relative">
                   <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
@@ -180,7 +191,7 @@ function Product() {
       <Latestproduct />
       <Discoverproducts />
     </div>
-  )
+  );
 }
 
-export default Product
+export default Product;

@@ -134,19 +134,22 @@
 import React, { useEffect, useState } from "react";
 import laptop from "../Assets/Shoping.jpg";
 
-import './Profile.css'
+import "./Profile.css";
+import { useAuth } from "../Context/AuthContext";
 
 const ProfilePage = () => {
-
   const [render, setRender] = useState([]);
-  const [selectedPage, setSelectedPage] = useState('products'); // Initialize the selected page state
+  const [selectedPage, setSelectedPage] = useState('products'); 
+  const [page, setPage]=useState('Profile');
+  const { user, isLoading } = useAuth();
 
     const apiCall= async()=>{
       try {
         setSelectedPage(page); 
-        const response = await fetch('https://fakestoreapi.com/products');
+        const response = await fetch('https://aguero.pythonanywhere.com/product/');
         const data = await response.json();
-        setRender(data);// Set the selected page based on the button clicked
+        setRender(data);
+        console.log(data)
       } catch (err) {
         console.error(err);
       }
@@ -154,12 +157,13 @@ const ProfilePage = () => {
 
   useEffect(()=>{
     apiCall()
-  })
+  },[])
+  isLoading ? console.log("loading") : console.log(user);
   
   const handleClick = async (page) => {
-      setSelectedPage(page); // Set the selected page based on the button clicked
+      setSelectedPage(page);
+      setPage(page)
   };
-  console.log(render);
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -172,11 +176,10 @@ const ProfilePage = () => {
             </div>
 
             <div className="basic_data">
-            <h2>User 101</h2>
-            <p>username here</p>
-            <p>phoneNumber</p>
+              <h2>{user}</h2>
+              <p>username here</p>
+              <p>phoneNumber</p>
             </div>
-
 
             <hr />
 
@@ -197,35 +200,36 @@ const ProfilePage = () => {
           <div className="right_col">
             <div className="nav">
               <ul className="ul">
-              <li
-              className={selectedPage === 'products' ? 'active' : ''}
-              onClick={() => handleClick('products')}
-            >
-              PRODUCTS
-            </li>
-            <li
-              className={selectedPage === 'services' ? 'active' : ''}
-              onClick={() => handleClick('services')}
-            >
-              SERVICES
-            </li>
-            <li
-              className={selectedPage === 'events' ? 'active' : ''}
-              onClick={() => handleClick('events')}
-            >
-              EVENTS
-            </li>
+                <li
+                  className={selectedPage === "products" ? "active" : ""}
+                  onClick={() => handleClick("products")}
+                >
+                  PRODUCTS
+                </li>
+                <li
+                  className={selectedPage === "services" ? "active" : ""}
+                  onClick={() => handleClick("services")}
+                >
+                  SERVICES
+                </li>
+                <li
+                  className={selectedPage === "events" ? "active" : ""}
+                  onClick={() => handleClick("events")}
+                >
+                  EVENTS
+                </li>
               </ul>
             </div>
 
             <div className="photos">
-              {render.map(each=>{
-                return(
-                  <PostItem image={each.image} title={each.title}/>
-                )
-              })}
+            {render.length > 0 ? (
+            render.map((each) => (
+              <PostItem key={each.id} image={each.image} title={each.title} />
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
             </div>
-
           </div>
         </div>
       </div>
@@ -234,12 +238,8 @@ const ProfilePage = () => {
 };
 
 const PostItem = (props) => (
-  <div className="bg-white rounded-md shadow-md overflow-hidden">
-    <img
-      src={props.image}
-      alt='item'
-      className="w-full h-48 object-cover"
-    />
+  <div className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer">
+    <img src={props.image} alt="item" className="w-full h-48 object-cover" />
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-1">{props.title}</h3>
       <p className="text-gray600">Rating: Rating</p>
