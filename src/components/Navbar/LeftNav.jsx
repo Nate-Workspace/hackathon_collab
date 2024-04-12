@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IoCartOutline } from 'react-icons/io5';
-import { MdClose } from 'react-icons/md';
-import { FiMenu } from 'react-icons/fi';
+import { IoCartOutline } from "react-icons/io5";
+import { MdClose } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
 import "./LeftNav.css";
+import { useAuth } from "../../Context/AuthContext";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
 
   //--------------------NavBar scroll state--------------------
-
+  const { isAuthenticated, logout, isLoading } = useAuth();
+  console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,10 +46,16 @@ function LeftNav() {
     setShowStudioDropdown(false);
   };
 
-  const handleClose=()=>{
-    setMenuOpen(false)
-    console.log(menuOpen)
-  }
+  const handleAccountClick = () => {
+    setShowAccountDropdown(true);
+  };
+  const handleAccountLeave = () => {
+    setShowAccountDropdown(false);
+  };
+  const handleClose = () => {
+    setMenuOpen(false);
+    console.log(menuOpen);
+  };
 
   return (
     <nav
@@ -61,7 +70,12 @@ function LeftNav() {
           <li className="home">
             <Link to="/">HOME</Link>
           </li>
-          <li className="button" id="button1" onMouseEnter={handleExploreClick} onMouseLeave={handleEventLeave}>
+          <li
+            className="button"
+            id="button1"
+            onMouseEnter={handleExploreClick}
+            onMouseLeave={handleEventLeave}
+          >
             EXPLORE
             {showExploreDropdown && (
               <ul
@@ -83,7 +97,12 @@ function LeftNav() {
             )}
           </li>
 
-          <li className="button" id="button2" onMouseEnter={handleStudioClick} onMouseLeave={handleStudioLeave}>
+          <li
+            className="button"
+            id="button2"
+            onMouseEnter={handleStudioClick}
+            onMouseLeave={handleStudioLeave}
+          >
             STUDIO
             {showStudioDropdown && (
               <ul
@@ -104,10 +123,40 @@ function LeftNav() {
               </ul>
             )}
           </li>
+          <li
+            className="button"
+            id="button2"
+            onMouseEnter={handleAccountClick}
+            onMouseLeave={handleAccountLeave}
+          >
+            {!isAuthenticated && !isLoading && (
+              <>
+                Account
+                {showAccountDropdown && (
+                  <ul
+                    className="dropdown"
+                    onMouseEnter={handleAccountClick}
+                    onMouseLeave={handleAccountLeave}
+                  >
+                    <li>
+                      <Link to="/register">Register</Link>
+                    </li>
+                    <li>
+                      <Link to="/signin">Sign In</Link>
+                    </li>
+                  </ul>
+                )}
+                {console.log(isAuthenticated, isLoading)}
+              </>
+            )}
+            {!isAuthenticated && isLoading && <button>Loading...</button>}
+          </li>
         </ul>
-        <li className="logout">
-          <Link to="/Logout">LOGOUT</Link>
-        </li>
+        {isAuthenticated && (
+          <li className="logout" onClick={() => logout()}>
+            Logout
+          </li>
+        )}
       </div>
     </nav>
   );
