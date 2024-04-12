@@ -29,7 +29,7 @@ const RegistrationForm = () => {
   const { register, error } = useAuth();
 
   const handleChange = (e) => {
-    const { name, value,file } = e.target;
+    const { name, value, files } = e.target;
 
     if (name === "confirmPassword") {
       setPasswordMatchError(value !== formData.password);
@@ -57,7 +57,19 @@ const RegistrationForm = () => {
       setPasswordRestrictionError(!isValidPassword);
     }
 
-    setFormData({ ...formData, [name]: value });
+    if (name === "profile") {
+      if (files.length > 0) {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData({ ...formData, profile: reader.result });
+        };
+        reader.readAsDataURL(file);
+      }
+      console.log("files", file);
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -95,6 +107,22 @@ const RegistrationForm = () => {
             <h2 className="text-2xl font-bold text-left mb-4">
               Registration Form
             </h2>
+            <label
+              className="block text-gray-700 text-md font-semibold mb-2"
+              htmlFor="image"
+            >
+              Profile Picture
+            </label>
+            <input
+              className="input-field border w-full px-4 py-2 focus:border-gray-500 hover:border-gray-500"
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*" 
+              placeholder="Enter your first name"
+              value={formData.profile}
+              onChange={handleChange}
+            />
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-md font-semibold mb-2"
