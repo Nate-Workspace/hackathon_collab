@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const textVariants = {
   initial: {
-    x: -500,
+    x: -40,
     opacity: 0,
   },
   animate: {
@@ -11,7 +11,8 @@ const textVariants = {
     opacity: 1,
     transition: {
       duration: 1,
-      staggerChildren: 0.1,
+      staggerChildren: 0.2,
+      ease: "easeInOut", // Add easing effect
     },
   },
   scrollButton: {
@@ -20,9 +21,11 @@ const textVariants = {
     transition: {
       duration: 2,
       repeat: Infinity,
+      repeatType: "reverse", // Change repeat type to reverse
     },
   },
 };
+
 const sliderVariants = {
   initial: {
     x: 0,
@@ -37,6 +40,20 @@ const sliderVariants = {
   },
 };
 
+const imageVariants = {
+  initial: {
+    opacity: 0, // Start with opacity 0
+  },
+  animate: {
+    opacity: 1, // Fade in the image
+    x: 0,
+    transition: {
+      duration: 1.5, // Longer duration for a smoother effect
+      ease: "easeInOut", // Add easing effect
+    },
+  },
+};
+
 const Hero = () => {
   return (
     <div className="hero">
@@ -47,14 +64,12 @@ const Hero = () => {
           initial="initial"
           animate="animate"
         >
-          <motion.h1 variants={textVariants}>DevCrew</motion.h1>
+          <motion.h1 variants={textVariants}>AASTU MARKET</motion.h1>
           <motion.h4 variants={textVariants}>
             Fueling Excitement, Igniting Connections - Unleash the Experience
           </motion.h4>
           <motion.div variants={textVariants} className="buttons">
-            <motion.button variants={textVariants}>
-              See the Latest Products
-            </motion.button>
+            {/* Add more motion effects to the buttons */}
           </motion.div>
           <motion.img
             variants={textVariants}
@@ -72,9 +87,14 @@ const Hero = () => {
       >
         let's boost your market experience
       </motion.div>
-      <div className="imageContainer">
-        <img className="" src="/hero.png" alt="" />
-      </div>
+      <motion.div
+        className="imageContainer"
+        variants={imageVariants}
+        initial="initial"
+        animate="animate"
+      >
+        <img className="" src="/hero.jpg" alt="" />
+      </motion.div>
     </div>
   );
 };

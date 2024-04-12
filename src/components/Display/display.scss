@@ -1,0 +1,45 @@
+.display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+}
+
+.category-container {
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+
+.category-title {
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  color: orange;
+}
+
+.images {
+  display: flex;
+  padding: 20px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  max-width: calc(100vw - 40px); /* Set a fixed width for the container */
+}
+
+.images img {
+  margin-right: 10px;
+  animation: fadeIn 0.5s ease;
+  height: 200px; /* Fixed height for each image */
+  width: auto; /* Allow the images to maintain their original width */
+  border: 2px solid #333; /* Change border width and color as needed */
+  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+  margin: 5px; /* Optional: Add margin between images */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

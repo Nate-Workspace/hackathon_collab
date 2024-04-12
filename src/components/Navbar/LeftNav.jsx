@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IoCartOutline } from 'react-icons/io5';
-import { MdClose } from 'react-icons/md';
-import { FiMenu } from 'react-icons/fi';
+import { IoCartOutline } from "react-icons/io5";
+import { MdClose } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
 import "./LeftNav.css";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
@@ -43,10 +43,10 @@ function LeftNav() {
     setShowStudioDropdown(false);
   };
 
-  const handleClose=()=>{
-    setMenuOpen(false)
-    console.log(menuOpen)
-  }
+  const handleClose = () => {
+    setMenuOpen(false);
+    console.log(menuOpen);
+  };
 
   return (
     <nav
@@ -61,7 +61,12 @@ function LeftNav() {
           <li className="home">
             <Link to="/">HOME</Link>
           </li>
-          <li className="button" id="button1" onMouseEnter={handleExploreClick} onMouseLeave={handleEventLeave}>
+          <li
+            className="button"
+            id="button1"
+            onMouseEnter={handleExploreClick}
+            onMouseLeave={handleEventLeave}
+          >
             EXPLORE
             {showExploreDropdown && (
               <ul
@@ -83,7 +88,12 @@ function LeftNav() {
             )}
           </li>
 
-          <li className="button" id="button2" onMouseEnter={handleStudioClick} onMouseLeave={handleStudioLeave}>
+          <li
+            className="button"
+            id="button2"
+            onMouseEnter={handleStudioClick}
+            onMouseLeave={handleStudioLeave}
+          >
             STUDIO
             {showStudioDropdown && (
               <ul
@@ -103,6 +113,9 @@ function LeftNav() {
                 </li>
               </ul>
             )}
+          </li>
+          <li className="about-us">
+            <Link to="/AboutUs">ABOUT US</Link>
           </li>
         </ul>
         <li className="logout">
