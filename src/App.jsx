@@ -20,6 +20,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <LeftNav />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Profile" element={<ProfilePage />} />
