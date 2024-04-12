@@ -87,19 +87,19 @@ function ServiceDetails() {
   <p className="text-[#3C9B78] text-sm font-light mb-16">{reviews[6].userName}</p>
 )}
             <p
-              className="text-[#11875C] text-2xl font-bold mb-4">Rating: {service.rating}</p>
+              className="text-[#222831] text-2xl font-bold mb-4">Rating: {service.rating}</p>
             <div className="description-wrapper w-110">
               <p
                 className="text-sm font-light mb-4">Description: {service.description}</p>
             </div>
             <div className="flex">
               <button
-                className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
                 <Phone size={24}/>
                 <span className="ml-2">Call</span>
               </button>
               <button
-                className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24}/>
                 <span className="ml-2">Save</span>
               </button>
@@ -107,7 +107,6 @@ function ServiceDetails() {
 
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Rating Section */}
         <div className="flex justify-center my-8">
@@ -127,19 +126,18 @@ function ServiceDetails() {
           </div>
           <div className="flex flex-col justify-end ml-40 mt-8">
             <textarea
-              className="border border-[#2B9770] rounded-md p-2 resize-y w-96 h-40"
+              className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
               placeholder="Leave your review"></textarea>
             <button
-              className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-2 px-4 rounded-xl mt-4 ml-56">Submit
+              className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-4 rounded-xl mt-4 ml-56">Submit
             </button>
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Reviews Section */}
-        <div className="mt-20">
-          <h2 className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
-          <div className="flex overflow-x-scroll">
+        <div className="mt-20 overflow-x-auto scrollbar-none">
+          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
+          <div className="flex">
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -150,19 +148,19 @@ function ServiceDetails() {
             ))}
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
+        
 
 
         {/* Related Section */}
          <div className="mt-20 ">
           <h2
-            className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Related Services</h2>
-          <div className="flex flex-wrap justify-center">
+            className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Related Services</h2>
+          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
             {relatedServices.map((relatedService) => (
               <Link to={`/Products/details/${relatedService.id}`} key={relatedService.id}>
                 <div
     key={relatedService.id}
-    className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+    className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
     onMouseEnter={() => handleMouseEnter(relatedService.id)}
     onMouseLeave={handleMouseLeave}
     style={{ backgroundColor: isHovered && hoveredImage === relatedService.id ? "#E5E7EB" : "white" }}
@@ -183,7 +181,7 @@ function ServiceDetails() {
         )}
       </div>
       <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{relatedService.title}</p>
-      <p className="text-gray-600">{relatedService.rating} </p>
+      <p className="text-gray-600">{relatedService.rating} stars</p>
     </div>
   </div>
               </Link>

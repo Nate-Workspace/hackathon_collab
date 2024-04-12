@@ -56,6 +56,18 @@ function Service() {
   };
 
   const isSaved = (serviceId) => savedServices.includes(serviceId);
+  
+  const saveIconStyle = {
+    display: isHovered ? 'block' : 'none',
+    position: 'absolute',
+    top: '8px',
+    right: '8px',
+    backgroundColor: 'white' ,
+    borderRadius: '50%',
+    padding: '5px',
+    cursor: 'pointer',
+    transition: 'opacity 0.3s',
+  };
 
   return (
     <div>
@@ -73,7 +85,7 @@ function Service() {
         style={{
     outline: 'none'}}
       />
-      <button type="submit" className="absolute inset-y-0 right-0 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full px-4 mr-1 mt-1 mb-1"style={{ width: '120px' }}>
+      <button type="submit" className="absolute inset-y-0 right-0 flex items-center justify-center  bg-[#31363F] hover:bg-orange-400 text-white rounded-full px-4 mr-1 mt-1 mb-1"style={{ width: '120px' }}>
         <svg className="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M21.71 20.29l-5.23-5.23A7.93 7.93 0 0018 10c0-4.42-3.58-8-8-8s-8 3.58-8 8 3.58 8 8 8a7.93 7.93 0 004.06-1.11l5.23 5.23a1 1 0 001.42 0 1 1 0 000-1.42zM4 10a6 6 0 116 6 6 6 0 01-6-6z"/>
         </svg>

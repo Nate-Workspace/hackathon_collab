@@ -3,6 +3,7 @@ import { IoFilterSharp } from "react-icons/io5";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import cancel from '../../Assets/cancel.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,6 +15,7 @@ function OurServices() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedServices, setSavedServices] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const getServices = async (category = null) => {
     try {
@@ -35,6 +37,12 @@ function OurServices() {
 
   const toggleCategories = () => {
     setShowCategories(!showCategories);
+    setIsFilterOpen(!isFilterOpen);
+    if (!showCategories) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling when filter menu is open
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling when filter menu is closed
+    }
   };
 
   const handleNextPage = () => {
@@ -85,6 +93,14 @@ function OurServices() {
     transition: 'opacity 0.3s',
   };
   
+const cancelIconStyle = {
+    position: 'absolute',
+    top: '10px',
+    right: '8px',
+    cursor: 'pointer',
+    width: '30px', 
+    height: '30px'
+  };
 
   // Calculate the index of the first and last item to display
   const indexOfLastItem = currentPage * 8;
@@ -95,6 +111,13 @@ function OurServices() {
     setSelectedCategory(category);
     setShowCategories(false);
     getServices(category);
+    setIsFilterOpen(false);
+    document.body.style.overflow = 'auto';
+  };
+
+  const handleCancelClick = () => {
+    setShowCategories(false);
+    document.body.style.overflow = 'auto'; // Enable scrolling when filter menu is closed
   };
 
   return (
@@ -111,17 +134,25 @@ function OurServices() {
   <span style={lineStyle}></span>
 </div>
 
-      <div className="flex justify-end mr-20 mb-4 relative">
-        <button onClick={toggleCategories} 
-        className="flex items-center font-bold py-2 px-4 rounded-full hover:bg-gray-300 relative border-2 border-black"
-         style={{ zIndex: showCategories ? '20' : 'auto' }}
-        >
-           <IoFilterSharp className="mr-2" />
-              Filters
-        </button>
+      <div className="flex justify-end mr-20 mb-6 relative">
+         <button
+  onClick={toggleCategories}
+  className="flex items-center font-bold py-1 px-2 rounded-full  relative border-2 border-black transition-transform duration-300"
+  style={{
+    zIndex: showCategories ? '30' : 'auto',
+    transform: showCategories ? 'translateY(-7px)' : 'none',
+    boxShadow: 'none',
+  }}
+  onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
+  onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
+>
+  <IoFilterSharp className="mr-2 " />
+ Filters
+</button>
       </div>
-      <div className={`absolute left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
-         <h2 className="text-3xl font-light mb-4">Filters</h2>
+      <div className={`fixed bottom-0 right-0 left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
+         <img src={cancel} alt="Cancel" style={cancelIconStyle}  onClick={handleCancelClick} />
+        <h2 className="text-4xl font-light mb-4 italic text-gray-900">Filters</h2>
          <div>
       <h3 className="text-md font-semibold mb-1">Categories</h3>
         <ul>
@@ -140,32 +171,17 @@ function OurServices() {
         </ul>
       </div>
        <div>
-    <h3 className="text-md font-semibold mb-1 mt-2">Price ($)</h3>
-    {/* <ul>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
-            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
-            <label htmlFor="clothes">Clothes</label>
-      </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
-            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
-            <label htmlFor="clothes">Clothes</label>
-          </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("clothes")}>
-            <input type="radio" id="clothes" name="category" checked={selectedCategory === "clothes"} readOnly />
-            <label htmlFor="clothes">Clothes</label>
-          </li>
-    </ul> */}
   </div>
 </div>
 
 
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-8">
         {currentServices.map((service) => (
           <Link to={`/service/${service.id}`} key={service.id}>
           <div 
               key={service.id} 
-              className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+              className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
               onMouseEnter={() => handleMouseEnter(service.id)}
               onMouseLeave={handleMouseLeave}
               style={{ backgroundColor: isHovered && hoveredImage === service.id ? "#E5E7EB" : "white" }}
@@ -194,7 +210,7 @@ function OurServices() {
           disabled={currentPage === 1}
           className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200 mr-4"
         >
-          <FaCaretLeft /> {/* Left Icon */}
+          <FaCaretLeft /> 
         </button>
         <p>{currentPage}</p>
         <button
@@ -202,7 +218,7 @@ function OurServices() {
           disabled={currentServices.length < 8}
           className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200 ml-4"
         >
-          <FaCaretRight /> {/* Right Icon */}
+          <FaCaretRight /> 
         </button>
       </div>
     </div>

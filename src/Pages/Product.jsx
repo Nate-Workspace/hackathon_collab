@@ -3,6 +3,12 @@ import { FaChevronRight } from "react-icons/fa6";
 import { FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../Assets/saveicon.png';
 import savedIcon from '../Assets/savedicon.png';
+import bag from '../Assets/bag.jpg';
+import clothes from '../Assets/clothes.jpg';
+import food from '../Assets/food.jpg';
+import mobile from '../Assets/mobile.jpg';
+import pc from '../Assets/pc.jpg';
+import stationary from '../Assets/stationary.jpg';
 import { Link } from 'react-router-dom';
 import Topratedproducts from '../components/Products/Topratedproducts'
 import Latestproduct from '../components/Products/Latestproduct'
@@ -70,11 +76,11 @@ function Product() {
 
   return (
     <div>
-     <div className="bg-gray-900 text-white py-20 px-10 relative"> 
+     <div className="bg-gray-900 text-white py-32 px-10 relative"> 
   <div className="max-w-6xl mx-auto text-center">
     <form onSubmit={handleSubmit}>
       <div className="flex items-center justify-center">
-        <div className="relative flex items-stretch w-full" style={{ maxWidth: '700px' }}>
+        <div className="relative flex items-stretch w-full  " style={{ maxWidth: '700px' }}>
           <input
             type="text"
             placeholder="Search products( title, description...)"
@@ -85,7 +91,7 @@ function Product() {
               outline: 'none'
             }}
           />
-          <button type="submit" className="absolute inset-y-0 right-0 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full px-4 mr-1 mt-1 mb-1" style={{ width: '120px' }}>
+          <button type="submit" className="absolute inset-y-0 right-0 flex items-center justify-center bg-[#31363F] hover:bg-orange-400 lighten-50 text-white rounded-full px-4 mr-1 mt-1 mb-1" style={{ width: '120px' }}>
             <svg className="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M21.71 20.29l-5.23-5.23A7.93 7.93 0 0018 10c0-4.42-3.58-8-8-8s-8 3.58-8 8 3.58 8 8 8a7.93 7.93 0 004.06-1.11l5.23 5.23a1 1 0 001.42 0 1 1 0 000-1.42zM4 10a6 6 0 116 6 6 6 0 01-6-6z"/>
             </svg>
@@ -94,18 +100,19 @@ function Product() {
         </div>
       </div>
     </form>
-    <h1 className="text-3xl font-bold mb-4 mt-8">Discover Our Amazing Products</h1>
+    <h1 className="text-3xl  font-bold text-orange-400 mb-8 mt-8">Discover Our Amazing Products</h1>
   </div>
 
   <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end" style={{ marginBottom: '15px' }}>
   <div className="flex justify-between max-w-6xl gap-12">
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-    <div className="w-24 h-24 bg-white rounded-full"></div>
-  </div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${bag})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${clothes})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${food})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${mobile})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${pc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${stationary})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+</div>
+
 </div>
 
 </div>
