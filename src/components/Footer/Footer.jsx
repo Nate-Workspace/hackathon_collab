@@ -64,7 +64,10 @@ const Footer = () => {
                 follow us
               </h4>
               <div className="flex items-center">
-                <a href="" className="text-white mr-4 text-4xl">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61558385463401"
+                  className="text-white mr-4 text-4xl"
+                >
                   <FaFacebook />
                 </a>
                 <a
