@@ -5,9 +5,7 @@ import Service from "./Pages/Service";
 import Event from "./Pages/Event";
 import "./App.css";
 import Home from "./Pages/Home";
-
 import Saved from "./Pages/Saved";
-
 import ProfilePage from "./Pages/ProfilePage";
 import MainContent from "./Pages/MainContent";
 import Dashboard from "./Pages/Dashboard";
@@ -20,13 +18,13 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <LeftNav />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/Products" element={<Product />} />
           <Route path="/Services" element={<Service />} />
           <Route path="/Events" element={<Event />} />
-
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/event/:id" element={<EventDetails />} />
           <Route path="/service/:id" element={<ServiceDetails />} />
