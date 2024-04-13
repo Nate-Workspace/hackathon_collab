@@ -132,51 +132,55 @@
 // export default ProfilePage;
 
 import React, { useEffect, useState } from "react";
-import laptop from "../Assets/Shoping.jpg";
-
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import { useAuth } from "../Context/AuthContext";
+import "ldrs/ring";
+import Loader from "../components/Loaders/Loader";
 
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
   const [selectedPage, setSelectedPage] = useState("products");
-  const { user, isLoading, getUserFromToken } = useAuth();
-  // Initialize the selected page state
-  useEffect(
-    function () {
-      async function apiCall(page) {
-        try {
-          setSelectedPage(page);
-          const response = await fetch("https://fakestoreapi.com/products");
-          const data = await response.json();
-          setRender(data); // Set the selected page based on the button clicked
-        } catch (err) {
-          console.error(err);
-        }
-
+  const { logout, user, isLoading, getUserFromToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(function () {
+    async function apiCall(page) {
+      try {
+        setSelectedPage(page);
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        setRender(data); // Set the selected page based on the button clicked
+      } catch (err) {
+        console.error(err);
       }
-      apiCall();
-    },
-    [user]
-  );
-
+    }
+    apiCall();
+  }, []);
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (user) {
+      return;
+    }
     if (token) {
       getUserFromToken(token);
     }
-  }, [user]);
-
-  console.log("loading", isLoading);
-  console.log("user", user);
-  console.log(user);
+  }, [isLoading]);
+  function handleLogout(e) {
+    e.preventDefault();
+    const x = confirm("Do you really want to log out");
+    console.log("x", x);
+    if (x) {
+      logout();
+      navigate("/");
+    }
+  }
 
   const handleClick = async (page) => {
-      setSelectedPage(page);
-      setPage(page)
+    setSelectedPage(page);
+    setPage(page);
   };
-  if (user === null) {
-    return <h3>Loading...</h3>;
+  if (!user) {
+    return <Loader />;
   }
   return (
     <div className="body">
@@ -209,6 +213,14 @@ const ProfilePage = () => {
               <hr />
 
               <p className="residence">Residence: AASTU</p>
+              <a href="/">
+                <div
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 pr-5 rounded-xl mr-2 flex items-center"
+                  onClick={handleLogout}
+                >
+                  <span className="ml-1 ">Logout</span>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -237,13 +249,17 @@ const ProfilePage = () => {
             </div>
 
             <div className="photos">
-            {render.length > 0 ? (
-            render.map((each) => (
-              <PostItem key={each.id} image={each.image} title={each.title} />
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
+              {render.length > 0 ? (
+                render.map((each) => (
+                  <PostItem
+                    key={each.id}
+                    image={each.image}
+                    title={each.title}
+                  />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
             </div>
           </div>
         </div>

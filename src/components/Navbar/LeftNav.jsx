@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import "./LeftNav.css";
 import { useAuth } from "../../Context/AuthContext";
+import { dotStream } from "ldrs";
+import { FaUserCircle } from "react-icons/fa";
+
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
@@ -13,7 +16,7 @@ function LeftNav() {
   const { isAuthenticated, logout, isLoading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
@@ -55,6 +58,7 @@ function LeftNav() {
     setMenuOpen(false);
     console.log(menuOpen);
   };
+  dotStream.register();
 
   return (
     <nav
@@ -96,69 +100,56 @@ function LeftNav() {
             )}
           </li>
 
-          <li
-            className="button"
-            id="button2"
-            onMouseEnter={handleStudioClick}
-            onMouseLeave={handleStudioLeave}
-          >
-            STUDIO
-            {showStudioDropdown && (
-              <ul
-                className="dropdown"
-                onMouseEnter={handleStudioClick}
-                onMouseLeave={handleStudioLeave}
-              >
-                {/* <hr /> */}
-                <li>
-                  <Link to="/Saved">SAVED</Link>
-                </li>
-                <li>
-                  <Link to="/Create">CREATE</Link>
-                </li>
-                <li>
-                  <Link to="/Profile">PROFILE</Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li
-            className="button"
-            id="button2"
-            onMouseEnter={handleAccountClick}
-            onMouseLeave={handleAccountLeave}
-          >
-            {!isAuthenticated && !isLoading && (
-              <>
-                Account
-                {showAccountDropdown && (
-                  <ul
-                    className="dropdown"
-                    onMouseEnter={handleAccountClick}
-                    onMouseLeave={handleAccountLeave}
-                  >
-                    <li>
-                      <Link to="/register">Register</Link>
-                    </li>
-                    
-                    <li>
-                      <Link to="/signin">Sign In</Link>
-                    </li>
-                  </ul>
-                )}
-              
-              </>
-            )}
-            {!isAuthenticated && isLoading && <button>Loading...</button>}
-          </li>
+          {isAuthenticated && !isLoading && (
+            <li
+              className="button"
+              id="button2"
+              onMouseEnter={handleStudioClick}
+              onMouseLeave={handleStudioLeave}
+            >
+              STUDIO
+              {showStudioDropdown && (
+                <ul
+                  className="dropdown"
+                  onMouseEnter={handleStudioClick}
+                  onMouseLeave={handleStudioLeave}
+                >
+                  {/* <hr /> */}
+                  <li>
+                    <Link to="/Saved">SAVED</Link>
+                  </li>
+                  <li>
+                    <Link to="/Create">CREATE</Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          )}
         </ul>
-        {isAuthenticated && (
-          <Link to='/'>
-          <li className="logout" onClick={() => logout()}>
-            Logout
-          </li>
-          </Link>
-        )}
+        <ul className="ul">
+          {!isAuthenticated && !isLoading && (
+            <>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+
+              <li>
+                <Link to="/SignIn">Sign In</Link>
+              </li>
+              </>
+          )}
+          
+
+          {console.log("isAuthenticated", isAuthenticated)}
+          {console.log("isLoading", isLoading)}
+        </ul>
+        {isAuthenticated && !isLoading && (
+            <li>
+              <Link to="/Profile" className="absolute right-5 bottom-3">
+                <FaUserCircle color="grey" size={40} />
+              </Link>
+            </li>
+          )}
       </div>
     </nav>
   );

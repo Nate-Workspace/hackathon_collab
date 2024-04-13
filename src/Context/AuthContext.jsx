@@ -5,7 +5,7 @@ const BASE_URL = "https://aguero.pythonanywhere.com";
 
 const AuthContext = createContext();
 const initialState = {
-  user: null,
+  user: {},
   isLoading: false,
   isAuthenticated: false,
   error: "",
@@ -58,7 +58,7 @@ function AuthProvider({ children }) {
     if (token) {
       getUserFromToken(token);
     }
-  }, [user]);
+  }, []);
 
   async function getUserFromToken(token) {
     try {
@@ -90,7 +90,21 @@ function AuthProvider({ children }) {
 
       const res = await axios.post(`${BASE_URL}/auth/users/`, formData);
       dispatch({ type: "register", payload: res.data.user });
+      //login starts
+      let username = userData.username;
+      let password = userData.password;
+      const response = await axios.post(`${BASE_URL}/auth/jwt/create`, {
+        username,
+        password,
+      });
 
+      if (response.status === 200 && response.data.access) {
+        localStorage.setItem("token", response.data.access);
+        dispatch({ type: "login", payload: response.data.user });
+         console.log("this is login")
+      }
+
+      //login ends
       if (res.data) {
         alert("Registered successfully");
       }
@@ -117,7 +131,6 @@ function AuthProvider({ children }) {
       if (res.status === 200 && res.data.access) {
         localStorage.setItem("token", res.data.access);
         dispatch({ type: "login", payload: res.data.user });
-        console.log(res.data);
         alert("Logged in successfully");
       }
       return res.data.access;

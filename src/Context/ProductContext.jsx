@@ -23,12 +23,13 @@ function ProductProvider({ children }) {
   async function uploadProduct(productData) {
     const token = localStorage.getItem("token");
     let config = null;
+    console.log("productdata", productData);
 
     if (token) {
       config = {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `JWT ${token}`,
+          "Content-Type": "application/json", // Specify Content-Type header
         },
       };
     } else {
@@ -37,15 +38,17 @@ function ProductProvider({ children }) {
 
     try {
       console.log(token);
-      const res = await axios.post(`${BASE_URL}/product`, productData, config);
+      const res = await axios.post(`${BASE_URL}/product/`, productData, config); // Make sure BASE_URL is defined somewhere
+      console.log(config);
       alert("Product uploaded successfully");
-      console.log("Product uploaded:", res.data);
+      console.log("uploaded:", res);
 
       return res.data;
     } catch (err) {
       console.error("Error uploading product:", err);
     }
   }
+
   async function getProduct() {
     try {
       const res = await axios.get(`${BASE_URL}/product/`);

@@ -62,7 +62,6 @@ const RegistrationForm = () => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
-
   };
 
   const handleSubmit = async (e) => {
@@ -82,7 +81,7 @@ const RegistrationForm = () => {
         throw new error("Registration failed");
       }
       if (registeredUser) {
-        navigate("/signin");
+        navigate("/");
       }
     } catch (error) {
       console.error("Registration error:", error);
