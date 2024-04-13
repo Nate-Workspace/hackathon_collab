@@ -14,10 +14,11 @@ import Dashboard from "./Pages/Dashboard";
 import ProductDetails from "./components/Details/ProductDetails";
 import EventDetails from "./components/Details/EventDetails";
 import ServiceDetails from "./components/Details/ServiceDetails";
-
 import RegistrationForm from "./Pages/RegistrationForm";
 import NotFound from "./Pages/NotFound";
-import SignInForm from "./Pages/signInForm";
+import SignInForm from "./Pages/SignInForm";
+
+
 function App() {
   return (
     <div className="App">
@@ -35,10 +36,11 @@ function App() {
           <Route path="/service/:id" element={<ServiceDetails />} />
           <Route path="/Saved" element={<Saved />} />
           <Route path="/Create" element={<MainContent />} />
-          <Route path="/signin" element ={<SignInForm/> }/>
+          <Route path="/SignIn" element={<SignInForm />} />
+
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/Logout" />
           <Route path="*" element={<NotFound />} />
-          <Route path='/Logout'/>
         </Routes>
       </Router>
     </div>

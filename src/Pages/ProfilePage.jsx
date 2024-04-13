@@ -132,104 +132,58 @@
 // export default ProfilePage;
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import laptop from "../Assets/Shoping.jpg";
+import { useNavigate } from "react-router-dom";
 
 import "./Profile.css";
 import { useAuth } from "../Context/AuthContext";
+import "ldrs/ring";
+import Loader from "../components/Loaders/Loader";
 
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
-  const [display, setDisplay] = useState([]);
-  const [selectedPage, setSelectedPage] = useState("product");
-  const [page, setPage] = useState("product");
-  const { user, isLoading } = useAuth();
-
-  const[userTest, setUserTest]= useState([])
-
-  // const apiCall = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://aguero.pythonanywhere.com/product/"
-  //     );
-  //     const data = response.data;
-  //     setRender(data);
-  //     console.log(render);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   apiCall();
-  // }, []);
-
-
-
-    // const dataFetcher = (page, user, render) => {
-  //   const userPosts = render.filter((each) => {
-  //     const full_name = user.first_name + " " + user.last_name;
-  //     const full = each.user.first_name + " " + each.user.last_name;
-  //     console.log(each.type);
-  //     console.log(full);
-  //     return "beimnet melese" === full && "FD" === each.type;
-  //   });
-  //   setDisplay(userPosts);
-  // };
-  // console.log(display);
-
-
-  const userCall = async () => {
-    try {
-      const response = await axios.get(
-        "https://aguero.pythonanywhere.com/user"
-      );
-      const data = response.data;
-      setUserTest(data);
-    } catch (err) {
-      console.error(err);
+  const [selectedPage, setSelectedPage] = useState("products");
+  const { logout, user, isLoading, getUserFromToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(function () {
+    async function apiCall(page) {
+      try {
+        setSelectedPage(page);
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        setRender(data); // Set the selected page based on the button clicked
+      } catch (err) {
+        console.error(err);
+      }
     }
-  };
-
-  useEffect(() => {
-    userCall();
+    apiCall();
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (user) {
+      return;
+    }
+    if (token) {
+      getUserFromToken(token);
+    }
+  }, [isLoading]);
+  function handleLogout(e) {
+    e.preventDefault();
+    const x = confirm("Do you really want to log out");
+    console.log("x", x);
+    if (x) {
+      logout();
+      navigate("/");
+    }
+  }
 
-
-  const typeSellector = (page) => {
-    const display = userTest.map((each) => {
-      const postType = Object.keys(each).map(details=>{
-        if(page==details){
-          console.log('matched')
-          return details;
-        }
-      })
-
-      return postType
-    });
-
-    setDisplay(display)
-  };
-
-
-  console.log(display)
-
-
-  
   const handleClick = async (page) => {
     setSelectedPage(page);
     setPage(page);
-    typeSellector(page)
-    // dataFetcher(page, render);
   };
+  if (!user) {
+    return <Loader />;
+  }
 
-  useEffect(()=>{
-    handleClick(page)
-  },[])
-
-  
-  console.log(userTest);
-  console.log(user);
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -237,15 +191,20 @@ const ProfilePage = () => {
         <div className="cols_container">
           <div className="left_col">
             <div className="img_container">
-              <img src={laptop} alt="laptop" />
+              <img src={user.profile} alt="laptop" />
               <span></span>
             </div>
 
             <div className="basic_data">
               <h2>
-                {user.first_name} {user.last_name}
+                {user ? (
+                  `${user.first_name} ${user.last_name}`
+                ) : (
+                  <h3>Loading...</h3>
+                )}
               </h2>
-              <p> {user.username}</p>
+              <p>{user.username}</p>
+
               <p>{user.phone}</p>
             </div>
 
@@ -256,7 +215,16 @@ const ProfilePage = () => {
 
               <hr />
 
-              <p className="residence">Email: {user.email}</p>
+              <p className="residence">Residence: AASTU</p>
+              <a href="/">
+                <div
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 pr-5 rounded-xl mr-2 flex items-center"
+                  onClick={handleLogout}
+                >
+                  <span className="ml-1 ">Logout</span>
+                </div>
+              </a>
+
             </div>
           </div>
 
@@ -285,20 +253,17 @@ const ProfilePage = () => {
             </div>
 
             <div className="photos">
-              {userTest.length > 0 ? (
-                display.length > 0 ? (
-                  display.map((each) => (
-                    <PostItem
-                      key={each.id}
-                      image={each.image}
-                      title={each.title}
-                    />
-                  ))
-                ) : (
-                  <p className="m-40">No {page} posted here yet!!</p>
-                )
+              {render.length > 0 ? (
+                render.map((each) => (
+                  <PostItem
+                    key={each.id}
+                    image={each.image}
+                    title={each.title}
+                  />
+                ))
               ) : (
-                <p className="m-40">Loading...</p>
+                <p>Loading...</p>
+
               )}
             </div>
           </div>
