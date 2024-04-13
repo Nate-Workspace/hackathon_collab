@@ -83,7 +83,8 @@ const Item = ({ item, index }) => {
           >
             <motion.b whileHover={{ color: "white" }}>{item.title}</motion.b>
           </motion.h2>
-          <p>{item.desc}</p>
+
+          <motion.p whileHover={{ color: "white" }}>{item.desc}</motion.p>
         </div>
       </div>
     </motion.div>
