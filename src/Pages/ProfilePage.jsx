@@ -133,6 +133,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./Profile.css";
 import { useAuth } from "../Context/AuthContext";
 import "ldrs/ring";
@@ -182,6 +183,7 @@ const ProfilePage = () => {
   if (!user) {
     return <Loader />;
   }
+
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -202,6 +204,7 @@ const ProfilePage = () => {
                 )}
               </h2>
               <p>{user.username}</p>
+
               <p>{user.phone}</p>
             </div>
 
@@ -221,6 +224,7 @@ const ProfilePage = () => {
                   <span className="ml-1 ">Logout</span>
                 </div>
               </a>
+
             </div>
           </div>
 
@@ -228,20 +232,20 @@ const ProfilePage = () => {
             <div className="nav">
               <ul className="ul">
                 <li
-                  className={selectedPage === "products" ? "active" : ""}
-                  onClick={() => handleClick("products")}
+                  className={selectedPage === "product" ? "active" : ""}
+                  onClick={() => handleClick("product")}
                 >
                   PRODUCTS
                 </li>
                 <li
-                  className={selectedPage === "services" ? "active" : ""}
-                  onClick={() => handleClick("services")}
+                  className={selectedPage === "service" ? "active" : ""}
+                  onClick={() => handleClick("service")}
                 >
                   SERVICES
                 </li>
                 <li
-                  className={selectedPage === "events" ? "active" : ""}
-                  onClick={() => handleClick("events")}
+                  className={selectedPage === "event" ? "active" : ""}
+                  onClick={() => handleClick("event")}
                 >
                   EVENTS
                 </li>
@@ -259,6 +263,7 @@ const ProfilePage = () => {
                 ))
               ) : (
                 <p>Loading...</p>
+
               )}
             </div>
           </div>
