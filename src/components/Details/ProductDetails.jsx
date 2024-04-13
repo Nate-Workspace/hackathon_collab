@@ -84,11 +84,11 @@ function ProductDetails() {
           <div className="w-1/2 pl-8 ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
            {reviews.length > 6 && (
-  <p className="text-[#3C9B78] text-sm font-light mb-16">{reviews[6].userName}</p>
+  <p className="text-[#76ABAE] text-sm font-light mb-16">{reviews[6].userName}</p>
 )}
 
             <p
-              className="text-[#11875C] text-2xl font-bold mb-4">Rating: {product.rating}</p>
+              className="text-[#222831] text-2xl font-bold mb-4">Rating: {product.rating}</p>
             <div className="description-wrapper w-110">
               <p
                 className="text-sm font-light mb-4">Description: {product.description}</p>
@@ -96,12 +96,12 @@ function ProductDetails() {
             <p className="text-xl font-bold mb-14">Price: ${product.price}</p>
             <div className="flex">
               <button
-                className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
                 <Phone size={24}/>
                 <span className="ml-2">Call</span>
               </button>
               <button
-                className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24}/>
                 <span className="ml-2">Save</span>
               </button>
@@ -109,7 +109,6 @@ function ProductDetails() {
 
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Rating Section */}
         <div className="flex justify-center my-16 mx-8">
@@ -129,18 +128,17 @@ function ProductDetails() {
           </div>
           <div className="flex flex-col justify-end ml-32 mt-8">
             <textarea
-              className="border border-[#2B9770] rounded-md p-2 resize-y w-96 h-40"
+              className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
               placeholder="Leave your review"></textarea>
             <button
-              className="bg-[#A4D9C6] hover:bg-[#3C9B78] text-black font-bold py-2 px-2 rounded-xl mt-4 ml-64">Submit
+              className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-2 rounded-xl mt-4 ml-64">Submit
             </button>
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
         {/* Reviews Section */}
         <div className="mt-20">
-          <h2 className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
+          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
           <div className="flex overflow-x-scroll">
             {reviews.map((review, index) => (
               <ReviewsCard
@@ -152,19 +150,18 @@ function ProductDetails() {
             ))}
           </div>
         </div>
-        <div className="border-b-2 border-[#2B9770] mt-8  mb-8"></div>
 
 
         {/* Related Section */}
         <div className="mt-20 ">
           <h2
-            className="text-[#2B9770] text-3xl font-ubuntu font-bold mb-1">Related Products</h2>
-          <div className="flex flex-wrap justify-center">
+            className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Related Products</h2>
+          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
             {relatedProducts.map((relatedProduct) => (
               <Link to={`/Products/details/${relatedProduct.id}`} key={relatedProduct.id}>
                 <div
     key={relatedProduct.id}
-    className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+    className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
     onMouseEnter={() => handleMouseEnter(relatedProduct.id)}
     onMouseLeave={handleMouseLeave}
     style={{ backgroundColor: isHovered && hoveredImage === relatedProduct.id ? "#E5E7EB" : "white" }}
@@ -185,8 +182,8 @@ function ProductDetails() {
         )}
       </div>
       <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{relatedProduct.title}</p>
-      <p className="text-gray-600">{relatedProduct.rating} </p>
-      <p className="text-gray-600 text-center">{relatedProduct.price}</p>
+      <p className="text-gray-600">{relatedProduct.rating} stars</p>
+      <p className="text-gray-600 text-center"> Price: ${relatedProduct.price}</p>
     </div>
   </div>
               </Link>

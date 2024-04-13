@@ -1,12 +1,35 @@
+
+@keyframes leftHero{
+    from{
+      transform: translateX(-5%);
+      opacity: 0%;
+    }
+    to{
+      transform: translateX(0);
+      opacity: 100%;
+    }
+  }
+  @keyframes wholeBlock{
+    from{
+      transform: translateY(10%);
+      opacity: 0%;
+    }
+    to{
+      transform: translateY(0);
+      opacity: 100%;
+    }
+  }
+
 .dashboard{
     width: 100%;
-    background-color: white;
-    height: 81vh;
+    background-color: rgb(221, 241, 250);
+    height: 75.6vh;
 }
 .intro{
     padding-top: 8%;
     padding-left: 10%;
     padding-bottom: 3px;
+    animation: leftHero 1s ease-in .2s 1 normal both;
 }
 .intro h1{
     font-weight: 700;
@@ -17,4 +40,7 @@
     font-weight: 500;
     font-size: 20px;
     color: rgb(143, 143, 143);
+}
+.wholeBlock{
+    animation: wholeBlock 1s ease-in .2s 1 normal both;
 }

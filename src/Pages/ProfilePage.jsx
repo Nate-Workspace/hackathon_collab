@@ -136,6 +136,7 @@ import laptop from "../Assets/Shoping.jpg";
 
 import "./Profile.css";
 import { useAuth } from "../Context/AuthContext";
+
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
   const [selectedPage, setSelectedPage] = useState("products");
@@ -152,6 +153,7 @@ const ProfilePage = () => {
         } catch (err) {
           console.error(err);
         }
+
       }
       apiCall();
     },
@@ -168,8 +170,10 @@ const ProfilePage = () => {
   console.log("loading", isLoading);
   console.log("user", user);
   console.log(user);
+
   const handleClick = async (page) => {
-    setSelectedPage(page); // Set the selected page based on the button clicked
+      setSelectedPage(page);
+      setPage(page)
   };
   if (user === null) {
     return <h3>Loading...</h3>;
@@ -233,9 +237,13 @@ const ProfilePage = () => {
             </div>
 
             <div className="photos">
-              {render.map((each) => {
-                return <PostItem image={each.image} title={each.title} />;
-              })}
+            {render.length > 0 ? (
+            render.map((each) => (
+              <PostItem key={each.id} image={each.image} title={each.title} />
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
             </div>
           </div>
         </div>
@@ -245,7 +253,7 @@ const ProfilePage = () => {
 };
 
 const PostItem = (props) => (
-  <div className="bg-white rounded-md shadow-md overflow-hidden">
+  <div className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer">
     <img src={props.image} alt="item" className="w-full h-48 object-cover" />
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-1">{props.title}</h3>
