@@ -132,6 +132,7 @@
 // export default ProfilePage;
 
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import laptop from "../Assets/Shoping.jpg";
 
 import "./Profile.css";
@@ -139,31 +140,96 @@ import { useAuth } from "../Context/AuthContext";
 
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
-  const [selectedPage, setSelectedPage] = useState('products'); 
-  const [page, setPage]=useState('Profile');
+  const [display, setDisplay] = useState([]);
+  const [selectedPage, setSelectedPage] = useState("product");
+  const [page, setPage] = useState("product");
   const { user, isLoading } = useAuth();
 
-    const apiCall= async()=>{
-      try {
-        setSelectedPage(page); 
-        const response = await fetch('https://aguero.pythonanywhere.com/product/');
-        const data = await response.json();
-        setRender(data);
-        console.log(data)
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  const[userTest, setUserTest]= useState([])
 
-  useEffect(()=>{
-    apiCall()
-  },[])
-  isLoading ? console.log("loading") : console.log(user);
+  // const apiCall = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://aguero.pythonanywhere.com/product/"
+  //     );
+  //     const data = response.data;
+  //     setRender(data);
+  //     console.log(render);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   apiCall();
+  // }, []);
+
+
+
+    // const dataFetcher = (page, user, render) => {
+  //   const userPosts = render.filter((each) => {
+  //     const full_name = user.first_name + " " + user.last_name;
+  //     const full = each.user.first_name + " " + each.user.last_name;
+  //     console.log(each.type);
+  //     console.log(full);
+  //     return "beimnet melese" === full && "FD" === each.type;
+  //   });
+  //   setDisplay(userPosts);
+  // };
+  // console.log(display);
+
+
+  const userCall = async () => {
+    try {
+      const response = await axios.get(
+        "https://aguero.pythonanywhere.com/user"
+      );
+      const data = response.data;
+      setUserTest(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    userCall();
+  }, []);
+
+
+  const typeSellector = (page) => {
+    const display = userTest.map((each) => {
+      const postType = Object.keys(each).map(details=>{
+        if(page==details){
+          console.log('matched')
+          return details;
+        }
+      })
+
+      return postType
+    });
+
+    setDisplay(display)
+  };
+
+
+  console.log(display)
+
+
   
   const handleClick = async (page) => {
-      setSelectedPage(page);
-      setPage(page)
+    setSelectedPage(page);
+    setPage(page);
+    typeSellector(page)
+    // dataFetcher(page, render);
   };
+
+  useEffect(()=>{
+    handleClick(page)
+  },[])
+
+  
+  console.log(userTest);
+  console.log(user);
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -176,24 +242,21 @@ const ProfilePage = () => {
             </div>
 
             <div className="basic_data">
-              <h2>{user}</h2>
-              <p>username here</p>
-              <p>phoneNumber</p>
+              <h2>
+                {user.first_name} {user.last_name}
+              </h2>
+              <p> {user.username}</p>
+              <p>{user.phone}</p>
             </div>
 
             <hr />
 
             <div className="content">
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
-                excepturi ea ipsa iure eveniet eos molestiae alias praesentium,
-                consequatur architecto? Voluptate illum eos similique earum esse
-                eveniet rerum ex suscipit.
-              </p>
+              <p>{user.bio}</p>
 
               <hr />
 
-              <p className="residence">Residence: somewhere</p>
+              <p className="residence">Email: {user.email}</p>
             </div>
           </div>
 
@@ -201,20 +264,20 @@ const ProfilePage = () => {
             <div className="nav">
               <ul className="ul">
                 <li
-                  className={selectedPage === "products" ? "active" : ""}
-                  onClick={() => handleClick("products")}
+                  className={selectedPage === "product" ? "active" : ""}
+                  onClick={() => handleClick("product")}
                 >
                   PRODUCTS
                 </li>
                 <li
-                  className={selectedPage === "services" ? "active" : ""}
-                  onClick={() => handleClick("services")}
+                  className={selectedPage === "service" ? "active" : ""}
+                  onClick={() => handleClick("service")}
                 >
                   SERVICES
                 </li>
                 <li
-                  className={selectedPage === "events" ? "active" : ""}
-                  onClick={() => handleClick("events")}
+                  className={selectedPage === "event" ? "active" : ""}
+                  onClick={() => handleClick("event")}
                 >
                   EVENTS
                 </li>
@@ -222,13 +285,21 @@ const ProfilePage = () => {
             </div>
 
             <div className="photos">
-            {render.length > 0 ? (
-            render.map((each) => (
-              <PostItem key={each.id} image={each.image} title={each.title} />
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
+              {userTest.length > 0 ? (
+                display.length > 0 ? (
+                  display.map((each) => (
+                    <PostItem
+                      key={each.id}
+                      image={each.image}
+                      title={each.title}
+                    />
+                  ))
+                ) : (
+                  <p className="m-40">No {page} posted here yet!!</p>
+                )
+              ) : (
+                <p className="m-40">Loading...</p>
+              )}
             </div>
           </div>
         </div>
