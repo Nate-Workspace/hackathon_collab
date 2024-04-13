@@ -139,26 +139,41 @@ import { useAuth } from "../Context/AuthContext";
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
   const [selectedPage, setSelectedPage] = useState("products");
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, getUserFromToken } = useAuth();
   // Initialize the selected page state
-  useEffect(function () {
-    async function apiCall(page) {
-      try {
-        setSelectedPage(page);
-        const response = await fetch("https://fakestoreapi.com/products");
-        const data = await response.json();
-        setRender(data); // Set the selected page based on the button clicked
-      } catch (err) {
-        console.error(err);
+  useEffect(
+    function () {
+      async function apiCall(page) {
+        try {
+          setSelectedPage(page);
+          const response = await fetch("https://fakestoreapi.com/products");
+          const data = await response.json();
+          setRender(data); // Set the selected page based on the button clicked
+        } catch (err) {
+          console.error(err);
+        }
       }
-    }
-    apiCall();
-  }, []);
-  isLoading ? console.log("loading") : console.log("user");
+      apiCall();
+    },
+    [user]
+  );
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUserFromToken(token);
+    }
+  }, [user]);
+
+  console.log("loading", isLoading);
+  console.log("user", user);
+  console.log(user);
   const handleClick = async (page) => {
     setSelectedPage(page); // Set the selected page based on the button clicked
   };
+  if (user === null) {
+    return <h3>Loading...</h3>;
+  }
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -166,29 +181,30 @@ const ProfilePage = () => {
         <div className="cols_container">
           <div className="left_col">
             <div className="img_container">
-              <img src={laptop} alt="laptop" />
+              <img src={user.profile} alt="laptop" />
               <span></span>
             </div>
 
             <div className="basic_data">
-              <h2>{user}</h2>
-              <p>username here</p>
-              <p>phoneNumber</p>
+              <h2>
+                {user ? (
+                  `${user.first_name} ${user.last_name}`
+                ) : (
+                  <h3>Loading...</h3>
+                )}
+              </h2>
+              <p>{user.username}</p>
+              <p>{user.phone}</p>
             </div>
 
             <hr />
 
             <div className="content">
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
-                excepturi ea ipsa iure eveniet eos molestiae alias praesentium,
-                consequatur architecto? Voluptate illum eos similique earum esse
-                eveniet rerum ex suscipit.
-              </p>
+              <p>{user.bio}</p>
 
               <hr />
 
-              <p className="residence">Residence: somewhere</p>
+              <p className="residence">Residence: AASTU</p>
             </div>
           </div>
 

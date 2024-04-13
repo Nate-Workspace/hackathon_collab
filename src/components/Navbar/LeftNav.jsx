@@ -11,7 +11,6 @@ function LeftNav() {
 
   //--------------------NavBar scroll state--------------------
   const { isAuthenticated, logout, isLoading } = useAuth();
-  console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
@@ -141,21 +140,24 @@ function LeftNav() {
                     <li>
                       <Link to="/register">Register</Link>
                     </li>
+                    
                     <li>
                       <Link to="/signin">Sign In</Link>
                     </li>
                   </ul>
                 )}
-                {console.log(isAuthenticated, isLoading)}
+              
               </>
             )}
             {!isAuthenticated && isLoading && <button>Loading...</button>}
           </li>
         </ul>
         {isAuthenticated && (
+          <Link to='/'>
           <li className="logout" onClick={() => logout()}>
             Logout
           </li>
+          </Link>
         )}
       </div>
     </nav>

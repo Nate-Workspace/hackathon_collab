@@ -57,19 +57,12 @@ const RegistrationForm = () => {
       setPasswordRestrictionError(!isValidPassword);
     }
 
-    if (name === "profile") {
-      if (files.length > 0) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setFormData({ ...formData, profile: reader.result });
-        };
-        reader.readAsDataURL(file);
-      }
-      console.log("files", file);
+    if (name === "profile" && files.length > 0) {
+      setFormData({ ...formData, profile: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
     }
+
   };
 
   const handleSubmit = async (e) => {
@@ -109,18 +102,16 @@ const RegistrationForm = () => {
             </h2>
             <label
               className="block text-gray-700 text-md font-semibold mb-2"
-              htmlFor="image"
+              htmlFor="profile"
             >
               Profile Picture
             </label>
             <input
               className="input-field border w-full px-4 py-2 focus:border-gray-500 hover:border-gray-500"
-              id="image"
-              name="image"
+              id="profile"
+              name="profile"
               type="file"
-              accept="image/*" 
-              placeholder="Enter your first name"
-              value={formData.profile}
+              accept="image/*"
               onChange={handleChange}
             />
             <div className="mb-4">

@@ -58,7 +58,7 @@ function AuthProvider({ children }) {
     if (token) {
       getUserFromToken(token);
     }
-  }, []);
+  }, [user]);
 
   async function getUserFromToken(token) {
     try {
@@ -77,16 +77,26 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function register(newUser) {
+  // In AuthProvider.js
+
+  async function register(userData) {
     try {
       dispatch({ type: "loading" });
 
-      const res = await axios.post(`${BASE_URL}/auth/users/`, newUser);
+      const formData = new FormData();
+      Object.entries(userData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post(`${BASE_URL}/auth/users/`, formData);
       dispatch({ type: "register", payload: res.data.user });
-      if (res.data) alert("Registered successfully");
-      console.log("registerrr", res.data);
+
+      if (res.data) {
+        alert("Registered successfully");
+      }
+
       return res.data;
-    } catch {
+    } catch (error) {
       dispatch({
         type: "rejected",
         payload: "There is an error registering the user...",
@@ -95,6 +105,7 @@ function AuthProvider({ children }) {
       dispatch({ type: "stopLoading" });
     }
   }
+
   async function login(username, password) {
     try {
       dispatch({ type: "loading" });
@@ -133,6 +144,7 @@ function AuthProvider({ children }) {
         logout,
         isLoading,
         user,
+        getUserFromToken,
         isAuthenticated,
         error,
       }}
