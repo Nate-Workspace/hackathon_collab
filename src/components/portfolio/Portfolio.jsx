@@ -147,7 +147,7 @@ const Item = ({ item, index, direction }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
               transition={{ duration: 0.5 }}
-              whileHover={inView ? { scale: 1.1 } : {}}
+              whileHover={{ scale: 1.1 }}
             >
               See Demo
             </motion.button>
