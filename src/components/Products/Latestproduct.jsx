@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
 import { Link } from 'react-router-dom';
@@ -77,7 +76,7 @@ function Latestproduct() {
   };
 
   return (
-    <div className="p-8 relative bg-sky-50">
+    <div className="p-8 relative bg-[#EEEEEE]">
      <div className="text-center font-bold text-3xl my-8 relative">
   <p 
           className="inline-block relative group"

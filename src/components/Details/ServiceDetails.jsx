@@ -86,8 +86,9 @@ function ServiceDetails() {
               alt={service.title}
               className="w-full h-[500px] object-contain"
             />
+
           </div>
-          <div className="w-1/2 pl-8 ml-20">
+          <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{service.title}</h3>
             {reviews.length > 6 && (
               <p className="text-[#3C9B78] text-sm font-light mb-16">
@@ -116,6 +117,7 @@ function ServiceDetails() {
         </div>
 
         {/* Rating Section */}
+
         <div className="flex justify-center my-8">
           <div className="mr-40 flex flex-col justify-items-start">
             <h2 className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-8">
@@ -145,6 +147,7 @@ function ServiceDetails() {
             Reviews
           </h2>
           <div className="flex">
+
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -157,11 +160,13 @@ function ServiceDetails() {
         </div>
 
         {/* Related Section */}
+
         <div className="mt-20 ">
           <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
             Related Services
           </h2>
           <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+
             {relatedServices.map((relatedService) => (
               <Link
                 to={`/Products/details/${relatedService.id}`}

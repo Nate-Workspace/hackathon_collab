@@ -15,17 +15,21 @@ function DiscoverProducts() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
- const [priceFilter, setPriceFilter] = useState(null);
+  const [priceFilter, setPriceFilter] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [isCustomPrice, setIsCustomPrice] = useState(false);
+
 
   const getDiscoverProducts = async (category = null, priceFilter = null) => {
   try {
     let apiUrl = 'https://aguero.pythonanywhere.com/product/';
     const params = new URLSearchParams();
 
-    if (category) {
-      params.append('type', category);
-    }
+    if (category && category !== "All") {
+        params.append('type', category);
+      }
 
     if (priceFilter) {
       Object.entries(priceFilter).forEach(([key, value]) => {
@@ -119,11 +123,11 @@ function DiscoverProducts() {
   const indexOfFirstItem = indexOfLastItem - 8;
   const currentProducts = discoverProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleCategoryChange = (category, priceFilter = null) => {
+  const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setShowCategories(false);
     setIsFilterOpen(false);
-    getDiscoverProducts(category, priceFilter);
+    getDiscoverProducts(category);
     document.body.style.overflow = 'auto';
   };
 
@@ -132,9 +136,23 @@ function DiscoverProducts() {
     document.body.style.overflow = 'auto'; // Enable scrolling when filter menu is closed
   };
 
+  const handlePriceFilterChange = (priceFilter) => {
+  setPriceFilter(priceFilter);
+  getDiscoverProducts(null, priceFilter); // Call with only priceFilter parameter
+};
 
+const handleCustomPriceFilterApply = () => {
+  setIsCustomPrice(false);
+  const min = parseInt(minPrice);
+  const max = parseInt(maxPrice);
+  if (!isNaN(min) && !isNaN(max) && min <= max) {
+    const priceFilter = { price__gt: min, price__lt: max };
+    setPriceFilter(priceFilter);
+    getDiscoverProducts(selectedCategory, priceFilter); // Call with both category and priceFilter
+  }
+};
    return (
-    <div className="p-8 bg-sky-50 relative">
+    <div className="p-8 bg-[#EEEEEE] relative">
       
 <div className="text-center font-bold text-3xl my-8 relative">
   <p className=" sm:inline-block relative group">
@@ -144,7 +162,7 @@ function DiscoverProducts() {
   <span style={lineStyle}></span>
   <div className="sm:hidden">
     <select
-      className="block w-full border border-gray-300 p-2 rounded-md"
+      className="block  w-full border border-gray-300 p-2 rounded-md"
       onChange={(e) => handleCategoryChange(e.target.value)}
       value={selectedCategory}
       style={{ fontSize: '18px' }}
@@ -164,7 +182,7 @@ function DiscoverProducts() {
 
 
       
-<div className="flex justify-end sm:mr-20 mb-6 relative">
+<div className="hidden sm:block flex justify-end sm:mr-20 mb-6 relative">
   <button
     onClick={toggleCategories}
     className="flex items-center font-bold py-1 px-2 rounded-full border-2 border-black transition-transform duration-300"
@@ -172,6 +190,7 @@ function DiscoverProducts() {
       zIndex: showCategories ? '30' : 'auto',
       transform: showCategories ? 'translateY(-7px)' : 'none',
       boxShadow: 'none',
+       marginLeft: 'auto',
     }}
     onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
     onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
@@ -184,7 +203,7 @@ function DiscoverProducts() {
         <div className={`fixed bottom-0 right-0 left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
           <img src={cancel} alt="Cancel" style={cancelIconStyle} onClick={handleCancelClick}/>
        <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
-         <div>
+         <div  style={{ marginLeft: '-10px' }}>
       <h3 className="text-md font-semibold mb-1">Categories</h3>
         <ul>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("FD")}>
@@ -221,22 +240,52 @@ function DiscoverProducts() {
           </li>
         </ul>
       </div>
-       <div>
+       <div  style={{ marginLeft: '-10px' }}>
     <h3 className="text-md font-semibold mb-1 mt-2">Price (Birr)</h3>
     <ul>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, { price__gt: 1000 })}>
-            <input type="radio" id="over 1000" name="category"  />
-            <label htmlFor="over 1000">Over Birr 1000 </label>
-      </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null, { price__lt: 300 })}>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handlePriceFilterChange(  {price__lt: 300} )}>
             <input type="radio" id="under 300" name="category" />
             <label htmlFor="under 300">Under Birr 300</label>
           </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange(null,  { price__gt: 500, price__lt: 1000 })}>
+      <li className="cursor-pointer py-1 px-2 " onClick={() => handlePriceFilterChange(  { price__gt: 500, price__lt: 1000 })}>
             <input type="radio" id="bwt 500&1000" name="category" />
             <label htmlFor="bwt 500&1000">Birr 500 to Birr 1000</label>
           </li>
-    </ul>
+          <li className="cursor-pointer py-1 px-2 " onClick={() =>handlePriceFilterChange( { price__gt: 1000 })}>
+            <input type="radio" id="over 1000" name="category"  />
+            <label htmlFor="over 1000">Over Birr 1000 </label>
+      </li>
+      <li className="cursor-pointer py-1 px-2" onClick={() => setIsCustomPrice(true)}>
+      <input type="radio" id="custom" name="category" />
+      <label htmlFor="custom">Custom</label>
+       </li>
+</ul>
+   {isCustomPrice && (
+      <div className="flex items-center mb-2 ">
+            <input
+              type="number"
+              placeholder="Min"
+              className="border border-gray-300 p-1 rounded-md mr-2 w-24"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            />
+            <span className="mr-2">to</span>
+            <input
+              type="number"
+              placeholder="Max"
+              className="border border-gray-300 p-1  rounded-md w-24"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
+           <button
+  onClick={handleCustomPriceFilterApply} // Apply custom price filter
+  className="bg-[#31363F] hover:bg-orange-400 text-white font-bold py-1 px-2 rounded-full ml-4"
+>
+  Go
+</button>
+
+</div>
+   )}
   </div>
 </div>
 
