@@ -18,9 +18,9 @@ function ProductsSaved() {
       const response = await axios.get(
         "https://aguero.pythonanywhere.com/product/0/save"
       );
-      console.log(response.data); // Log the fetched data directly
+      console.log(response); 
       setproducts(response.data);
-      console.log(products); // Log the state value in the next render cycle
+      console.log(products); 
     } catch (err) {
       console.error(err);
     }
