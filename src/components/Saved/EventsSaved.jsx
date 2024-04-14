@@ -12,24 +12,47 @@ function EventsSaved() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedEvents, setSavedEvents] = useState([]);
+  const BASE_URL = "https://aguero.pythonanywhere.com";
 
-  const getExploreEvents = async () => {
+//------------------Saved Events--------------
+  const token = localStorage.getItem("token");
+        let config = null;
+  
+        if (token) {
+          config = {
+            headers: {
+              Authorization: `JWT ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+        } else {
+          console.error("Token not found in localStorage");
+        }
+
+  const getEvents = async () => {
     try {
-      const response = await axios.get(
-        "https://aguero.pythonanywhere.com/event/0/save"
-      );
-      setEvents(response.data);
-      console.log(events);
+      const response = await axios.get(`${BASE_URL}/product/0/save`, config);
+      console.log("res", response.data);
+      setEvents(response.data)
+      console.log(events)
     } catch (err) {
       console.error(err);
     }
   };
 
-  useEffect(() => {
-    getExploreEvents();
-  }, []);
+
+  useEffect(()=>{
+    getEvents()
+  },[events])
 
   console.log(events);
+  events.map(each=>{
+    console.log(each)
+  })
+
+
+//---------------------------------------
+
 
   const scrollContainer = (scrollValue) => {
     setScrollLeft(scrollLeft + scrollValue);
@@ -110,16 +133,16 @@ function EventsSaved() {
             className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
             style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
           >
-            {events.map((event) => (
-              <Link to={`/event/${event.id}`} key={event.id}>
+            {events.map((each) => (
+              <Link to={`/event/${each.id}`} key={each.id}>
                 <div
-                  key={event.id}
+                  key={each.id}
                   className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
-                  onMouseEnter={() => handleMouseEnter(event.id)}
+                  onMouseEnter={() => handleMouseEnter(each.id)}
                   onMouseLeave={handleMouseLeave}
                   style={{
                     backgroundColor:
-                      isHovered && hoveredImage === event.id
+                      isHovered && hoveredImage === each.id
                         ? "#E5E7EB"
                         : "white",
                   }}
@@ -127,28 +150,28 @@ function EventsSaved() {
                   <div className="flex flex-col items-center relative">
                     <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
                       <img
-                        src={event.image}
-                        alt={event.title}
+                        src={each.image}
+                        alt={each.title}
                         className="w-full h-full object-cover rounded-lg"
                       />
 
-                      {isHovered && hoveredImage === event.id && (
+                      {isHovered && hoveredImage === each.id && (
                         <img
-                          src={isSaved(event.id) ? savedIcon : saveIcon}
+                          src={isSaved(each.id) ? savedIcon : saveIcon}
                           alt="Save"
                           style={saveIconStyle}
-                          onClick={() => toggleSaved(event.id)}
+                          onClick={() => toggleSaved(each.id)}
                         />
                       )}
                     </div>
                     <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
-                      {event.title}
+                      {each.title}
                     </p>
                     <p className="text-gray-600">
-                      Organizer: {event.organizer}{" "}
+                      Organizer: {each.organizer}{" "}
                     </p>
                     <p className="text-gray-600 text-center">
-                      {event.event_date}
+                      {each.event_date}
                     </p>
                   </div>
                 </div>

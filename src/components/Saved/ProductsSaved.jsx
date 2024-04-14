@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { config } from "tailwind-scrollbar-hide";
 
+
 function ProductsSaved() {
   const [products, setproducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
+  const BASE_URL = "https://aguero.pythonanywhere.com";
 
   const token = localStorage.getItem("token");
         let config = null;
@@ -30,8 +32,10 @@ function ProductsSaved() {
 
   const getproducts = async () => {
     try {
-      const response = await axios.get({BASE_URL}/product/0/save, config);
+      const response = await axios.get(`${BASE_URL}/product/0/save`, config);
       console.log("res", response.data);
+      setproducts(response.data)
+      set
     } catch (err) {
       console.error(err);
     }
@@ -43,6 +47,9 @@ function ProductsSaved() {
   },[products])
 
   console.log(products);
+  products.map(product=>{
+    console.log(product)
+  })
 
   const scrollContainer = (scrollValue) => {
     const scrollElement = document.getElementById("scroll-content");
@@ -128,16 +135,16 @@ function ProductsSaved() {
             className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
             style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
           >
-            {products.map((product) => (
-              <Link to={`/product/${product.id}`} key={product.id}>
+            {products.map((each) => (
+              <Link to={`/product/${each.product.id}`} key={each.product.id}>
                 <div
-                  key={product.id}
+                  key={each.product.id}
                   className="w-64  rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
-                  onMouseEnter={() => handleMouseEnter(product.id)}
+                  onMouseEnter={() => handleMouseEnter(each.product.id)}
                   onMouseLeave={handleMouseLeave}
                   style={{
                     backgroundColor:
-                      isHovered && hoveredImage === product.id
+                      isHovered && hoveredImage === each.product.id
                         ? "#E5E7EB"
                         : "white",
                   }}
@@ -145,25 +152,25 @@ function ProductsSaved() {
                   <div className="flex flex-col items-center relative">
                     <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
                       <img
-                        src={product.image}
-                        alt={product.title}
+                        src={each.product.image}
+                        alt={each.product.title}
                         className="w-full h-full object-cover rounded-lg"
                       />
-                      {isHovered && hoveredImage === product.id && (
+                      {isHovered && hoveredImage === each.product.id && (
                         <img
-                          src={isSaved(product.id) ? savedIcon : saveIcon}
+                          src={isSaved(each.product.id) ? savedIcon : saveIcon}
                           alt="Save"
                           style={saveIconStyle}
-                          onClick={() => toggleSaved(product.id)}
+                          onClick={() => toggleSaved(each.product.id)}
                         />
                       )}
                     </div>
                     <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
-                      {product.title}
+                      {each.product.title}
                     </p>
-                    <p className="text-gray-600">{product.rating} stars</p>
+                    <p className="text-gray-600">{each.product.rating} stars</p>
                     <p className="text-gray-600 text-center">
-                      Price: ${product.price}
+                      Price: ${each.product.price}
                     </p>
                   </div>
                 </div>

@@ -21,40 +21,12 @@ function ProductDetails() {
   const [saveState, setSaveState] = useState(false);
   const [saveId,setSaveId]= useState(0);
   const BASE_URL = "https://aguero.pythonanywhere.com";
+  const [container,setContainer]=useState([])
 
   
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const { rater, reviewer, getReviews } = useProduct();
-
-
-  const token = localStorage.getItem("token");
-        let config = null;
-  
-        if (token) {
-          config = {
-            headers: {
-              Authorization: `JWT ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-        } else {
-          console.error("Token not found in localStorage");
-        }
-
-  const getproducts = async () => {
-    try {
-      const response = await axios.get({BASE_URL}/product/0/save, config);
-      console.log("res", response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-
-  useEffect(()=>{
-    getproducts()
-  },[product])
 
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
@@ -88,7 +60,7 @@ function ProductDetails() {
       console.log("reviewssss", revw);
     }
     revieww();
-  },[])
+  },[getReviews, id])
   
   const handleMouseLeave = () => {
     setIsHovered(false);
@@ -126,6 +98,41 @@ function ProductDetails() {
   }
 
   // -------------------- Handling save click -------------
+
+  //------------- Fetching the saved---------------
+
+  // const token = localStorage.getItem("token");
+  //       let config = null;
+  
+  //       if (token) {
+  //         config = {
+  //           headers: {
+  //             Authorization: `JWT ${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //         };
+  //       } else {
+  //         console.error("Token not found in localStorage");
+  //       }
+
+  // const getContainer = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/product/0/save`, config);
+  //     console.log("res", response.data);
+  //     setContainer(response.data)
+  //     set
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // useEffect(()=>{
+  //   getContainer()
+  // },[config, getContainer])
+
+  // console.log(container)
+
+  //---------------------End------------------
   
   const handleSaveState = () => {
     if (saveState) {

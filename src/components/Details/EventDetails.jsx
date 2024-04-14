@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BookmarkSimple } from "phosphor-react";
+import { BookmarkSimple,BookBookmark } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import Loader from "../Loaders/Loader";
+
+import saveAnEvent from "../savedPost/saveAnEvent";
+import deleteAnEvent from "../savedPost/deleteAnEvent";
 
 function EventDetails() {
   const { id } = useParams();
@@ -14,6 +17,8 @@ function EventDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedEvents, setSavedEvents] = useState([]);
+  const[saveState,setSaveState]=useState(false)
+  const[saveId,setSaveId]=useState(0);
 
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/event/${id}`)
@@ -72,6 +77,20 @@ function EventDetails() {
     return <Loader />;
   }
 
+  //-------------- Save handling-------------
+
+  const handleSaveState = () => {
+    if (saveState) {
+      deleteAnEvent(event,saveId,setSaveState)
+    } else {
+      saveAnEvent(event, setSaveId,setSaveState);
+    }
+  
+    console.log(saveId);
+  };
+
+  //------------------------------------------
+
   return (
     <div>
     
@@ -108,10 +127,23 @@ function EventDetails() {
               Time: {event.event_time}
             </p>
             <div className="flex">
-              <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
-                <BookmarkSimple size={24} />
-                <span className="ml-2">Save</span>
-              </button>
+            {saveState ? (
+                <button
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  onClick={handleSaveState}
+                >
+                  <BookBookmark size={24}/>
+                  <span className="ml-2">Saved</span>
+                </button>
+              ) : (
+                <button
+                  className="bg-orange-400 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  onClick={handleSaveState}
+                >
+                  <BookmarkSimple size={24} />
+                  <span className="ml-2">Save</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
