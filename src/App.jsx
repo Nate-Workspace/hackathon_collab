@@ -18,7 +18,7 @@ import Footer from "./components/Footer/Footer";
 
 import RegistrationForm from "./Pages/RegistrationForm";
 import NotFound from "./Pages/NotFound";
-import SignInForm from "./Pages/signInForm";
+import SignInForm from "./Pages/SignInForm";
 import { useAuth } from "./Context/AuthContext";
 import Navbar from "./components/Navbar/Navbar";
 
