@@ -5,10 +5,11 @@ header {
   align-items: center;
   background-color: rgba(51, 51, 51, 0.5);
   position: fixed;
-  z-index: 1;
+  z-index: 4;
   top: 0;
   transition: background-color 0.4s ease-in-out;
 }
+
 header.scrolled {
   background-color: rgb(27, 24, 24);
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
@@ -17,10 +18,12 @@ header.scrolled {
 .logo {
   padding: 20px 0;
 }
+
 p {
   color: white;
   margin-left: 20px;
 }
+
 header.scrolled p {
   color: black;
 }
@@ -32,6 +35,7 @@ header.scrolled p {
   flex-grow: 1;
   text-align: center;
 }
+
 .header-links .ul {
   display: flex;
   align-items: center;
@@ -48,6 +52,7 @@ header.scrolled p {
   padding: 20px 55px;
   position: relative;
 }
+
 .header-links .logout {
   display: inline-block;
   padding: 20px 55px;
@@ -59,8 +64,6 @@ header.scrolled p {
   color: white;
   text-decoration: none;
 }
-
-/* ------------------------------ */
 
 @media only screen and (max-width: 1024px) {
   header .nav-btn {
@@ -98,8 +101,6 @@ header.scrolled p {
   }
 }
 
-/* ---------------------------------------- */
-
 .header-links .ul li::after {
   content: "";
   width: 0%;
@@ -109,6 +110,7 @@ header.scrolled p {
   margin: auto;
   transition: 0.5s;
 }
+
 .header-links .logout::after {
   content: "";
   width: 0%;
@@ -118,9 +120,11 @@ header.scrolled p {
   margin: auto;
   transition: 0.5s;
 }
+
 .header-links .ul li:hover::after {
   width: 100%;
 }
+
 .header-links .logout:hover::after {
   width: 100%;
 }
@@ -135,28 +139,27 @@ header.scrolled p {
 .header-links .ul ul li {
   display: block;
 }
+
 .header-links .button {
   color: white;
 }
 
-/* Nav dropdown width */
 .button .dropdown {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-/* -------------- */
+
 header.hovered .dropdown {
   background-color: white;
   box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
-  /* color: black; */
 }
+
 header.hovered .dropdown a {
   background-color: white;
   color: black;
 }
 
-/* ---------------------------------- */
 .saved {
   border-radius: 15px;
   border: 1px solid #a8a8a8;
@@ -165,11 +168,13 @@ header.hovered .dropdown a {
   text-align: center;
   color: #c7c5c5;
 }
+
 .saved img {
   width: 50%;
   height: 50%;
   color: #a8a8a8;
 }
+
 .saved p {
   font-weight: 500;
   font-size: 18px;
@@ -181,6 +186,7 @@ header.hovered .dropdown a {
 .close {
   display: none;
 }
+
 @media (max-width: 700px) {
   .nav-links .ul {
     display: flex;
