@@ -136,6 +136,7 @@ nav.scrolled p {
   width: 100%;
   display: flex;
   flex-direction: column;
+  z-index: 12;
 }
 /* -------------- */
 nav.hovered .dropdown {
