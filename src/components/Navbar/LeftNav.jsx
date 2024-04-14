@@ -72,11 +72,11 @@ function LeftNav() {
       } ${showExploreDropdown ? "hovered" : ""}`}
     >
       <div className="nav-links">
-        <p className="logo">LOGO</p>
+        <p className="logo">Logo</p>
 
         <ul className="ul">
           <li className="home">
-            <Link to="/">HOME</Link>
+            <Link to="/">Home</Link>
           </li>
           <li
             className="button"
@@ -84,7 +84,7 @@ function LeftNav() {
             onMouseEnter={handleExploreClick}
             onMouseLeave={handleEventLeave}
           >
-            EXPLORE
+            Explore
             {showExploreDropdown && (
               <ul
                 className="dropdown"
@@ -93,13 +93,13 @@ function LeftNav() {
               >
                 {/* <hr /> */}
                 <li>
-                  <Link to="/Products">PRODUCTS</Link>
+                  <Link to="/Products">Products</Link>
                 </li>
                 <li>
-                  <Link to="/Services">SERVICES</Link>
+                  <Link to="/Services">Services</Link>
                 </li>
                 <li>
-                  <Link to="/Events">EVENTS</Link>
+                  <Link to="/Events">Events</Link>
                 </li>
               </ul>
             )}
@@ -147,7 +147,7 @@ function LeftNav() {
               onMouseEnter={handleStudioClick}
               onMouseLeave={handleStudioLeave}
             >
-              STUDIO
+              Studio
               {showStudioDropdown && (
                 <ul
                   className="dropdown"
@@ -156,10 +156,10 @@ function LeftNav() {
                 >
                   {/* <hr /> */}
                   <li>
-                    <Link to="/Saved">SAVED</Link>
+                    <Link to="/Saved">Saved</Link>
                   </li>
                   <li>
-                    <Link to="/Create">CREATE</Link>
+                    <Link to="/Create">Create</Link>
                   </li>
                 </ul>
               )}
@@ -169,7 +169,7 @@ function LeftNav() {
           {!isAuthenticated && !isLoading && (
             <>
               <li>
-                <Link to="/register">Register</Link>
+                <Link to="/register">Sign Up</Link>
               </li>
 
               <li>
@@ -181,9 +181,6 @@ function LeftNav() {
           </ul>
           
 
-          {console.log("isAuthenticated", isAuthenticated)}
-          {console.log("isLoading", isLoading)}
-          
           
         {isAuthenticated && !isLoading && (
             <li>

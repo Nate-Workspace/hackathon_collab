@@ -25,7 +25,6 @@ function Product() {
   const [savedProducts, setSavedProducts] = useState([]);
   const { user } = useAuth();
 
-  
   const handleSubmit = async (product) => {
     product.preventDefault();
     console.log("Searching for events:", searchValue);

@@ -13,7 +13,7 @@ const RegistrationForm = () => {
     username: "",
     password: "",
     confirmPassword: "",
-    phone: "1234567890",
+    phone: "",
     sex: "",
   });
 
@@ -53,7 +53,8 @@ const RegistrationForm = () => {
 
     if (name === "password") {
       const isValidPassword =
-        /^(?=.*[a-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+      /^.{8,}$/.test(value);
+
       setPasswordRestrictionError(!isValidPassword);
     }
 
@@ -63,6 +64,7 @@ const RegistrationForm = () => {
       setFormData({ ...formData, [name]: value });
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,6 +89,16 @@ const RegistrationForm = () => {
       console.error("Registration error:", error);
     }
   };
+  // Function to check if there are any validation errors
+const hasErrors = () => {
+  return (
+    formErrors.email !== "" ||
+    formErrors.phone !== "" ||
+    passwordMatchError ||
+    passwordRestrictionError
+  );
+};
+
 
   return (
     <div className="bg-gray-100 text-gray-800 py-12 px-10 md:px-20">
@@ -96,9 +108,10 @@ const RegistrationForm = () => {
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4"
           >
-            <h2 className="text-2xl font-bold text-left mb-4">
-              Registration Form
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-4">
+              Sign Up
+                </h2>
+
             <label
               className="block text-gray-700 text-md font-semibold mb-2"
               htmlFor="profile"
@@ -199,7 +212,7 @@ const RegistrationForm = () => {
                 placeholder="Enter your bio"
                 value={formData.bio}
                 onChange={handleChange}
-                required
+                
               />
             </div>
             <div className="mb-4">
@@ -240,8 +253,7 @@ const RegistrationForm = () => {
               />
               {passwordRestrictionError && (
                 <p className="text-red-500 text-xs italic mt-1">
-                  Password must be at least 8 characters long and contain at
-                  least one lowercase letter and one special character
+                  Password must be at least 8 characters long 
                 </p>
               )}
             </div>
@@ -265,7 +277,7 @@ const RegistrationForm = () => {
               />
               {passwordMatchError && (
                 <p className="text-red-500 text-xs italic mt-1">
-                  Passwords do not match
+                  Password must match
                 </p>
               )}
             </div>
@@ -332,16 +344,18 @@ const RegistrationForm = () => {
             <p className="text-md text-gray-600 text-center mb-6">
               Already have an account?{" "}
               <a className="text-blue-500 hover:text-blue-700" href="/signin">
-                Sign in
+                Sign In
               </a>
             </p>
 
             <button
-              type="submit"
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            >
-              Register
-            </button>
+  type="submit"
+  className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${hasErrors() ? "cursor-not-allowed opacity-50" : ""}`}
+  disabled={hasErrors()}
+>
+  Sign Up
+</button>
+
           </form>
         </div>
       </div>

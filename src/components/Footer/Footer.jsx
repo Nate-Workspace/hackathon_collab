@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-wrap -mx-20">
           <div className="flex w-full sm:w-1/2 md:w-1/4 px-30 mb-8 md:mb-0">
             <div className="flex flex-col">
-              <h4 className="text-white text-2xl font-semibold mb-4">
+              <h4 className="text-white text-xl font-semibold mb-4">
                 Contacts:
               </h4>
               <ul className="text-gray-500">
@@ -29,7 +29,7 @@ const Footer = () => {
           </div>
           <div className="flex w-full sm:w-1/2 md:w-1/4 px-20 mb-8 md:mb-0">
             <div className="flex flex-col">
-              <h4 className="text-white text-2xl font-semibold mb-4">
+              <h4 className="text-white text-xl font-semibold mb-4">
                 Company
               </h4>
               <ul className="text-gray-500">
@@ -43,7 +43,7 @@ const Footer = () => {
 
           <div className="flex w-full sm:w-1/2 md:w-1/4 px-20 mb-8 md:mb-0">
             <div className="flex flex-col">
-              <h4 className="text-white text-2xl font-semibold mb-4">Shop</h4>
+              <h4 className="text-white text-xl font-semibold mb-4">Shop</h4>
               <ul className="text-gray-500">
                 <li className="mb-2">
                   <a href="/Products">Products</a>
@@ -60,7 +60,7 @@ const Footer = () => {
 
           <div className="flex w-full sm:w-1/2 md:w-1/4 px-20 mb-8 md:mb-0">
             <div className="flex flex-col">
-              <h4 className="text-white text-2xl font-semibold mb-4">
+              <h4 className="text-white text-xl font-semibold mb-4">
                 follow us
               </h4>
               <div className="flex items-center">
