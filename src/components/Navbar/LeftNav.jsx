@@ -130,9 +130,10 @@ function LeftNav() {
               </ul>
             )}
           </li>
+            */}
           <li className="about-us">
             <Link to="/AboutUs">ABOUT US</Link>
-          </li>  */}
+          </li>
 
           {isAuthenticated && !isLoading && (
             <li
