@@ -30,31 +30,32 @@ export default function StarRating({
   };
   return (
     <div className="relative">
-    <div className=" pr-3" style={containerStyle}>
-      <div style={starContainerStyle}>
-        {Array.from({ length: maxRating }, (_, i) => (
-          <Star
-            key={i}
-            onRate={() => handleRating(i + 1)}
-            onHoverIn={() => setTempRating(i + 1)}
-            onHoverOut={() => setTempRating(0)}
-            full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
-            color={color}
-            size={size}
-          />
-        ))}
+      <div className=" pr-3" style={containerStyle}>
+        <div style={starContainerStyle}>
+          {Array.from({ length: maxRating }, (_, i) => (
+            <Star
+              key={i}
+              onRate={() => handleRating(i + 1)}
+              onHoverIn={() => setTempRating(i + 1)}
+              onHoverOut={() => setTempRating(0)}
+              full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
+              color={color}
+              size={size}
+            />
+          ))}
+        </div>
+        <div className="absolute right-0">
+          <p style={textStyle}>
+            {messages.length === maxRating
+              ? messages[tempRating ? tempRating - 1 : rating - 1]
+              : tempRating || rating || ""}
+          </p>
+        </div>
       </div>
-      <div className="absolute right-0">
-        <p style={textStyle}>
-          {messages.length === maxRating
-            ? messages[tempRating ? tempRating - 1 : rating - 1]
-            : tempRating || rating || ""}
-        </p>
-      </div>
-    </div>
     </div>
   );
 }
+//for Rate
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
