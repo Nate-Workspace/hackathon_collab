@@ -121,10 +121,10 @@ const cancelIconStyle = {
   };
 
   return (
-    <div className="p-8 bg-sky-50 relative">
+    <div className="p-8 bg-[#EEEEEE] relative">
        <div className="text-center font-bold text-3xl my-8 relative">
   <p
-    className="inline-block relative group"
+    className="sm:inline-block relative group"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
   >
@@ -132,9 +132,21 @@ const cancelIconStyle = {
     <span className=" text-5xl">Our Services</span>
   </p>
   <span style={lineStyle}></span>
+  <div className="sm:hidden">
+    <select
+      className="block w-full border border-gray-300 p-2 rounded-md"
+      onChange={(e) => handleCategoryChange(e.target.value)}
+      value={selectedCategory}
+      style={{ fontSize: '18px' }}
+    >
+      <option value="Delivery">Delivery</option>
+      <option value="Repair Electronics">Repair Electronics</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 </div>
 
-      <div className="flex justify-end mr-20 mb-6 relative">
+     <div className="hidden sm:block flex justify-end sm:mr-20 mb-6 relative">
          <button
   onClick={toggleCategories}
   className="flex items-center font-bold py-1 px-2 rounded-full  relative border-2 border-black transition-transform duration-300"
@@ -142,6 +154,7 @@ const cancelIconStyle = {
     zIndex: showCategories ? '30' : 'auto',
     transform: showCategories ? 'translateY(-7px)' : 'none',
     boxShadow: 'none',
+     marginLeft: 'auto',
   }}
   onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
   onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
@@ -152,7 +165,7 @@ const cancelIconStyle = {
       </div>
       <div className={`fixed bottom-0 right-0 left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
          <img src={cancel} alt="Cancel" style={cancelIconStyle}  onClick={handleCancelClick} />
-        <h2 className="text-4xl font-light mb-4 italic text-gray-900">Filters</h2>
+ <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
          <div>
       <h3 className="text-md font-semibold mb-1">Categories</h3>
         <ul>
@@ -176,7 +189,7 @@ const cancelIconStyle = {
 
 
 
-      <div className="flex flex-wrap justify-center gap-8">
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {currentServices.map((service) => (
           <Link to={`/service/${service.id}`} key={service.id}>
           <div 
@@ -193,6 +206,7 @@ const cancelIconStyle = {
 
                 </div>
                 <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
+
                 {service.rating && service.rating.rate !== undefined ? (
                   <p className="text-gray-600">{service.rating.rate} stars</p>
                 ) : (

@@ -91,7 +91,7 @@ function EventsSaved() {
         >
           <span className="font-light text-lg">EVENTS</span>
           <br />
-          <span className=" text-5xl">Upcoming Events</span>
+          <span className=" text-5xl">Events Reminder</span>
         </p>
         <span style={lineStyle}></span>
       </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../Assets/saveicon.png';
 import savedIcon from '../Assets/savedicon.png';
 import { Link } from 'react-router-dom';
@@ -65,6 +64,7 @@ function Event() {
   };
 
   const isSaved = (eventId) => savedEvents.includes(eventId);
+  const hasSearchResults = searchResults.length > 0;
 
   return (
     <div>
@@ -94,8 +94,8 @@ function Event() {
           <p className="text-2xl mb-8 text-white">Join us for unforgettable events filled with fun, learning, and networking opportunities.</p>
         </div>
       </div>
-
-       <div className="flex items-center bg-[#FFF2E1] justify-center space-x-4">
+{hasSearchResults && (
+       <div className="flex items-center bg-[#EEEEEE] justify-center space-x-4">
         <button
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
@@ -149,7 +149,7 @@ function Event() {
           <FaChevronRight />
         </button>
       </div>
-
+)}
       <UpcomingEvents/>
     </div>
   )

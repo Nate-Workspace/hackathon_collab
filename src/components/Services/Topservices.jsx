@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
 import { Link } from 'react-router-dom';
@@ -78,10 +77,10 @@ function Topservices() {
   };
 
   return (
-    <div className="p-8 bg-sky-50 relative">
+    <div className="p-8 bg-[#EEEEEE] relative">
              <div className="text-center font-bold text-3xl my-8 relative">
   <p 
-          className="inline-block relative group"
+          className="inline-block relative group text-gray-900"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
   >
@@ -103,6 +102,7 @@ function Topservices() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >{featuredServices.map((service) => (
+
           <Link to={`/service/${service.id}`} key={service.id}>
             <div 
               key={service.id} 

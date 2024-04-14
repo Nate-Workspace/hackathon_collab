@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../Assets/saveicon.png';
 import savedIcon from '../Assets/savedicon.png';
 import { Link } from 'react-router-dom';
@@ -29,10 +28,6 @@ function Service() {
     }
   };
 
-  const scrollContainer = (scrollValue) => {
-    setScrollLeft(scrollLeft + scrollValue);
-    document.getElementById('scroll-content').scrollLeft += scrollValue;
-  };
 
    const scrollButtonStyle = {
     marginTop: '-100px', 
@@ -57,6 +52,11 @@ function Service() {
     }
   };
 
+  const scrollContainer = (scrollValue) => {
+    setScrollLeft(scrollLeft + scrollValue);
+    document.getElementById('scroll-content').scrollLeft += scrollValue;
+  };
+
   const isSaved = (serviceId) => savedServices.includes(serviceId);
   
   const saveIconStyle = {
@@ -70,6 +70,7 @@ function Service() {
     cursor: 'pointer',
     transition: 'opacity 0.3s',
   };
+ const hasSearchResults = searchResults.length > 0;
 
   searchResults.map(each=>{
     console.log(each)
@@ -103,8 +104,8 @@ function Service() {
  <h1 className="text-6xl text-white font-bold mb-4 mt-8">Discover Our Services</h1>
   </div>
 </div>
-
-<div className="flex items-center  bg-sky-50 justify-center space-x-4">
+{hasSearchResults && (
+<div className="flex items-center bg-[#EEEEEE] justify-center space-x-4">
         <button
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
@@ -150,7 +151,7 @@ function Service() {
            <FaChevronRight />
         </button>
       </div>
-    
+)}
      <Topservices />
       <OurServices/>
       

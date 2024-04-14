@@ -152,14 +152,14 @@ const ProfilePage = () => {
 
               <hr />
 
-              {user&&(<p className="residence">Email: {user.email}</p>)}
-              
-              {/*------------------ For the logout ------------------*/}
-              <a href="/">
-                <div className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 pr-5 rounded-xl mr-2 flex items-center"
-                onClick={handleLogout}
+              <p className="residence">Residence: AASTU</p>
+              <a className="relative left-0" href="/">
+                <div
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 rounded-xl mr-2 w-2/6 scale-95 flex items-center align-middle"
+                  onClick={handleLogout}
                 >
-                  <span className="ml-1">Logout</span>
+                  <span className="ml-1 relative right-3">Logout</span>
+
                 </div>
               </a>
               {/* -----------------For the logout----------------------*/}
