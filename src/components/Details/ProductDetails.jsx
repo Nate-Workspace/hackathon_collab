@@ -4,11 +4,10 @@ import { Phone, BookmarkSimple,BookBookmark, Star } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard.jsx";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
-import StarRating from "../StarRating/StarRating.jsx";
-import axios from "axios";
-import savedPostFetch from "../savedPost/savedPostFetch.jsx";
-import deletePost from "../savedPost/deletePost.jsx";
+import StarRating from "../Rating/StarRating.jsx";
+
 import { useProduct } from "../../Context/ProductContext.jsx";
+import { useSaved } from "../../Context/SavedContext.jsx";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -25,42 +24,15 @@ function ProductDetails() {
   
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { rater, reviewer, getReviews } = useProduct();
-
-
-  const token = localStorage.getItem("token");
-        let config = null;
-  
-        if (token) {
-          config = {
-            headers: {
-              Authorization: `JWT ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-        } else {
-          console.error("Token not found in localStorage");
-        }
-
-  const getproducts = async () => {
-    try {
-      const response = await axios.get({BASE_URL}/product/0/save, config);
-      console.log("res", response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-
-  useEffect(()=>{
-    getproducts()
-  },[product])
+  const [rates, setRates] = useState("");
+  const [alreadyRated, setAlreadyRated] = useState(false);
+  const { rater, reviewer, getReviews, getRatings } = useProduct();
+  const { saveProduct } = useSaved();
 
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
-
     fetch("https://aguero.pythonanywhere.com/product/")
       .then((res) => res.json())
       .then((data) => {
@@ -70,26 +42,60 @@ function ProductDetails() {
         const limitedRelated = related.slice(0, 20);
         setRelatedProducts(limitedRelated);
       });
-    fetch(
-      "https://random-data-api.com/api/v3/projects/e657498e-1ee1-4ec6-a8ed-ecfef7f0cc48?api_key=HF9K2pVV3eyFg790PkXc0w"
-    )
-      .then((response) => response.json())
-      .then((data) => setReviews(data.json_array));
   }, [id]);
+  useEffect(function () {
+    async function saver() {
+      const saved = await saveProduct(product);
+      if(saved){
+        console.log("saver", saved)
+      }
+    }
+    saver();
+  }, [product]);
+  useEffect(() => {
+    async function fetchReviewsAndRatings() {
+      const reviewsResponse = await getReviews(id);
+      const ratingsResponse = await getRatings(id);
+
+      const combinedData = reviewsResponse.map((review) => {
+        const correspondingRating = ratingsResponse.find(
+          (rating) =>
+            rating.user.first_name === review.user.first_name &&
+            rating.user.last_name === review.user.last_name
+        );
+        return {
+          id: review.id,
+          userName: `${review.user.first_name} ${review.user.last_name}`,
+          rating: correspondingRating ? correspondingRating.rate : 0,
+          review: review.review,
+        };
+      });
+
+      setReviews(combinedData);
+    }
+
+    fetchReviewsAndRatings();
+  }, [id, getReviews, getRatings]);
 
   const handleMouseEnter = (eventId) => {
     setIsHovered(true);
     setHoveredImage(eventId);
   };
-  useEffect(function(){
-    async function revieww() {
-      e.preventDefault();
-      const revw = await getReviews(id);
-      console.log("reviewssss", revw);
-    }
-    revieww();
-  },[])
-  
+  // useEffect(function () {
+  //   async function revieww() {
+  //     const revw = await getReviews(id);
+  //     setReviews(revw);
+  //   }
+  //   revieww();
+  // }, []);
+
+  // useEffect(function () {
+  //   async function ratingss() {
+  //     const rateResponse = await getRatings(id);
+  //     setRates(rateResponse);
+  //   }
+  //   ratingss();
+  // }, []);
   const handleMouseLeave = () => {
     setIsHovered(false);
     setHoveredImage(null);
@@ -156,7 +162,6 @@ function ProductDetails() {
               alt={product.title}
               className="w-full h-[500px] object-contain"
             />
-
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
@@ -238,14 +243,15 @@ function ProductDetails() {
               Reviews
             </h2>
             <div className="flex overflow-x-scroll">
-              {reviews.map((review, index) => (
+              {reviews.map((data, index) => (
                 <ReviewsCard
                   key={index}
-                  userName={review.userName}
-                  rating={review.rating}
-                  review={review.review}
+                  userName={data.userName}
+                  rating={data.rating}
+                  review={data.review}
                 />
               ))}
+              {console.log("rating in review", rating)}
             </div>
           </div>
         </form>
@@ -256,7 +262,6 @@ function ProductDetails() {
             Related Products
           </h2>
           <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
-
             {relatedProducts.map((relatedProduct) => (
               <Link
                 to={`/Products/details/${relatedProduct.id}`}

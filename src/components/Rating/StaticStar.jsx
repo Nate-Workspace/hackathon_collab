@@ -9,15 +9,16 @@ const starContainerStyle = {
   display: "flex",
 };
 
-export default function StarRating({
+export default function StaticStar({
   maxRating = 5,
   color = "#11875C",
-  size = 48,
+  size = 24,
   messages = [],
   onSetRating,
+  rated,
   handleRating,
 }) {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(rated);
   const [tempRating, setTempRating] = useState(0);
   function handleRating(rating) {
     setRating(rating);
@@ -30,6 +31,8 @@ export default function StarRating({
     color,
     fontSize: `${size / 3}px`,
   };
+  console.log("rating in static", rating);
+
   return (
     <div className="relative">
       <div className=" pr-3" style={containerStyle}>
@@ -59,21 +62,15 @@ export default function StarRating({
 }
 //for Rate
 
-function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
+function Star({ full, color, size }) {
   const starStyle = {
     width: `${size}px`,
     height: `${size}px`,
-    cursor: "pointer",
     display: "block",
   };
+
   return (
-    <span
-      role="button"
-      style={starStyle}
-      onClick={onRate}
-      onMouseOver={onHoverIn}
-      onMouseOut={onHoverOut}
-    >
+    <span style={starStyle}>
       {full ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
