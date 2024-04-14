@@ -85,7 +85,7 @@ function Latestproduct() {
           onMouseLeave={handleMouseLeave}
           >
     <span className="font-light text-lg">SHOP</span><br />
-    <span className="text-5xl"> Latest Products</span>
+    <span className="text-5xl text-gray-900"> Latest Products</span>
   </p>
   <span style={lineStyle}></span>
 </div>
@@ -100,14 +100,14 @@ function Latestproduct() {
         </button>
         <div
           id="scroll-content"
-          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
+          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >
           {latestProducts.map((product) => (
   <Link to={`/product/${product.id}`} key={product.id}>
     <div 
       key={product.id} 
-      className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+      className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
       onMouseEnter={() => handleMouseEnter(product.id)}
       onMouseLeave={handleMouseLeave}
       style={{ backgroundColor: isHovered && hoveredImage === product.id ? "#E5E7EB" : "white" }}

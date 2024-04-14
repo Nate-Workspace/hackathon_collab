@@ -15,8 +15,10 @@ function TopRatedProducts() {
 
   const getTopRatedProducts = async () => {
     try {
-     const response = await axios.get("https://aguero.pythonanywhere.com/product/");
-     setTopRatedProducts(response.data);
+      const response = await axios.get("https://aguero.pythonanywhere.com/product/");
+      console.log(response.data); // Log the fetched data directly
+      setTopRatedProducts(response.data);
+      console.log(topRatedProducts); // Log the state value in the next render cycle
     } catch (err) {
       console.error(err);
     }
@@ -27,9 +29,15 @@ function TopRatedProducts() {
   }, []);
 
   const scrollContainer = (scrollValue) => {
-    setScrollLeft(scrollLeft + scrollValue);
-    document.getElementById("scroll-content").scrollLeft += scrollValue;
-  };
+  const scrollElement = document.getElementById("scroll-content");
+   console.log("Scrolling...");
+  if (scrollElement) {
+    scrollElement.scrollLeft += scrollValue;
+    setScrollLeft(scrollElement.scrollLeft);
+    console.log("scrollLeft:", scrollElement.scrollLeft);
+  }
+};
+
 
   const handleMouseEnter = (productId) => {
     setIsHovered(true);
@@ -86,7 +94,7 @@ function TopRatedProducts() {
         >
           <span className="font-light text-lg">PRODUCTS</span>
           <br />
-          <span className=" text-5xl"> Top Rated</span>
+          <span className=" text-5xl text-gray-900"> Top Rated</span>
          
         </p>
         <span style={lineStyle}></span>
@@ -102,14 +110,14 @@ function TopRatedProducts() {
         </button>
         <div
           id="scroll-content"
-          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
+          className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
           {topRatedProducts.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id}>
               <div
                 key={product.id}
-                className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+                className="w-64  rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
                 onMouseEnter={() => handleMouseEnter(product.id)}
                 onMouseLeave={handleMouseLeave}
                 style={{ backgroundColor: isHovered && hoveredImage === product.id ? "#E5E7EB" : "white" }}

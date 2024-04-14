@@ -132,34 +132,58 @@
 // export default ProfilePage;
 
 import React, { useEffect, useState } from "react";
-import laptop from "../Assets/Shoping.jpg";
+import { useNavigate } from "react-router-dom";
 
-import './Profile.css'
+import "./Profile.css";
+import { useAuth } from "../Context/AuthContext";
+import "ldrs/ring";
+import Loader from "../components/Loaders/Loader";
 
 const ProfilePage = () => {
-
   const [render, setRender] = useState([]);
-  const [selectedPage, setSelectedPage] = useState('products'); // Initialize the selected page state
-
-    const apiCall= async()=>{
+  const [selectedPage, setSelectedPage] = useState("products");
+  const { logout, user, isLoading, getUserFromToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(function () {
+    async function apiCall(page) {
       try {
-        setSelectedPage(page); 
-        const response = await fetch('https://fakestoreapi.com/products');
+        setSelectedPage(page);
+        const response = await fetch("https://fakestoreapi.com/products");
         const data = await response.json();
-        setRender(data);// Set the selected page based on the button clicked
+        setRender(data); // Set the selected page based on the button clicked
       } catch (err) {
         console.error(err);
       }
     }
+    apiCall();
+  }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (user) {
+      return;
+    }
+    if (token) {
+      getUserFromToken(token);
+    }
+  }, [isLoading]);
+  function handleLogout(e) {
+    e.preventDefault();
+    const x = confirm("Do you really want to log out");
+    console.log("x", x);
+    if (x) {
+      logout();
+      navigate("/");
+    }
+  }
 
-  useEffect(()=>{
-    apiCall()
-  })
-  
   const handleClick = async (page) => {
-      setSelectedPage(page); // Set the selected page based on the button clicked
+    setSelectedPage(page);
+    setPage(page);
   };
-  console.log(render);
+  if (!user) {
+    return <Loader />;
+  }
+
   return (
     <div className="body">
       <div className="header_wrapper">
@@ -167,65 +191,81 @@ const ProfilePage = () => {
         <div className="cols_container">
           <div className="left_col">
             <div className="img_container">
-              <img src={laptop} alt="laptop" />
+              <img src={user.profile} alt="laptop" />
               <span></span>
             </div>
 
             <div className="basic_data">
-            <h2>User 101</h2>
-            <p>username here</p>
-            <p>phoneNumber</p>
-            </div>
+              <h2>
+                {user ? (
+                  `${user.first_name} ${user.last_name}`
+                ) : (
+                  <h3>Loading...</h3>
+                )}
+              </h2>
+              <p>{user.username}</p>
 
+              <p>{user.phone}</p>
+            </div>
 
             <hr />
 
             <div className="content">
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
-                excepturi ea ipsa iure eveniet eos molestiae alias praesentium,
-                consequatur architecto? Voluptate illum eos similique earum esse
-                eveniet rerum ex suscipit.
-              </p>
+              <p>{user.bio}</p>
 
               <hr />
 
-              <p className="residence">Residence: somewhere</p>
+              <p className="residence">Residence: AASTU</p>
+              <a href="/">
+                <div
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 pr-5 rounded-xl mr-2 flex items-center"
+                  onClick={handleLogout}
+                >
+                  <span className="ml-1 ">Logout</span>
+                </div>
+              </a>
+
             </div>
           </div>
 
           <div className="right_col">
             <div className="nav">
               <ul className="ul">
-              <li
-              className={selectedPage === 'products' ? 'active' : ''}
-              onClick={() => handleClick('products')}
-            >
-              PRODUCTS
-            </li>
-            <li
-              className={selectedPage === 'services' ? 'active' : ''}
-              onClick={() => handleClick('services')}
-            >
-              SERVICES
-            </li>
-            <li
-              className={selectedPage === 'events' ? 'active' : ''}
-              onClick={() => handleClick('events')}
-            >
-              EVENTS
-            </li>
+                <li
+                  className={selectedPage === "product" ? "active" : ""}
+                  onClick={() => handleClick("product")}
+                >
+                  PRODUCTS
+                </li>
+                <li
+                  className={selectedPage === "service" ? "active" : ""}
+                  onClick={() => handleClick("service")}
+                >
+                  SERVICES
+                </li>
+                <li
+                  className={selectedPage === "event" ? "active" : ""}
+                  onClick={() => handleClick("event")}
+                >
+                  EVENTS
+                </li>
               </ul>
             </div>
 
             <div className="photos">
-              {render.map(each=>{
-                return(
-                  <PostItem image={each.image} title={each.title}/>
-                )
-              })}
-            </div>
+              {render.length > 0 ? (
+                render.map((each) => (
+                  <PostItem
+                    key={each.id}
+                    image={each.image}
+                    title={each.title}
+                  />
+                ))
+              ) : (
+                <p>Loading...</p>
 
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -234,12 +274,8 @@ const ProfilePage = () => {
 };
 
 const PostItem = (props) => (
-  <div className="bg-white rounded-md shadow-md overflow-hidden">
-    <img
-      src={props.image}
-      alt='item'
-      className="w-full h-48 object-cover"
-    />
+  <div className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer">
+    <img src={props.image} alt="item" className="w-full h-48 object-cover" />
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-1">{props.title}</h3>
       <p className="text-gray600">Rating: Rating</p>
