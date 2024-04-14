@@ -10,7 +10,7 @@ function ReviewsCard({userName, rating, review }) {
         {[1, 2, 3, 4, 5].map((star) => (
           star <= rating ? <Star key={star} size={24} className="text-[#11875C]" /> : <Star key={star} size={24} className="text-[#2B9770]" />
         ))}
-      </div>
+      </div>  
       <p className="text-sm text-[#828282]">{review}</p>
     </div>
   );

@@ -26,7 +26,6 @@ function Product() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
   const { user } = useAuth();
-  console.log("user", user);
   const handleSubmit = async (product) => {
     product.preventDefault();
     console.log("Searching for events:", searchValue);
