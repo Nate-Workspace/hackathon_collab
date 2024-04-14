@@ -193,7 +193,11 @@ const cancelIconStyle = {
 
                 </div>
                 <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
-                <p className="text-gray-600">{service.rating.rate} stars</p>
+                {service.rating && service.rating.rate !== undefined ? (
+                  <p className="text-gray-600">{service.rating.rate} stars</p>
+                ) : (
+                  <p className="text-gray-600">No rating</p>
+                )}
                 <p className="text-gray-600 text-center">Price: ${service.price}</p>
               </div>
             </div>

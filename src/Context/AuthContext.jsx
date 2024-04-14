@@ -5,7 +5,7 @@ const BASE_URL = "https://aguero.pythonanywhere.com";
 
 const AuthContext = createContext();
 const initialState = {
-  user: null,
+  user: {},
   isLoading: false,
   isAuthenticated: false,
   error: "",
@@ -104,16 +104,40 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function register(newUser) {
+  // In AuthProvider.js
+
+  async function register(userData) {
     try {
       dispatch({ type: "loading" });
 
-      const res = await axios.post(`${BASE_URL}/auth/users/`, newUser);
+      const formData = new FormData();
+      Object.entries(userData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post(`${BASE_URL}/auth/users/`, formData);
       dispatch({ type: "register", payload: res.data.user });
-      if (res.data) alert("Registered successfully");
-      console.log("registerrr", res.data);
+      //login starts
+      let username = userData.username;
+      let password = userData.password;
+      const response = await axios.post(`${BASE_URL}/auth/jwt/create`, {
+        username,
+        password,
+      });
+
+      if (response.status === 200 && response.data.access) {
+        localStorage.setItem("token", response.data.access);
+        dispatch({ type: "login", payload: response.data.user });
+         console.log("this is login")
+      }
+
+      //login ends
+      if (res.data) {
+        alert("Registered successfully");
+      }
+
       return res.data;
-    } catch {
+    } catch (error) {
       dispatch({
         type: "rejected",
         payload: "There is an error registering the user...",
@@ -122,6 +146,7 @@ function AuthProvider({ children }) {
       dispatch({ type: "stopLoading" });
     }
   }
+
   async function login(username, password) {
     try {
       dispatch({ type: "loading" });
@@ -133,7 +158,6 @@ function AuthProvider({ children }) {
       if (res.status === 200 && res.data.access) {
         localStorage.setItem("token", res.data.access);
         dispatch({ type: "login", payload: res.data.user });
-        console.log(res.data);
         alert("Logged in successfully");
       }
       return res.data.access;
@@ -160,6 +184,7 @@ function AuthProvider({ children }) {
         logout,
         isLoading,
         user,
+        getUserFromToken,
         isAuthenticated,
         error,
         getUserFromToken,

@@ -5,7 +5,6 @@ import Service from "./Pages/Service";
 import Event from "./Pages/Event";
 import "./App.css";
 import Home from "./Pages/Home";
-
 import Saved from "./Pages/Saved";
 
 import ProfilePage from "./Pages/ProfilePage";
@@ -15,9 +14,14 @@ import ProductDetails from "./components/Details/ProductDetails";
 import EventDetails from "./components/Details/EventDetails";
 import ServiceDetails from "./components/Details/ServiceDetails";
 
+import AboutUs from "./Pages/AboutUs";
+import Footer from "./components/Footer/Footer";
+
 import RegistrationForm from "./Pages/RegistrationForm";
 import NotFound from "./Pages/NotFound";
 import SignInForm from "./Pages/signInForm";
+
+
 function App() {
   return (
     <div className="App">
@@ -35,12 +39,18 @@ function App() {
           <Route path="/service/:id" element={<ServiceDetails />} />
           <Route path="/Saved" element={<Saved />} />
           <Route path="/Create" element={<MainContent />} />
-          <Route path="/signin" element ={<SignInForm/> }/>
+
+          <Route path="/AboutUs" element={<AboutUs />} />
+
+          <Route path="/SignIn" element={<SignInForm />} />
+
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/Logout" />
           <Route path="*" element={<NotFound />} />
-          <Route path='/Logout'/>
+
         </Routes>
       </Router>
+      <Footer />
     </div>
   );
 }
