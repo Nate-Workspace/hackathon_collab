@@ -136,7 +136,7 @@ nav.scrolled p{
 
 
 /* Nav dropdown width */
-.dropdown{
+.button .dropdown{
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -15,8 +15,10 @@ function TopRatedProducts() {
 
   const getTopRatedProducts = async () => {
     try {
-     const response = await axios.get("https://aguero.pythonanywhere.com/product/");
-     setTopRatedProducts(response.data);
+      const response = await axios.get("https://aguero.pythonanywhere.com/product/");
+      console.log(response.data); // Log the fetched data directly
+      setTopRatedProducts(response.data);
+      console.log(topRatedProducts); // Log the state value in the next render cycle
     } catch (err) {
       console.error(err);
     }
