@@ -92,7 +92,7 @@ function TopRatedProducts() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="font-light text-lg">PRODUCTS</span>
+          <span className="font-light text-lg"  style={{ color: '#000' }}>PRODUCTS</span>
           <br />
           <span className=" text-5xl text-gray-900"> Top Rated</span>
          
@@ -138,7 +138,7 @@ function TopRatedProducts() {
                       />
                     )}
                   </div>
-                  <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
+                  <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"  style={{ color: '#000' }}>
                     {product.title}
                   </p>
                   <p className="text-gray-600">{product.rating} stars</p>
