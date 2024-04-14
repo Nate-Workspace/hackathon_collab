@@ -5,16 +5,19 @@ import emailjs from "@emailjs/browser";
 
 const variants = {
   initial: {
-    y: 500,
     opacity: 0,
+    y: 20,
   },
   animate: {
-    y: 0,
     opacity: 1,
+    y: 0,
     transition: {
       duration: 0.5,
-      staggerChildren: 0.1,
+      delay: 0.5,
     },
+  },
+  hover: {
+    scale: 1.1,
   },
 };
 
@@ -31,10 +34,10 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_94y20xo",
-        "template_v10u2oh",
+        "service_nfc2lql",
+        "template_dh5nkea",
         formRef.current,
-        "pX_2hasGmGcuvjXIW"
+        "hf4cBLssUT6D1iR9D"
       )
       .then(
         (result) => {
@@ -52,6 +55,7 @@ const Contact = () => {
       className="contact"
       variants={variants}
       initial="initial"
+      animate="animate"
       whileInView="animate"
     >
       <motion.div className="textContainer" variants={variants}>
@@ -109,7 +113,13 @@ const Contact = () => {
           <input type="text" required placeholder="Name" name="name" />
           <input type="email" required placeholder="Email" name="email" />
           <textarea rows={8} placeholder="Message" name="message" />
-          <button>Submit</button>
+          <motion.button
+            variants={variants}
+            whileHover="hover" // Apply hover animation
+            whileTap={{ scale: 0.9 }} // Apply tap animation
+          >
+            Submit
+          </motion.button>
           {error && "Error"}
           {success && "Success"}
         </motion.form>

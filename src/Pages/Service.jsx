@@ -7,6 +7,8 @@ import Topservices from '../components/Services/Topservices'
 import OurServices from '../components/Services/OurServices'
 import servicehero from "../Assets/servicehero.jpg"
 import axios from 'axios';
+
+
 function Service() {
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -70,6 +72,10 @@ function Service() {
   };
  const hasSearchResults = searchResults.length > 0;
 
+  searchResults.map(each=>{
+    console.log(each)
+  })
+
   return (
     <div>
       <div className="bg-gray-900 text-black py-20 px-10 " style={{ backgroundImage: `url(${servicehero})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
@@ -129,7 +135,7 @@ function Service() {
           )}
         </div>
         <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
-        <p className="text-gray-600">{service.rating.rate} stars</p>
+        <p className="text-gray-600">3 stars</p>
         <p className="text-gray-600 text-center">Price: ${service.price}</p>
       </div>
     </div>

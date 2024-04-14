@@ -4,6 +4,7 @@ import {Phone, BookmarkSimple, Star} from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard.jsx";
 import saveIcon from '../../Assets/saveicon.png';
 import savedIcon from '../../Assets/savedicon.png';
+import StarRating from '../StarRating/StarRating.jsx';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -121,9 +122,7 @@ function ProductDetails() {
               think
               about this product</p>
             <div className="flex justify-around mt-8">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star key={star} size={44} className="text-[#B0B0B0]"/>
-              ))}
+              <StarRating size={60} />
             </div>
           </div>
           <div className="flex flex-col justify-end ml-0 sm:ml-32 mt-8 sm:mt-0">

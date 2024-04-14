@@ -1,29 +1,31 @@
 import "../app.scss";
-import Contact from "../components/contact/Contact";
+
 import Hero from "../components/hero/Hero";
-import Parallax from "../components/parallax/Parallax";
+import Display from "../components/Display/display";
 import Portfolio from "../components/portfolio/Portfolio";
-import Services from "../components/section/Section";
+import DisplayService from "../components/Display/displayService";
+import DisplayEvent from "../components/Display/displayEvent";
+
 const Home = () => {
   return (
     <div>
       <div>
-      <section id="Homepage">
-        <Hero />
-      </section>
-      <section id="Section">
-        <Parallax type="section" />
-      </section>
-      <section>
-        <Services />
-      </section>
-      <section id="Portfolio">
-        <Parallax type="portfolio" />
-      </section>
-      <Portfolio />
-      <section id="Contact">
-        <Contact />
-      </section>
+        <section id="Homepage">
+          <Hero />
+        </section>
+
+        <section>
+          <Portfolio />
+        </section>
+        <section>
+          <Display />
+        </section>
+        <section>
+          <DisplayService />
+        </section>
+        <section>
+          <DisplayEvent />
+        </section>
       </div>
     </div>
   );
