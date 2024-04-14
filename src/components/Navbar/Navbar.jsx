@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
-
-import { IoCartOutline } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
-import { FiMenu } from "react-icons/fi";
-import "./LeftNav.css";
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../../Context/AuthContext";
-import { dotStream } from "ldrs";
-import { FaUserCircle } from "react-icons/fa";
+import "./navbar.css";
 
-function LeftNav() {
+function Navbar() {
+  const navRef = useRef();
+  const { isAuthenticated, isLoading } = useAuth();
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
-
-  //--------------------NavBar scroll state--------------------
-  const { isAuthenticated, logout, isLoading } = useAuth();
-  // console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
-  const navigate = useNavigate();
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
-      const threshold = 20; // Adjust this value to set the scroll threshold for changing the background color
-
+      const threshold = 20;
       setIsScrolled(scrollTop > threshold);
     };
 
@@ -34,8 +25,6 @@ function LeftNav() {
     };
   }, []);
 
-  //-------------------------------------------
-
   const handleExploreClick = () => {
     setShowExploreDropdown(true);
   };
@@ -43,35 +32,23 @@ function LeftNav() {
   const handleStudioClick = () => {
     setShowStudioDropdown(true);
   };
+
   const handleEventLeave = () => {
     setShowExploreDropdown(false);
   };
+
   const handleStudioLeave = () => {
     setShowStudioDropdown(false);
   };
 
-  const handleAccountClick = () => {
-    setShowAccountDropdown(true);
+  const showNavbar = () => {
+    navRef.current.classList.toggle("responsive_nav");
   };
-  const handleAccountLeave = () => {
-    setShowAccountDropdown(false);
-  };
-  const handleClose = () => {
-    setMenuOpen(false);
-    console.log(menuOpen);
-  };
-
-  dotStream.register();
 
   return (
-    <nav
-      className={`${isScrolled ? "scrolled" : ""} ${
-        showStudioDropdown ? "hovered" : ""
-      } ${showExploreDropdown ? "hovered" : ""}`}
-    >
-      <div className="nav-links">
-        <p className="logo">LOGO</p>
-
+    <header className={`nav ${isScrolled ? "scrolled" : ""}`}>
+      <h3>LOGO</h3>
+      <nav ref={navRef}>
         <ul className="ul">
           <li className="home">
             <Link to="/">HOME</Link>
@@ -89,7 +66,6 @@ function LeftNav() {
                 onMouseEnter={handleExploreClick}
                 onMouseLeave={handleEventLeave}
               >
-                {/* <hr /> */}
                 <li>
                   <Link to="/Products">PRODUCTS</Link>
                 </li>
@@ -102,38 +78,6 @@ function LeftNav() {
               </ul>
             )}
           </li>
-
-          {/* <li
-            className="button"
-            id="button2"
-            onMouseEnter={handleStudioClick}
-            onMouseLeave={handleStudioLeave}
-          >
-            STUDIO
-            {showStudioDropdown && (
-              <ul
-                className="dropdown"
-                onMouseEnter={handleStudioClick}
-                onMouseLeave={handleStudioLeave}
-              >
-                 <hr /> */}
-
-          {/* <li>
-                  <Link to="/Saved">SAVED</Link>
-                </li>
-                <li>
-                  <Link to="/Create">CREATE</Link>
-                </li>
-                <li>
-                  <Link to="/Profile">PROFILE</Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li className="about-us">
-            <Link to="/AboutUs">ABOUT US</Link>
-          </li>  */}
-
           {isAuthenticated && !isLoading && (
             <li
               className="button"
@@ -148,7 +92,6 @@ function LeftNav() {
                   onMouseEnter={handleStudioClick}
                   onMouseLeave={handleStudioLeave}
                 >
-                  {/* <hr /> */}
                   <li>
                     <Link to="/Saved">SAVED</Link>
                   </li>
@@ -159,23 +102,17 @@ function LeftNav() {
               )}
             </li>
           )}
-
           {!isAuthenticated && !isLoading && (
             <>
               <li>
                 <Link to="/register">Register</Link>
               </li>
-
               <li>
                 <Link to="/SignIn">Sign In</Link>
               </li>
             </>
           )}
         </ul>
-
-        {console.log("isAuthenticated", isAuthenticated)}
-        {console.log("isLoading", isLoading)}
-
         {isAuthenticated && !isLoading && (
           <li>
             <Link to="/Profile" className="absolute right-5 bottom-3">
@@ -183,18 +120,15 @@ function LeftNav() {
             </Link>
           </li>
         )}
-      </div>
-    </nav>
+        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+          <FaTimes />
+        </button>
+      </nav>
+      <button className="nav-btn" onClick={showNavbar}>
+        <FaBars />
+      </button>
+    </header>
   );
 }
 
-// const Dropnav=()=>{
-//   return(
-//     <div className="flex flex-row justify-center items-center">
-//     <IoCartOutline size={20} color="gray"/>
-//     <p className="ml-1.5">PRODUCTS</p>
-//     </div>
-//   )
-// }
-
-export default LeftNav;
+export default Navbar;

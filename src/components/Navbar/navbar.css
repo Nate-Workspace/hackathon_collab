@@ -1,4 +1,4 @@
-nav {
+header {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -9,30 +9,30 @@ nav {
   top: 0;
   transition: background-color 0.4s ease-in-out;
 }
-nav.scrolled {
-  background-color: white;
+header.scrolled {
+  background-color: rgb(27, 24, 24);
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
   padding: 20px 0;
 }
-nav p {
+p {
   color: white;
   margin-left: 20px;
 }
-nav.scrolled p {
+header.scrolled p {
   color: black;
 }
 
-.nav-links {
+.header-links {
   display: flex;
   justify-content: space-between;
   padding: 0 2%;
   flex-grow: 1;
   text-align: center;
 }
-.nav-links .ul {
+.header-links .ul {
   display: flex;
   align-items: center;
   width: 100%;
@@ -43,57 +43,64 @@ nav.scrolled p {
   padding: 0;
 }
 
-.nav-links .ul li {
+.header-links .ul li {
   display: inline-block;
   padding: 20px 55px;
   position: relative;
 }
-.nav-links .logout {
+.header-links .logout {
   display: inline-block;
   padding: 20px 55px;
   position: relative;
   color: white;
 }
 
-.nav-links .ul li a {
+.header-links .ul li a {
   color: white;
   text-decoration: none;
 }
 
 /* ------------------------------ */
 
-@media (min-width: 700px) {
-  nav.hovered {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+@media only screen and (max-width: 1024px) {
+  header .nav-btn {
+    visibility: visible;
+    opacity: 1;
   }
-  nav.hovered p {
-    color: black;
+
+  header nav {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: black;
+    transition: 1s;
   }
-  nav.scrolled .nav-links .ul li a {
-    color: black;
+
+  header .responsive_nav {
+    transform: translateY(100vh);
   }
-  nav.scrolled .nav-links .logout {
-    color: black;
+
+  nav .nav-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
   }
-  nav.hovered .nav-links .ul li a {
-    color: black;
-  }
-  nav.hovered .nav-links .logout {
-    color: black;
-  }
-  nav.scrolled .nav-links .button {
-    color: black;
-  }
-  nav.hovered .nav-links .button {
-    color: black;
-    cursor: pointer;
+
+  nav a {
+    font-size: 1.5rem;
   }
 }
 
 /* ---------------------------------------- */
 
-.nav-links .ul li::after {
+.header-links .ul li::after {
   content: "";
   width: 0%;
   height: 2px;
@@ -102,7 +109,7 @@ nav.scrolled p {
   margin: auto;
   transition: 0.5s;
 }
-.nav-links .logout::after {
+.header-links .logout::after {
   content: "";
   width: 0%;
   height: 2px;
@@ -111,24 +118,24 @@ nav.scrolled p {
   margin: auto;
   transition: 0.5s;
 }
-.nav-links .ul li:hover::after {
+.header-links .ul li:hover::after {
   width: 100%;
 }
-.nav-links .logout:hover::after {
+.header-links .logout:hover::after {
   width: 100%;
 }
 
-.nav-links .ul ul {
+.header-links .ul ul {
   position: absolute;
   top: 100%;
   left: 0;
   background-color: rgba(51, 51, 51, 0.5);
 }
 
-.nav-links .ul ul li {
+.header-links .ul ul li {
   display: block;
 }
-.nav-links .button {
+.header-links .button {
   color: white;
 }
 
@@ -139,12 +146,12 @@ nav.scrolled p {
   flex-direction: column;
 }
 /* -------------- */
-nav.hovered .dropdown {
+header.hovered .dropdown {
   background-color: white;
   box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
   /* color: black; */
 }
-nav.hovered .dropdown a {
+header.hovered .dropdown a {
   background-color: white;
   color: black;
 }
@@ -192,7 +199,7 @@ nav.hovered .dropdown a {
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
   }
 
-  .nav-links .ul li {
+  .header-links .ul li {
     width: 100%;
     padding-left: 22%;
     align-items: center;
@@ -200,16 +207,16 @@ nav.hovered .dropdown a {
     text-align: start;
   }
 
-  .nav-links .ul li:hover {
+  .header-links .ul li:hover {
     background-color: aliceblue;
     color: black;
   }
 
-  nav.hovered .nav-links .ul li {
+  header.hovered .nav-links .ul li {
     color: black;
   }
 
-  .nav-links .logout {
+  .header-links .logout {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -218,35 +225,35 @@ nav.hovered .dropdown a {
     padding-left: 5%;
   }
 
-  .nav-links .logout:hover {
+  .header-links .logout:hover {
     background-color: aliceblue;
     color: black;
   }
 
-  .nav-links .ul #button1:hover {
+  .header-links .ul #button1:hover {
     color: black;
     cursor: pointer;
   }
 
-  .nav-links .ul #button2:hover {
+  .header-links .ul #button2:hover {
     color: black;
     cursor: pointer;
   }
-  .nav-links .ul #button1:hover ~ #button2 {
+  .header-links .ul #button1:hover ~ #button2 {
     transform: translateY(300%);
     color: white;
   }
-  .nav-links .ul #button2:hover ~ #button1 {
+  .header-links .ul #button2:hover ~ #button1 {
     color: white;
   }
-  .nav-links .ul #button2 li:hover ~ #button1 {
+  .header-links .ul #button2 li:hover ~ #button1 {
     color: white;
   }
-  .nav-links .ul .button:hover li {
+  .header-links .ul .button:hover li {
     padding-left: 30%;
   }
 
-  .nav-links .ul .home:hover a {
+  .header-links .ul .home:hover a {
     background-color: aliceblue;
     color: black;
   }

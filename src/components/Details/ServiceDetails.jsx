@@ -71,31 +71,31 @@ function ServiceDetails() {
   if (!service) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#2B9770]"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#f28424]"></div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="p-8">
-        <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
-          <div className="">
+      <div className="p-8 sm:p-8">
+        <div className="flex sm:flex-row mr-30 ml-30 mt-10 mb-10 justify-items-center">
+          <div className="w-full sm:w-auto mb-4 sm:mb-0">
             <img
               src={service.image}
               alt={service.title}
-              className="w-full h-[500px] object-contain"
+              className="w-full h-auto  object-contain"
             />
-
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{service.title}</h3>
             {reviews.length > 6 && (
-              <p className="text-[#3C9B78] text-sm font-light mb-16">
+              <p className="text-[#fff] text-sm py-3 font-light mb-16">
                 {reviews[6].userName}
               </p>
             )}
-            <p className="text-[#222831] text-2xl font-bold mb-4">
+
+            <p className="text-[#f28424] text-2xl font-bold mb-4">
               Rating: {service.rating}
             </p>
             <div className="description-wrapper w-110">
@@ -103,12 +103,13 @@ function ServiceDetails() {
                 Description: {service.description}
               </p>
             </div>
+            <p className="text-xl font-bold mb-14">Price: ${service.price}</p>
             <div className="flex">
-              <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+              <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
                 <Phone size={24} />
                 <span className="ml-2">Call</span>
               </button>
-              <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+              <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24} />
                 <span className="ml-2">Save</span>
               </button>
@@ -117,37 +118,35 @@ function ServiceDetails() {
         </div>
 
         {/* Rating Section */}
-
-        <div className="flex justify-center my-8">
-          <div className="mr-40 flex flex-col justify-items-start">
-            <h2 className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-8">
+        <div className="flex flex-col sm:flex-row justify-center sm:my-26 sm:mx-12 mx-8">
+          <div className="mb-8 sm:mr-20 flex flex-col justify-items-start">
+            <h2 className="text-[#B0B0B0] text-3xl font-ubuntu font-bold mb-1 mt-10">
               Rate this Service
             </h2>
             <p className="text-[#B0B0B0] text-l font-ubuntu">
-              Tell others what you think about this Service
+              Tell others what you think about this service
             </p>
-            <div className="flex m-10">
+            <div className="flex justify-around  mt-8">
               <StarRating size={60} />
             </div>
           </div>
-          <div className="flex flex-col justify-end ml-40 mt-8">
+          <div className="flex flex-col justify-end ml-0 sm:ml-32 mt-8 sm:mt-0">
             <textarea
-              className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
+              className="border border-gray-900 rounded-md p-2 resize-y text-black w-full sm:w-96 h-40  mb-4 sm:mb-0"
               placeholder="Leave your review"
             ></textarea>
-            <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-4 rounded-xl mt-4 ml-56">
+            <button className="bg-orange-400 hover:bg-white text-black font-bold py-2 px-2  rounded-xl mt-4 ml-64 sm:mt-8">
               Submit
             </button>
           </div>
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-20 overflow-x-auto scrollbar-none">
-          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
+        <div className="mt-20">
+          <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
             Reviews
           </h2>
-          <div className="flex">
-
+          <div className="flex overflow-x-scroll scrollbar-hide">
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -160,16 +159,14 @@ function ServiceDetails() {
         </div>
 
         {/* Related Section */}
-
         <div className="mt-20 ">
-          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
+          <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
             Related Services
           </h2>
-          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
-
+          <div className="flex flex-wrap justify-center  sm:grid-cols-2 space-x-6  space-y-6 relative p-4">
             {relatedServices.map((relatedService) => (
               <Link
-                to={`/Products/details/${relatedService.id}`}
+                to={`/Service/${relatedService.id}`}
                 key={relatedService.id}
               >
                 <div
@@ -219,5 +216,4 @@ function ServiceDetails() {
     </div>
   );
 }
-
 export default ServiceDetails;

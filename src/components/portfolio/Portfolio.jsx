@@ -149,7 +149,7 @@ const Item = ({ item, index, direction }) => {
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.1 }}
             >
-              See Demo
+              Explore
             </motion.button>
           </div>
         </div>
