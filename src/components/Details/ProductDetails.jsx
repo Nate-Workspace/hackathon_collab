@@ -6,6 +6,7 @@ import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import StarRating from "../Rating/StarRating.jsx";
 import { useProduct } from "../../Context/ProductContext.jsx";
+import { useSaved } from "../../Context/SavedContext.jsx";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -20,11 +21,11 @@ function ProductDetails() {
   const [rates, setRates] = useState("");
   const [alreadyRated, setAlreadyRated] = useState(false);
   const { rater, reviewer, getReviews, getRatings } = useProduct();
+  const { saveProduct } = useSaved();
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
-
     fetch("https://aguero.pythonanywhere.com/product/")
       .then((res) => res.json())
       .then((data) => {
@@ -35,7 +36,15 @@ function ProductDetails() {
         setRelatedProducts(limitedRelated);
       });
   }, [id]);
-
+  useEffect(function () {
+    async function saver() {
+      const saved = await saveProduct(product);
+      if(saved){
+        console.log("saver", saved)
+      }
+    }
+    saver();
+  }, [product]);
   useEffect(() => {
     async function fetchReviewsAndRatings() {
       const reviewsResponse = await getReviews(id);
@@ -122,7 +131,6 @@ function ProductDetails() {
     console.log("review", review);
   }
 
-
   return (
     <div>
       <div className="p-8">
@@ -133,7 +141,6 @@ function ProductDetails() {
               alt={product.title}
               className="w-full h-[500px] object-contain"
             />
-
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
@@ -206,7 +213,7 @@ function ProductDetails() {
                   review={data.review}
                 />
               ))}
-              {console.log("rating in review",rating)}
+              {console.log("rating in review", rating)}
             </div>
           </div>
         </form>
@@ -217,7 +224,6 @@ function ProductDetails() {
             Related Products
           </h2>
           <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
-
             {relatedProducts.map((relatedProduct) => (
               <Link
                 to={`/Products/details/${relatedProduct.id}`}

@@ -19,17 +19,20 @@ import Footer from "./components/Footer/Footer";
 
 import RegistrationForm from "./Pages/RegistrationForm";
 import NotFound from "./Pages/NotFound";
-import SignInForm from "./Pages/signInForm";
+import SignInForm from "./Pages/SignInForm";
 import { useAuth } from "./Context/AuthContext";
 
 function App() {
- const {isAuthenticated } =useAuth();
+  const { isAuthenticated } = useAuth();
   return (
     <div className="App">
       <Router>
         <LeftNav />
         <Routes>
-          <Route path="/" element={isAuthenticated?<Dashboard />:<Home />} />
+          <Route
+            path="/"
+            element={isAuthenticated ? <Dashboard /> : <Home />}
+          />
           <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/Products" element={<Product />} />
           <Route path="/Services" element={<Service />} />
@@ -47,7 +50,6 @@ function App() {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/Logout" />
           <Route path="*" element={<NotFound />} />
-
         </Routes>
       </Router>
       <Footer />
