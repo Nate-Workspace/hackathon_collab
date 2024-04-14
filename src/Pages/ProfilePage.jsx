@@ -5,12 +5,18 @@ import laptop from "../Assets/Shoping.jpg";
 
 import "./Profile.css";
 
+//Logout imports
+import { useNavigate } from "react-router-dom";
+import 'ldrs/ring'
+import Loader from "../components/Loaders/Loader";
+
 const ProfilePage = () => {
   const [render, setRender] = useState([]);
   const [display, setDisplay] = useState([]);
   const [selectedPage, setSelectedPage] = useState("product");
   const [page, setPage] = useState("product");
-  const { user,getUserFromToken } = useAuth();
+  const { logout, user,getUserFromToken, isLoading } = useAuth();
+  const navigate=useNavigate();
 
   const [userTest, setUserTest] = useState([]);
   
@@ -25,6 +31,24 @@ const ProfilePage = () => {
   if (!user == null){
     return <p>loading</p>
   }
+
+  //------For the logout-------
+
+  const handleLogout=(e)=>{
+    e.preventDefault();
+
+    const x= confirm("Do you really want to log out")
+    console.log("X",x);
+    if(x){
+      logout();
+      navigate("/")
+    }
+  }
+
+
+
+
+  //-------------------- End -----------------
   
   const userCall = async () => {
     try {
@@ -129,6 +153,17 @@ const ProfilePage = () => {
               <hr />
 
               {user&&(<p className="residence">Email: {user.email}</p>)}
+              
+              {/*------------------ For the logout ------------------*/}
+              <a href="/">
+                <div className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 px-8 pr-5 rounded-xl mr-2 flex items-center"
+                onClick={handleLogout}
+                >
+                  <span className="ml-1">Logout</span>
+                </div>
+              </a>
+              {/* -----------------For the logout----------------------*/}
+
             </div>
           </div>
 
