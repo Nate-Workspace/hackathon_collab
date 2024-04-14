@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
+
 import { IoCartOutline } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
@@ -14,6 +15,7 @@ function LeftNav() {
 
   //--------------------NavBar scroll state--------------------
   const { isAuthenticated, logout, isLoading } = useAuth();
+  // console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const navigate = useNavigate();
@@ -48,6 +50,7 @@ function LeftNav() {
     setShowStudioDropdown(false);
   };
 
+
   const handleAccountClick = () => {
     setShowAccountDropdown(true);
   };
@@ -58,7 +61,9 @@ function LeftNav() {
     setMenuOpen(false);
     console.log(menuOpen);
   };
+  
   dotStream.register();
+ 
 
   return (
     <nav
@@ -100,6 +105,41 @@ function LeftNav() {
             )}
           </li>
 
+
+           {/* <li
+            className="button"
+            id="button2"
+            onMouseEnter={handleStudioClick}
+            onMouseLeave={handleStudioLeave}
+          >
+            STUDIO
+            {showStudioDropdown && (
+              <ul
+                className="dropdown"
+                onMouseEnter={handleStudioClick}
+                onMouseLeave={handleStudioLeave}
+              >
+                 <hr /> */}
+                
+                {/* <li>
+                  <Link to="/Saved">SAVED</Link>
+                </li>
+                <li>
+                  <Link to="/Create">CREATE</Link>
+                </li>
+                <li>
+                  <Link to="/Profile">PROFILE</Link>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li className="about-us">
+            <Link to="/AboutUs">ABOUT US</Link>
+          </li>  */}
+          
+          
+
+
           {isAuthenticated && !isLoading && (
             <li
               className="button"
@@ -125,8 +165,7 @@ function LeftNav() {
               )}
             </li>
           )}
-        </ul>
-        <ul className="ul">
+        
           {!isAuthenticated && !isLoading && (
             <>
               <li>
@@ -138,11 +177,14 @@ function LeftNav() {
               </li>
               </>
           )}
+
+          </ul>
           
 
           {console.log("isAuthenticated", isAuthenticated)}
           {console.log("isLoading", isLoading)}
-        </ul>
+          
+          
         {isAuthenticated && !isLoading && (
             <li>
               <Link to="/Profile" className="absolute right-5 bottom-3">

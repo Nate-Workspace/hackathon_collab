@@ -35,7 +35,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white shadow-lg rounded-lg mt-16">
+    <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white shadow-lg rounded-lg mt-32 mb-40">
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Sign In
       </h2>

@@ -103,28 +103,33 @@ function Topservices() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: 'smooth', scrollLeft: scrollLeft + 'px' }}
         >{featuredServices.map((service) => (
-  <Link to={`/service/${service.id}`} key={service.id}>
-    <div 
-      key={service.id} 
-      className="w-64 rounded-lg p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
-      onMouseEnter={() => handleMouseEnter(service.id)}
-      onMouseLeave={handleMouseLeave}
-      style={{ backgroundColor: isHovered && hoveredImage === service.id ? "#E5E7EB" : "white" }}
-    >
-      <div className="flex flex-col items-center relative">
-        <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
-          <img src={service.image} alt={service.title} className="w-full h-full object-cover rounded-lg" />
-          {isHovered && hoveredImage === service.id && (
-            <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)} />
-          )}
-        </div>
-        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
-        <p className="text-gray-600">{service?.rating?.rate} stars</p>
-        <p className="text-gray-600 text-center">Price: ${service.price}</p>
-      </div>
-    </div>
-  </Link>
-))}
+
+          <Link to={`/service/${service.id}`} key={service.id}>
+            <div 
+              key={service.id} 
+              className="w-64 rounded-lg p-2 mb-4 mt-8 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
+              onMouseEnter={() => handleMouseEnter(service.id)}
+              onMouseLeave={handleMouseLeave}
+              style={{ backgroundColor: isHovered && hoveredImage === service.id ? "#E5E7EB" : "white" }}
+            >
+              <div className="flex flex-col items-center relative">
+                <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover rounded-lg" />
+                  {isHovered && hoveredImage === service.id && (
+                    <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)} />
+                  )}
+                </div>
+                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
+                {service.rating && service.rating.rate !== undefined ? (
+                  <p className="text-gray-600">{service.rating.rate} stars</p>
+                ) : (
+                  <p className="text-gray-600">No rating</p>
+                )}
+                <p className="text-gray-600 text-center">Price: ${service.price}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
 
         </div>
         <button

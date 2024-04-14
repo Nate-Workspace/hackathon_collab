@@ -10,6 +10,9 @@ const initialState = {
   isAuthenticated: false,
   error: "",
 };
+
+
+
 function reducer(state, action) {
   switch (action.type) {
     case "loading":
@@ -52,6 +55,30 @@ function AuthProvider({ children }) {
     reducer,
     initialState
   );
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      async function getUserData() {
+        try {
+          dispatch({ type: "loading" });
+          const userRes = await axios.get(`${BASE_URL}/auth/users/me`, {
+            headers: {
+              Authorization: `JWT ${token}`,
+            },
+          });
+          console.log("Fetched user data:", userRes.data); // Log retrieved data
+          dispatch({ type: "login", payload: userRes.data });
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+          // Handle error appropriately
+        } finally {
+          dispatch({ type: "stopLoading" });
+        }
+      }
+      getUserData();
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -160,6 +187,7 @@ function AuthProvider({ children }) {
         getUserFromToken,
         isAuthenticated,
         error,
+        getUserFromToken,
       }}
     >
       {children}
