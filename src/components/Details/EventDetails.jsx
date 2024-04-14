@@ -86,7 +86,7 @@ function EventDetails() {
           <div className="w-1/2 pl-8 ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{event.title}</h3>
             {reviews.length > 6 && (
-              <p className="text-[##fff] text-sm font-light mb-16">
+              <p className="text-[#fff] text-sm font-light mb-16">
                 {reviews[6].userName}
               </p>
             )}
