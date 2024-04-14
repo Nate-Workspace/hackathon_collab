@@ -225,7 +225,7 @@ function ProductDetails() {
             <div className="flex flex-col justify-end ml-32 mt-8">
               <textarea
                 onChange={(e) => setReview(e.target.value)}
-                className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
+                className="border border-gray-900 rounded-md text-black p-2 resize-y w-96 h-40"
                 placeholder="Leave your review"
               ></textarea>
               <button className="bg-orange-400 hover:bg-white text-black font-bold py-2 px-2 rounded-xl mt-4 ml-64">
@@ -239,7 +239,7 @@ function ProductDetails() {
             <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
               Reviews
             </h2>
-            <div className="flex overflow-x-scroll">
+            <div className="flex overflow-x-scroll scrollbar-hide">
               {reviews.map((review, index) => (
                 <ReviewsCard
                   key={index}
@@ -257,10 +257,10 @@ function ProductDetails() {
           <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
             Related Products
           </h2>
-          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+          <div className="flex flex-wrap justify-center space-x-6 space-y-6 relative mt-4">
             {relatedProducts.map((relatedProduct) => (
               <Link
-                to={`/Products/${relatedProduct.id}`}
+                to={`/Product/${relatedProduct.id}`}
                 key={relatedProduct.id}
               >
                 <div

@@ -138,10 +138,7 @@ function EventDetails() {
           </h2>
           <div className="flex justify-center flex-wrap sm:grid-cols-4 space-x-6 space-y-6  relative p-4">
             {relatedEvents.map((relatedEvent) => (
-              <Link
-                to={`/Events/details/${relatedEvent.id}`}
-                key={relatedEvent.id}
-              >
+              <Link to={`/Event/${relatedEvent.id}`} key={relatedEvent.id}>
                 <div
                   key={relatedEvent.id}
                   className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"

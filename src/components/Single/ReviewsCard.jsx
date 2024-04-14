@@ -16,7 +16,7 @@ function ReviewsCard({ userName, rating, review }) {
         )}
       </div>
 
-      <p className="text-sm text-[#828282]">{review}</p>
+      <p className="text-sm text-[#000000]">{review}</p>
     </div>
   );
 }
