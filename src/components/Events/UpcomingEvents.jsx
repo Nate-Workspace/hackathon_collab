@@ -127,7 +127,7 @@ function UpcomingEvents() {
           />
         )}
       </div>
-      <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{event.title}</p>
+      <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold" style={{ color: '#000' }}>{event.title}</p>
       <p className="text-gray-600">Organizer: {event.organizer} </p>
       <p className="text-gray-600 text-center">{event.event_date}</p>
     </div>
