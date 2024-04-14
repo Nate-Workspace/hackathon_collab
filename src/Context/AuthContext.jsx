@@ -67,7 +67,6 @@ function AuthProvider({ children }) {
               Authorization: `JWT ${token}`,
             },
           });
-          console.log("Fetched user data:", userRes.data); // Log retrieved data
           dispatch({ type: "login", payload: userRes.data });
         } catch (err) {
           console.error("Error fetching user data:", err);

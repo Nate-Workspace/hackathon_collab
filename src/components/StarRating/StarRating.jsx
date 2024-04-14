@@ -15,12 +15,14 @@ export default function StarRating({
   size = 48,
   messages = [],
   onSetRating,
+  handleRating,
 }) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
   function handleRating(rating) {
     setRating(rating);
     onSetRating(rating);
+    console.log("rating in star", rating);
   }
   const textStyle = {
     lineHeight: "1",

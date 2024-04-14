@@ -181,9 +181,6 @@ function LeftNav() {
           </ul>
           
 
-          {console.log("isAuthenticated", isAuthenticated)}
-          {console.log("isLoading", isLoading)}
-          
           
         {isAuthenticated && !isLoading && (
             <li>
