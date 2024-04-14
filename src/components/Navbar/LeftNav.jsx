@@ -9,6 +9,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { dotStream } from "ldrs";
 import { FaUserCircle } from "react-icons/fa";
 
+
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);

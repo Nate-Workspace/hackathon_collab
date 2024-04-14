@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useProduct } from "../Context/ProductContext";
 
+
 const PostForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  // const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
+
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const { uploadProduct } = useProduct();
+  const [priceError, setPriceError] = useState('');
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const imageUrls = files.map((file) => URL.createObjectURL(file));
@@ -38,7 +42,15 @@ const PostForm = () => {
     setCategory("FD");
     setImages([]);
   };
-
+  const handlePriceChange = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue === '' || (!isNaN(inputValue) && parseFloat(inputValue) > 0)) {
+      setPrice(inputValue);
+      setPriceError('');
+    } else {
+      setPriceError('Price must be a number greater than 0');
+    }
+  };
   return (
     <div>
       <h5 className="text-lg font-bold mb-6 text-left text-blue-900">
@@ -72,19 +84,19 @@ const PostForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="price" className="block text-black">
-            Price:
-          </label>
-          <input
-            type="number"
-            id="price"
-            className="border  border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-400  text-gray-700 "
-            min="0"
-            value={price}
-            onChange={(e) => setPrice(parseInt(e.target.value))}
-            required
-          />
-        </div>
+  <label htmlFor="price" className="block text-black">
+    Price:
+  </label>
+  <input
+    type="text"
+    id="price"
+    className={`border ${priceError ? 'border-red-500' : 'border-gray-300'} rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-400 text-gray-700`}
+    value={price}
+    onChange={handlePriceChange}
+    required
+  />
+  {priceError && <p className="text-red-500">{priceError}</p>}
+</div>
         <div>
           <label htmlFor="category" className="block text-black">
             Category:
@@ -96,7 +108,7 @@ const PostForm = () => {
             onChange={(e) => setCategory(e.target.value)}
             required
           >
-            <option value="">Personal Computer</option>
+            <option value="pc">Personal Computer</option>
             <option value="electronics">Phone</option>
             <option value="clothes">Clothes</option>
             <option value="FD">Food</option>
@@ -117,6 +129,7 @@ const PostForm = () => {
             accept="image/*"
             multiple
             onChange={handleImageUpload}
+            required
           />
           <div className="mt-2 flex space-x-4">
             {images.map((imageUrl, index) => (
