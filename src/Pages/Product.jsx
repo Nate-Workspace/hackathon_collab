@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import saveIcon from '../Assets/saveicon.png';
 import savedIcon from '../Assets/savedicon.png';
 import bag from '../Assets/bag.jpg';
@@ -76,7 +75,7 @@ function Product() {
 
   return (
     <div>
-     <div className="bg-gray-900 text-white py-32 px-10 relative"> 
+     <div className="bg-[#222831] text-white py-32 px-10 relative"> 
   <div className="max-w-6xl mx-auto text-center">
     <form onSubmit={handleSubmit}>
       <div className="flex items-center justify-center">
@@ -100,24 +99,24 @@ function Product() {
         </div>
       </div>
     </form>
-    <h1 className="text-3xl  font-bold text-orange-400 mb-8 mt-8">Discover Our Amazing Products</h1>
+    <h1 className="text-4xl  font-bold text-orange-400 mb-8 mt-8">Discover Our Amazing Products</h1>
   </div>
 
   <div className="absolute bottom-0 left-0 right-0 flex justify-center items-end" style={{ marginBottom: '15px' }}>
   <div className="flex justify-between max-w-6xl gap-12">
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${bag})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${clothes})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${food})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${mobile})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${pc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-  <div className="w-40  h-32  bg-white rounded-full" style={{ backgroundImage: `url(${stationary})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${bag})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${clothes})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${food})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${mobile})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${pc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+  <div className="w-40 h-32 bg-white rounded-full " style={{ backgroundImage: `url(${stationary})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
 </div>
 
 </div>
 
 </div>
 
-<div className="flex items-center bg-sky-50 justify-center space-x-4">
+<div className="flex items-center bg-[#EEEEEE] justify-center space-x-4">
         <button
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}

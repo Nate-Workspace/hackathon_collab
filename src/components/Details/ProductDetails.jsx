@@ -75,13 +75,13 @@ function ProductDetails() {
 
   return (
     <div>
-      <div className="p-8">
-        <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
-          <div className="">
+      <div className="p-8 sm:p-8">
+      <div className="flex sm:flex-row mr-30 ml-30 mt-10 mb-10 justify-items-center">
+          <div className="w-full sm:w-auto mb-4 sm:mb-0">
             <img src={product.image} alt={product.title}
-                 className="w-full h-[500px] object-contain"/>
+                 className="w-full h-auto  object-contain"/>
           </div>
-          <div className="w-1/2 pl-8 ml-20">
+          <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
            {reviews.length > 6 && (
   <p className="text-[#76ABAE] text-sm font-light mb-16">{reviews[6].userName}</p>
@@ -111,10 +111,10 @@ function ProductDetails() {
         </div>
 
         {/* Rating Section */}
-        <div className="flex justify-center my-16 mx-8">
-          <div className="mr-20 flex flex-col justify-items-start">
+        <div className="flex flex-col sm:flex-row justify-center sm:my-26 sm:mx-12 mx-8">
+          <div className="mb-8 sm:mr-20 flex flex-col justify-items-start">
             <h2
-              className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-8">Rate
+              className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-10">Rate
               this Product</h2>
             <p className="text-[#B0B0B0] text-l font-ubuntu">Tell others what
               you
@@ -126,12 +126,12 @@ function ProductDetails() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col justify-end ml-32 mt-8">
+          <div className="flex flex-col justify-end ml-0 sm:ml-32 mt-8 sm:mt-0">
             <textarea
-              className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
+              className="border border-gray-900 rounded-md p-2 resize-y  w-full sm:w-96 h-40  mb-4 sm:mb-0"
               placeholder="Leave your review"></textarea>
             <button
-              className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-2 rounded-xl mt-4 ml-64">Submit
+              className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-2  rounded-xl mt-4 ml-64 sm:mt-8">Submit
             </button>
           </div>
         </div>
@@ -139,7 +139,7 @@ function ProductDetails() {
         {/* Reviews Section */}
         <div className="mt-20">
           <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
-          <div className="flex overflow-x-scroll">
+          <div className="flex overflow-x-scroll scrollbar-hide">
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -156,7 +156,7 @@ function ProductDetails() {
         <div className="mt-20 ">
           <h2
             className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Related Products</h2>
-          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+          <div className="flex flex-wrap justify-center  sm:grid-cols-2 space-x-6 relative mt-4">
             {relatedProducts.map((relatedProduct) => (
               <Link to={`/Products/details/${relatedProduct.id}`} key={relatedProduct.id}>
                 <div

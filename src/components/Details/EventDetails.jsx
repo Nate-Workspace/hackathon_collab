@@ -75,42 +75,38 @@ function EventDetails() {
 
   return (
     <div>
-      <div className="p-8">
-        <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
-          <div className="">
-            <img src='https://pic.pnnet.dev/300x300' alt='img'
-                 className="w-full h-[500px] object-contain"/>
-          </div>
-          <div className="w-1/2 pl-8 ml-20">
-            <h3 className="text-xl font-ubuntu mb-0">{event.title}</h3>
-            {reviews.length > 6 && (
-  <p className="text-[#3C9B78] text-sm font-light mb-16">{reviews[6].userName}</p>
-)}
+      <div className="p-8 sm:p-8">
+        <div className="flex flex-col sm:flex-row justify-center items-center">
+  <div className="w-full sm:w-auto mb-4 sm:mb-0">
+    <img src='https://pic.pnnet.dev/300x300' alt='img' className="w-full h-auto  object-contain" />
+  </div>
+  <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20 mt-20">
+  <h3 className="text-xl font-ubuntu mb-2">{event.title}</h3>
+  {reviews.length > 6 && (
+    <p className="text-[#3C9B78] text-sm font-light mb-4">{reviews[6].userName}</p>
+  )}
+  <p className="text-[#222831] text-2xl font-bold mb-2">Date: {event.event_date}</p>
+  <div className="description-wrapper w-110">
+    <p className="text-sm font-light mb-4">Description: {event.description}</p>
+  </div>
+  <p className="text-xl font-bold mb-2">Location: {event.event_place}</p>
+  <p className="text-l text-[#11875C] font-bold mb-8">Time: {event.event_time}</p>
+  <div className="flex">
+    <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+      <BookmarkSimple size={24} />
+      <span className="ml-2">Save</span>
+    </button>
+  </div>
+</div>
 
-            <p
-              className="text-[#222831] text-2xl font-bold mb-4">Date:
-              {event.event_date}</p>
-            <div className="description-wrapper w-110">
-              <p
-                className="text-sm font-light mb-8">Description: {event.description}</p>
-            </div>
-            <p className="text-xl font-bold mb-1">Location: {event.event_place}</p>
-            <p className="text-l text-[#11875C] font-bold mb-14">Time: {event.event_time}</p>
-            <div className="flex">
-              <button
-                className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
-                <BookmarkSimple size={24}/>
-                <span className="ml-2">Save</span>
-              </button>
-            </div>
+  </div>
+</div>
 
-          </div>
-        </div>
 
         {/* Reviews Section */}
-        <div className="mt-20">
+        <div className="mt-30 ">
           <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Reviews</h2>
-          <div className="flex overflow-x-scroll">
+          <div className="flex overflow-x-scroll scrollbar-hide">
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -126,7 +122,7 @@ function EventDetails() {
         <div className="mt-20 ">
           <h2
             className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">Related Events</h2>
-          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+          <div className="flex flex-wrap justify-center sm:grid-cols-2 space-x-6 relative mt-4">
             {relatedEvents.map((relatedEvent) => (
               <Link to={`/Events/details/${relatedEvent.id}`} key={relatedEvent.id}>
                 <div
@@ -161,7 +157,7 @@ function EventDetails() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
