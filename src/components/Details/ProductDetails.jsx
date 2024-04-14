@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Phone, BookmarkSimple, Star } from "phosphor-react";
+import { Phone, BookmarkSimple,BookBookmark, Star } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard.jsx";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import StarRating from "../Rating/StarRating.jsx";
+
 import { useProduct } from "../../Context/ProductContext.jsx";
 import { useSaved } from "../../Context/SavedContext.jsx";
 
@@ -16,12 +17,18 @@ function ProductDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedEvents, setSavedEvents] = useState([]);
+  const [saveState, setSaveState] = useState(false);
+  const [saveId,setSaveId]= useState(0);
+  const BASE_URL = "https://aguero.pythonanywhere.com";
+
+  
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [rates, setRates] = useState("");
   const [alreadyRated, setAlreadyRated] = useState(false);
   const { rater, reviewer, getReviews, getRatings } = useProduct();
   const { saveProduct } = useSaved();
+
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
       .then((res) => res.json())
@@ -123,6 +130,20 @@ function ProductDetails() {
       </div>
     );
   }
+
+  // -------------------- Handling save click -------------
+  
+  const handleSaveState = () => {
+    if (saveState) {
+      deletePost(product,saveId,setSaveState)
+    } else {
+      savedPostFetch(product, setSaveId,setSaveState);
+    }
+  
+    console.log(saveId);
+  };
+
+  //-----------------------End------------
   function handleRatingReview(e) {
     e.preventDefault();
     rater(id, rating);
@@ -164,10 +185,27 @@ function ProductDetails() {
                 <Phone size={24} />
                 <span className="ml-2">Call</span>
               </button>
-              <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
-                <BookmarkSimple size={24} />
-                <span className="ml-2">Save</span>
-              </button>
+
+              {/* ----------------------- Handling Save---------------------- */}
+              {saveState ? (
+                <button
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  onClick={handleSaveState}
+                >
+                  <BookBookmark size={24}/>
+                  <span className="ml-2">Saved</span>
+                </button>
+              ) : (
+                <button
+                  className="bg-orange-400 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  onClick={handleSaveState}
+                >
+                  <BookmarkSimple size={24} />
+                  <span className="ml-2">Save</span>
+                </button>
+              )}
+
+              {/* -----------------------End----------------------------- */}
             </div>
           </div>
         </div>
