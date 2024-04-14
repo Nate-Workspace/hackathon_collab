@@ -11,7 +11,7 @@ function LeftNav() {
 
   //--------------------NavBar scroll state--------------------
   const { isAuthenticated, logout, isLoading } = useAuth();
-  console.log(isAuthenticated, isLoading);
+  // console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 

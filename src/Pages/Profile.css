@@ -199,6 +199,9 @@
     justify-content: space-between;
     flex-direction: column;
   }
+  .left_col .img_container {
+    width: 120px;
+  }
 }
 
 @media (min-width: 1017) {
@@ -218,5 +221,10 @@
   }
   .left_col .img_container {
     top: -110px;
+  }
+}
+@media (min-width: 1100px) {
+  .left_col .img_container {
+    width: 180px;
   }
 }
