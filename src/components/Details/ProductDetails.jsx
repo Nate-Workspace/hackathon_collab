@@ -104,8 +104,9 @@ function ProductDetails() {
               alt={product.title}
               className="w-full h-[500px] object-contain"
             />
+
           </div>
-          <div className="w-1/2 pl-8 ml-20">
+          <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
             {reviews.length > 6 && (
               <p className="text-[#76ABAE] text-sm font-light mb-16">
@@ -186,6 +187,7 @@ function ProductDetails() {
             Related Products
           </h2>
           <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+
             {relatedProducts.map((relatedProduct) => (
               <Link
                 to={`/Products/details/${relatedProduct.id}`}

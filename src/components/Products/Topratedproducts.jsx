@@ -85,7 +85,7 @@ function TopRatedProducts() {
   };
 
   return (
-    <div className="p-8 relative bg-sky-50">
+    <div className="p-8 relative bg-[#EEEEEE]">
       <div className="text-center font-bold text-3xl my-12 relative">
         <p
           className="inline-block relative group"
