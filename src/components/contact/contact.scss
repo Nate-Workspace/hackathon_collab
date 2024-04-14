@@ -2,11 +2,12 @@
 
 .contact {
   height: 100%;
-  max-width: 1366px;
+  max-width: 100%px;
   margin: auto;
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 10px;
+  padding: 20px;
 
   @include mobile {
     width: 100%;
@@ -19,6 +20,8 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    text-align: center;
+    padding: 80px;
 
     @include mobile {
       gap: 20px;
@@ -44,12 +47,11 @@
   .formContainer {
     flex: 1;
     position: relative;
-    
+
     @include mobile {
       padding: 50px;
       width: 100%;
     }
-
 
     .phoneSvg {
       stroke: orange;
@@ -62,6 +64,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      padding-top: 20px;
 
       input,
       textarea {
@@ -70,7 +73,7 @@
         border: 1px solid white;
         color: white;
         border-radius: 5px;
-
+        width: 80%;
         @include mobile {
           padding: 10px;
         }
@@ -82,8 +85,15 @@
         background-color: orange;
         cursor: pointer;
         font-weight: 500;
+        border-radius: 20px;
+        width: 80%;
         @include mobile {
           padding: 10px;
+        }
+        &:hover {
+          // Apply style on hover
+          background-color: white;
+          color: black; // Change color on hover
         }
       }
     }
