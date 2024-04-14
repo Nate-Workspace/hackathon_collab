@@ -156,28 +156,40 @@ const handleCustomPriceFilterApply = () => {
       
 <div className="text-center font-bold text-3xl my-8 relative">
   <p className=" sm:inline-block relative group">
-    <span className="font-light text-lg">Shop by category</span><br />
-    <span className="text-5xl text-gray-900">Shop by category</span>
+    <span className="font-light text-lg" style={{ color: '#000' }}>Shop by category</span><br />
+    <span className=" text-5xl text-gray-900">Shop by category</span>
   </p>
   <span style={lineStyle}></span>
-  <div className="sm:hidden">
-    <select
-      className="block  w-full border border-gray-300 p-2 rounded-md"
-      onChange={(e) => handleCategoryChange(e.target.value)}
-      value={selectedCategory}
-      style={{ fontSize: '18px' }}
-    >
-      <option value="All">All</option>
-      <option value="FD">Food</option>
-      <option value="ST">Stationery</option>
-      <option value="PC">Personal Computer</option>
-      <option value="MB">Mobile</option>
-      <option value="SK">Sticker</option>
-      <option value="CL">Bag</option>
-      <option value="CL">Clothes</option>
-      <option value="PC">Other Electronics</option>
-    </select>
-  </div>
+  <div className="sm:hidden flex flex-wrap justify-between">
+  <select
+    className="block w-48 sm:w-auto border border-gray-300 p-2 rounded-md mb-2"
+    onChange={(e) => handleCategoryChange(e.target.value)}
+    value={selectedCategory}
+    style={{ fontSize: '18px' }}
+  >
+    <option value="All">All</option>
+    <option value="FD">Food</option>
+    <option value="ST">Stationery</option>
+    <option value="PC">Personal Computer</option>
+    <option value="MB">Mobile</option>
+    <option value="SK">Sticker</option>
+    <option value="CL">Bag</option>
+    <option value="CL">Clothes</option>
+    <option value="PC">Other Electronics</option>
+  </select>
+  <select
+    className="block w-48 sm:w-auto border border-gray-300 p-2 rounded-md mb-2"
+    onChange={(e) => handlePriceFilterChange(e.target.value)}
+    value={priceFilter}
+    style={{ fontSize: '18px' }}
+  >
+    <option value="">Price</option>
+    <option value="under300">Under Birr 300</option>
+    <option value="bwt500&1000">Birr 500 to Birr 1000</option>
+    <option value="over1000">Over Birr 1000</option>
+  </select>
+</div>
+
 </div>
 
 
@@ -191,6 +203,7 @@ const handleCustomPriceFilterApply = () => {
       transform: showCategories ? 'translateY(-7px)' : 'none',
       boxShadow: 'none',
        marginLeft: 'auto',
+       color: '#000'
     }}
     onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
     onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
@@ -204,8 +217,8 @@ const handleCustomPriceFilterApply = () => {
           <img src={cancel} alt="Cancel" style={cancelIconStyle} onClick={handleCancelClick}/>
        <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
          <div  style={{ marginLeft: '-10px' }}>
-      <h3 className="text-md font-semibold mb-1">Categories</h3>
-        <ul>
+      <h3 className="text-md font-semibold mb-1" style={{ color: '#000' }}>Categories</h3>
+        <ul  style={{ color: '#000' }}>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("FD")}>
             <input type="radio" id="Food" name="category" checked={selectedCategory === "FD"} onChange={() => handleCategoryChange("FD")} />
             <label htmlFor="Food">Food</label>
@@ -226,23 +239,23 @@ const handleCustomPriceFilterApply = () => {
             <input type="radio" id="Sticker" name="category" checked={selectedCategory === "SK"} onChange={() => handleCategoryChange("SK")} />
             <label htmlFor="Sticker">Sticker</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("CL")}>
-            <input type="radio" id="Bag" name="category" checked={selectedCategory === "CL"} onChange={() => handleCategoryChange("CL")} />
+          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("BG")}>
+            <input type="radio" id="Bag" name="category" checked={selectedCategory === "BG"} onChange={() => handleCategoryChange("BG")} />
             <label htmlFor="Bag">Bag</label>
           </li>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("CL")}>
             <input type="radio" id="Clothes" name="category" checked={selectedCategory === "CL"} onChange={() => handleCategoryChange("CL")} />
             <label htmlFor="Clothes">Clothes</label>
           </li>
-           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("PC")}>
-            <input type="radio" id="Other Electronics" name="category" checked={selectedCategory === "PC"} onChange={() => handleCategoryChange("PC")} />
+           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("OT")}>
+            <input type="radio" id="Other Electronics" name="category" checked={selectedCategory === "OT"} onChange={() => handleCategoryChange("OT")} />
             <label htmlFor="Other Electronics">Other Electronics</label>
           </li>
         </ul>
       </div>
        <div  style={{ marginLeft: '-10px' }}>
-    <h3 className="text-md font-semibold mb-1 mt-2">Price (Birr)</h3>
-    <ul>
+    <h3 className="text-md font-semibold mb-1 mt-2" style={{ color: '#000' }}>Price (Birr)</h3>
+    <ul style={{ color: '#000' }}>
       <li className="cursor-pointer py-1 px-2 " onClick={() => handlePriceFilterChange(  {price__lt: 300} )}>
             <input type="radio" id="under 300" name="category" />
             <label htmlFor="under 300">Under Birr 300</label>
@@ -316,7 +329,7 @@ const handleCustomPriceFilterApply = () => {
                     />
                   )}
                 </div>
-                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
+                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"  style={{ color: '#000' }}>
                   {product.title}
                 </p>
                 <p className="text-gray-600">{product.rating} stars</p>
@@ -332,7 +345,7 @@ const handleCustomPriceFilterApply = () => {
           <div key={`placeholder-${index}`} className="w-64 h-64"></div>
         ))}
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4"  style={{ color: '#000' }}>
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}

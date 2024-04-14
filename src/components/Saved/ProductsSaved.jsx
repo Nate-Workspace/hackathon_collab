@@ -5,6 +5,7 @@ import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { config } from "tailwind-scrollbar-hide";
 
 function ProductsSaved() {
   const [products, setproducts] = useState([]);
@@ -13,22 +14,33 @@ function ProductsSaved() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
 
+  const token = localStorage.getItem("token");
+        let config = null;
+  
+        if (token) {
+          config = {
+            headers: {
+              Authorization: `JWT ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+        } else {
+          console.error("Token not found in localStorage");
+        }
+
   const getproducts = async () => {
     try {
-      const response = await axios.get(
-        "https://aguero.pythonanywhere.com/product/0/save"
-      );
-      console.log(response); 
-      setproducts(response.data);
-      console.log(products); 
+      const response = await axios.get({BASE_URL}/product/0/save, config);
+      console.log("res", response.data);
     } catch (err) {
       console.error(err);
     }
   };
 
-  useEffect(() => {
-    getproducts();
-  }, []);
+
+  useEffect(()=>{
+    getproducts()
+  },[products])
 
   console.log(products);
 

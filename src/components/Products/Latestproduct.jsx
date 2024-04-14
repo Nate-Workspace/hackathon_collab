@@ -83,7 +83,7 @@ function Latestproduct() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           >
-    <span className="font-light text-lg">SHOP</span><br />
+    <span className="font-light text-lg"  style={{ color: '#000' }}>SHOP</span><br />
     <span className="text-5xl text-gray-900"> Latest Products</span>
   </p>
   <span style={lineStyle}></span>
@@ -118,7 +118,7 @@ function Latestproduct() {
             <img src={isSaved(product.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(product.id)} />
           )}
         </div>
-        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{product.title}</p>
+        <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold" style={{ color: '#000' }}>{product.title}</p>
         <p className="text-gray-600">{product.rating ? `${product.rating} stars` : 'No rating'}</p>
         <p className="text-gray-600 text-center">Price: ${product.price}</p>
       </div>

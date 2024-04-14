@@ -8,6 +8,7 @@ import StarRating from "../StarRating/StarRating.jsx";
 import axios from "axios";
 import savedPostFetch from "../savedPost/savedPostFetch.jsx";
 import deletePost from "../savedPost/deletePost.jsx";
+import { useProduct } from "../../Context/ProductContext.jsx";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -19,8 +20,41 @@ function ProductDetails() {
   const [savedEvents, setSavedEvents] = useState([]);
   const [saveState, setSaveState] = useState(false);
   const [saveId,setSaveId]= useState(0);
+  const BASE_URL = "https://aguero.pythonanywhere.com";
 
   
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const { rater, reviewer, getReviews } = useProduct();
+
+
+  const token = localStorage.getItem("token");
+        let config = null;
+  
+        if (token) {
+          config = {
+            headers: {
+              Authorization: `JWT ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+        } else {
+          console.error("Token not found in localStorage");
+        }
+
+  const getproducts = async () => {
+    try {
+      const response = await axios.get({BASE_URL}/product/0/save, config);
+      console.log("res", response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+  useEffect(()=>{
+    getproducts()
+  },[product])
 
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
@@ -47,7 +81,15 @@ function ProductDetails() {
     setIsHovered(true);
     setHoveredImage(eventId);
   };
-
+  useEffect(function(){
+    async function revieww() {
+      e.preventDefault();
+      const revw = await getReviews(id);
+      console.log("reviewssss", revw);
+    }
+    revieww();
+  },[])
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
     setHoveredImage(null);
@@ -96,17 +138,25 @@ function ProductDetails() {
   };
 
   //-----------------------End------------
+  function handleRatingReview(e) {
+    e.preventDefault();
+    rater(id, rating);
+    reviewer(id, review);
+    console.log("Rating", rating);
+    console.log("review", review);
+  }
 
   return (
     <div>
-      <div className="p-8 sm:p-8">
-        <div className="flex sm:flex-row mr-30 ml-30 mt-10 mb-10 justify-items-center">
-          <div className="w-full sm:w-auto mb-4 sm:mb-0">
+      <div className="p-8">
+        <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
+          <div className="">
             <img
               src={product.image}
               alt={product.title}
-              className="w-full h-auto  object-contain"
+              className="w-full h-[500px] object-contain"
             />
+
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
@@ -155,53 +205,58 @@ function ProductDetails() {
           </div>
         </div>
 
-        {/* Rating Section */}
-        <div className="flex flex-col sm:flex-row justify-center sm:my-26 sm:mx-12 mx-8">
-          <div className="mb-8 sm:mr-20 flex flex-col justify-items-start">
-            <h2 className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-10">
-              Rate this Product
-            </h2>
-            <p className="text-[#B0B0B0] text-l font-ubuntu">
-              Tell others what you think about this product
-            </p>
-            <div className="flex justify-around mt-8">
-              <StarRating size={60} />
+        <form onSubmit={handleRatingReview}>
+          {/* Rating Section */}
+
+          <div className="flex justify-center my-16 mx-8">
+            <div className="mr-20 flex flex-col justify-items-start">
+              <h2 className="text-[#000000] text-3xl font-ubuntu font-bold mb-1 mt-8">
+                Rate this Product
+              </h2>
+              <p className="text-[#B0B0B0] text-l font-ubuntu">
+                Tell others what you think about this product
+              </p>
+              <div className="flex justify-around mt-8">
+                <StarRating size={60} onSetRating={setRating} />
+              </div>
+            </div>
+            <div className="flex flex-col justify-end ml-32 mt-8">
+              <textarea
+                onChange={(e) => setReview(e.target.value)}
+                className="border border-gray-900 rounded-md p-2 resize-y w-96 h-40"
+                placeholder="Leave your review"
+              ></textarea>
+              <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-2 rounded-xl mt-4 ml-64">
+                Submit
+              </button>
             </div>
           </div>
-          <div className="flex flex-col justify-end ml-0 sm:ml-32 mt-8 sm:mt-0">
-            <textarea
-              className="border border-gray-900 rounded-md p-2 resize-y  w-full sm:w-96 h-40  mb-4 sm:mb-0"
-              placeholder="Leave your review"
-            ></textarea>
-            <button className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-2 px-2  rounded-xl mt-4 ml-64 sm:mt-8">
-              Submit
-            </button>
-          </div>
-        </div>
 
-        {/* Reviews Section */}
-        <div className="mt-20">
-          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
-            Reviews
-          </h2>
-          <div className="flex overflow-x-scroll scrollbar-hide">
-            {reviews.map((review, index) => (
-              <ReviewsCard
-                key={index}
-                userName={review.userName}
-                rating={review.rating}
-                review={review.review}
-              />
-            ))}
+          {/* Reviews Section */}
+          <div className="mt-20">
+            <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
+              Reviews
+            </h2>
+            <div className="flex overflow-x-scroll">
+              {reviews.map((review, index) => (
+                <ReviewsCard
+                  key={index}
+                  userName={review.userName}
+                  rating={review.rating}
+                  review={review.review}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </form>
 
         {/* Related Section */}
         <div className="mt-20 ">
           <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
             Related Products
           </h2>
-          <div className="flex flex-wrap justify-center  sm:grid-cols-2 space-x-6 relative mt-4">
+          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+
             {relatedProducts.map((relatedProduct) => (
               <Link
                 to={`/Products/details/${relatedProduct.id}`}

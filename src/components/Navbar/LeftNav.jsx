@@ -105,38 +105,6 @@ function LeftNav() {
             )}
           </li>
 
-
-           {/* <li
-            className="button"
-            id="button2"
-            onMouseEnter={handleStudioClick}
-            onMouseLeave={handleStudioLeave}
-          >
-            STUDIO
-            {showStudioDropdown && (
-              <ul
-                className="dropdown"
-                onMouseEnter={handleStudioClick}
-                onMouseLeave={handleStudioLeave}
-              >
-                 <hr /> */}
-                
-                {/* <li>
-                  <Link to="/Saved">SAVED</Link>
-                </li>
-                <li>
-                  <Link to="/Create">CREATE</Link>
-                </li>
-                <li>
-                  <Link to="/Profile">PROFILE</Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li className="about-us">
-            <Link to="/AboutUs">ABOUT US</Link>
-          </li>  */}
-          
           
 
 
@@ -165,29 +133,23 @@ function LeftNav() {
               )}
             </li>
           )}
-        
-          {!isAuthenticated && !isLoading && (
-            <>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-
-              <li>
-                <Link to="/SignIn">Sign In</Link>
-              </li>
-              </>
-          )}
 
           </ul>
-          
+          {!isAuthenticated && !isLoading && (
+            <div className="flex flex-row gap-10 pr-10 ">
+              <li>
+                <Link to="/register">REGISTER</Link>
+              </li>
 
-          {console.log("isAuthenticated", isAuthenticated)}
-          {console.log("isLoading", isLoading)}
-          
+              <li className="w-auto">
+                <Link to="/SignIn">SIGNIN</Link>
+              </li>
+              </div>
+          )}
           
         {isAuthenticated && !isLoading && (
             <li>
-              <Link to="/Profile" className="absolute right-5 bottom-3">
+              <Link to="/Profile" className="absolute right-10 bottom-3 ">
                 <FaUserCircle color="grey" size={40} />
               </Link>
             </li>
