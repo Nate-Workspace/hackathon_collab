@@ -122,7 +122,7 @@ function Topservices() {
                 {service.rating && service.rating.rate !== undefined ? (
                   <p className="text-gray-600">{service.rating.rate} stars</p>
                 ) : (
-                  <p className="text-gray-600">No rating</p>
+                  <p className="text-gray-600">Rating: 0</p>
                 )}
                 <p className="text-gray-600 text-center">Price: ${service.price}</p>
               </div>
