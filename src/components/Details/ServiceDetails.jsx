@@ -4,7 +4,7 @@ import { Phone, BookmarkSimple, Star } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
-import StarRating from "../StarRating/StarRating";
+import StarRating from "../Rating/StarRating";
 
 function ServiceDetails() {
   const { id } = useParams();
@@ -14,7 +14,7 @@ function ServiceDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedServices, setSavedServices] = useState([]);
-
+  const {raterService,reviewerService,getReviews,getRatings} = useContext(ProductContext);
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/service/${id}`)
       .then((res) => res.json())

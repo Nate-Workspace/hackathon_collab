@@ -4,7 +4,7 @@ import { Phone, BookmarkSimple, Star } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard.jsx";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
-import StarRating from "../StarRating/StarRating.jsx";
+import StarRating from "../Rating/StarRating.jsx";
 import { useProduct } from "../../Context/ProductContext.jsx";
 
 function ProductDetails() {
@@ -17,7 +17,9 @@ function ProductDetails() {
   const [savedEvents, setSavedEvents] = useState([]);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { rater, reviewer, getReviews } = useProduct();
+  const [rates, setRates] = useState("");
+  const [alreadyRated, setAlreadyRated] = useState(false);
+  const { rater, reviewer, getReviews, getRatings } = useProduct();
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/product/${id}`)
       .then((res) => res.json())
@@ -32,26 +34,52 @@ function ProductDetails() {
         const limitedRelated = related.slice(0, 20);
         setRelatedProducts(limitedRelated);
       });
-    fetch(
-      "https://random-data-api.com/api/v3/projects/e657498e-1ee1-4ec6-a8ed-ecfef7f0cc48?api_key=HF9K2pVV3eyFg790PkXc0w"
-    )
-      .then((response) => response.json())
-      .then((data) => setReviews(data.json_array));
   }, [id]);
+
+  useEffect(() => {
+    async function fetchReviewsAndRatings() {
+      const reviewsResponse = await getReviews(id);
+      const ratingsResponse = await getRatings(id);
+
+      const combinedData = reviewsResponse.map((review) => {
+        const correspondingRating = ratingsResponse.find(
+          (rating) =>
+            rating.user.first_name === review.user.first_name &&
+            rating.user.last_name === review.user.last_name
+        );
+        return {
+          id: review.id,
+          userName: `${review.user.first_name} ${review.user.last_name}`,
+          rating: correspondingRating ? correspondingRating.rate : 0,
+          review: review.review,
+        };
+      });
+
+      setReviews(combinedData);
+    }
+
+    fetchReviewsAndRatings();
+  }, [id, getReviews, getRatings]);
 
   const handleMouseEnter = (eventId) => {
     setIsHovered(true);
     setHoveredImage(eventId);
   };
-  useEffect(function(){
-    async function revieww() {
-      e.preventDefault();
-      const revw = await getReviews(id);
-      console.log("reviewssss", revw);
-    }
-    revieww();
-  },[])
-  
+  // useEffect(function () {
+  //   async function revieww() {
+  //     const revw = await getReviews(id);
+  //     setReviews(revw);
+  //   }
+  //   revieww();
+  // }, []);
+
+  // useEffect(function () {
+  //   async function ratingss() {
+  //     const rateResponse = await getRatings(id);
+  //     setRates(rateResponse);
+  //   }
+  //   ratingss();
+  // }, []);
   const handleMouseLeave = () => {
     setIsHovered(false);
     setHoveredImage(null);
@@ -93,6 +121,7 @@ function ProductDetails() {
     console.log("Rating", rating);
     console.log("review", review);
   }
+
 
   return (
     <div>
@@ -168,14 +197,15 @@ function ProductDetails() {
               Reviews
             </h2>
             <div className="flex overflow-x-scroll">
-              {reviews.map((review, index) => (
+              {reviews.map((data, index) => (
                 <ReviewsCard
                   key={index}
-                  userName={review.userName}
-                  rating={review.rating}
-                  review={review.review}
+                  userName={data.userName}
+                  rating={data.rating}
+                  review={data.review}
                 />
               ))}
+              {console.log("rating in review",rating)}
             </div>
           </div>
         </form>
