@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Link } from 'react-router-dom';
 

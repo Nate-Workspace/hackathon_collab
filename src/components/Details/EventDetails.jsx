@@ -74,6 +74,7 @@ function EventDetails() {
 
   return (
     <div>
+    
       <div className="p-8">
         <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
           <div className="">
@@ -121,6 +122,8 @@ function EventDetails() {
             Reviews
           </h2>
           <div className="flex overflow-x-scroll">
+
+            
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -134,10 +137,12 @@ function EventDetails() {
 
         {/* Related Section */}
         <div className="mt-20 ">
+          
           <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
             Related Events
           </h2>
           <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
+
             {relatedEvents.map((relatedEvent) => (
               <Link
                 to={`/Events/details/${relatedEvent.id}`}
@@ -189,7 +194,7 @@ function EventDetails() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
