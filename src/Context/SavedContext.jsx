@@ -23,13 +23,35 @@ function SavedProvider({ children }) {
   const getproducts = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/product/0/save`, config);
-      console.log("res", response.data);
+      return response.data;
     } catch (err) {
       console.error(err);
     }
   };
+
+  const getServices = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/service/0/save`, config);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getEvents = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/event/0/save`, config);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const saveProduct = async (product) => {
     console.log("product.id", product.id);
+    if (!product) {
+      return "No product is saved";
+    }
     try {
       console.log(config);
       const res = await axios.post(
@@ -45,11 +67,49 @@ function SavedProvider({ children }) {
     }
   };
 
+  const saveService = async (service) => {
+    console.log("service.id", service.id);
+    try {
+      console.log(config);
+      const res = await axios.post(
+        `https://aguero.pythonanywhere.com/service/${service.id}/save/`,
+        {},
+        config
+      );
+      alert("service uploaded successfully");
+      console.log("uploaded:", res);
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const saveEvent = async (event) => {
+    console.log("event.id", event.id);
+    try {
+      console.log(config);
+      const res = await axios.post(
+        `https://aguero.pythonanywhere.com/event/${event.id}/save/`,
+        {},
+        config
+      );
+      alert("event uploaded successfully");
+      console.log("uploaded:", res);
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <SavedContext.Provider
       value={{
         getproducts,
         saveProduct,
+        saveEvent,
+        saveService,
+        getServices,
+        getEvents,
       }}
     >
       {children}
