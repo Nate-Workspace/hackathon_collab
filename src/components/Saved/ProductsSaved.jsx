@@ -5,7 +5,8 @@ import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { config } from "tailwind-scrollbar-hide";
+import { useSaved } from "../../Context/SavedContext";
+
 
 
 function ProductsSaved() {
