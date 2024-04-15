@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSaved } from "../../Context/SavedContext";
 
-
-
 function ProductsSaved() {
   const [products, setproducts] = useState([]);
+  const [services, setServices] = useState([]);
+  const [events, setEvents] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
@@ -43,9 +43,14 @@ function ProductsSaved() {
   };
 
 
-  useEffect(()=>{
-    getproducts()
-  },[products])
+  useEffect(function () {
+    async function prodfetch() {
+      const prod = await getproducts();
+      setproducts(prod);
+    }
+    prodfetch();
+  }, []);
+
 
   console.log(products);
   products.map(product=>{
@@ -157,14 +162,23 @@ function ProductsSaved() {
                         alt={each.product.title}
                         className="w-full h-full object-cover rounded-lg"
                       />
-                      {isHovered && hoveredImage === each.product.id && (
-                        <img
-                          src={isSaved(each.product.id) ? savedIcon : saveIcon}
-                          alt="Save"
-                          style={saveIconStyle}
-                          onClick={() => toggleSaved(each.product.id)}
-                        />
-                      )}
+                        <div className="bg-white  rounded-full w-9 h-9 p-1 flex items-center justify-center absolute top-5 right-5 cursor-pointer	">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#000"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="none"
+                          className="w-6 h-6 "
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                          />
+                        </svg>
+                      </div>
+
                     </div>
                     <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
                       {each.product.title}

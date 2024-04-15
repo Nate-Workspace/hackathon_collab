@@ -13,6 +13,8 @@ import savedPostFetch from "../savedPost/savedPostFetch.jsx";
 import deletePost from "../savedPost/deletePost.jsx";
 import { useProduct } from "../../Context/ProductContext.jsx";
 import { useSaved } from "../../Context/SavedContext.jsx";
+import savedPostFetch from "../savedPost/savedPostFetch.jsx";
+import deletePost from "../savedPost/deletePost.jsx";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -47,15 +49,15 @@ function ProductDetails() {
         setRelatedProducts(limitedRelated);
       });
   }, [id]);
-  useEffect(function () {
-    async function saver() {
-      const saved = await saveProduct(product);
-      if(saved){
-        console.log("saver", saved)
-      }
-    }
-    saver();
-  }, [product]);
+  // useEffect(function () {
+  //   async function saver() {
+  //     const saved = await saveProduct(product);
+  //     if(saved){
+  //       console.log("saver", saved)
+  //     }
+  //   }
+  //   saver();
+  // }, [product]);
   useEffect(() => {
     async function fetchReviewsAndRatings() {
       const reviewsResponse = await getReviews(id);
@@ -139,6 +141,7 @@ function ProductDetails() {
 
   const handleSaveState = () => {
     if (saveState) {
+
       deletePost(product, saveId, setSaveState);
     } else {
       savedPostFetch(product, setSaveId, setSaveState);

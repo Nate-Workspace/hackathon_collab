@@ -11,30 +11,28 @@ const PostForm = () => {
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const { uploadProduct } = useProduct();
-  const [priceError, setPriceError] = useState('');
-  const handleImageUpload = (e) => {
+  let productData = {
+    title: name,
+    description: description,
+    price: price,
+    type: category,
+    image: null,
+  };
+  function handleChange(e) {
+    const { name, value } = e.target;
+
     const files = Array.from(e.target.files);
     const imageUrls = files.map((file) => URL.createObjectURL(file));
-    setImages(imageUrls);
-  };
-  const [productData, setProductData] = useState({
-    title: "pc",
-    description: "pc pc pc",
-    price: 25000,
-    type: 'FD',
-    image: null
-  })
-
+    if (name === "image" && files.length > 0) {
+      productData = { ...productData, image: imageUrls };
+    } else {
+      productData = { ...productData, [name]: value };
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Form submitted:", {
-      name,
-      description,
-      price,
-      category,
-      images,
-    });
+    console.log("Form submitted:", productData);
     uploadProduct(productData);
     setName("");
     setDescription("");
@@ -108,14 +106,16 @@ const PostForm = () => {
             onChange={(e) => setCategory(e.target.value)}
             required
           >
-            <option value="pc">Personal Computer</option>
-            <option value="electronics">Phone</option>
-            <option value="clothes">Clothes</option>
+            <option value="All">All</option>
+
             <option value="FD">Food</option>
-            <option value="stationary">Stationary</option>
-            <option value="bag">Bag</option>
-            <option value="sticker">Sticker</option>
-            <option value="other">Other</option>
+            <option value="ST">Stationery</option>
+            <option value="PC">Personal Computer</option>
+            <option value="MB">Mobile</option>
+            <option value="SK">Sticker</option>
+            <option value="CL">Bag</option>
+            <option value="CL">Clothes</option>
+            <option value="PC">Other Electronics</option>
           </select>
         </div>
         <div>
@@ -125,11 +125,12 @@ const PostForm = () => {
           <input
             type="file"
             id="images"
+            name="image"
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-400  text-gray-700 "
             accept="image/*"
             multiple
-            onChange={handleImageUpload}
-            required
+
           />
           <div className="mt-2 flex space-x-4">
             {images.map((imageUrl, index) => (

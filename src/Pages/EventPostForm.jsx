@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { useProduct } from "../Context/ProductContext";
+import { data } from "autoprefixer";
 
 const EventForm = () => {
   const [name, setName] = useState("new");
@@ -10,22 +11,29 @@ const EventForm = () => {
   const [location, setLocation] = useState("new");
   const [host, setHost] = useState("new");
   const [images, setImages] = useState([]);
-  const [eventData, setEventData] = useState({
-    title: "new",
-    organizer: "devcrew",
-    description: "hackathon",
-    event_date: "2024-04-20",
-    event_time: "11:00:00",
-    event_place: "lt",
+  const eventData = {
+    title: name,
+    organizer: host,
+    description: description,
+    event_date: data,
+    event_time: time,
+    event_place: location,
     image: null,
-  });
-  const {uploadProduct} =useProduct();
+  };
+  const { uploadProduct } = useProduct();
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const imageUrls = files.map((file) => URL.createObjectURL(file));
     setImages(imageUrls);
   };
-
+  // function handleChange(e) {
+  //   const { name, value, files } = e.target;
+  //   if (name === "image" && files.length > 0) {
+  //     productData = { ...productData, image: files[0] };
+  //   } else {
+  //     productData = { ...productData, [name]: value };
+  //   }
+  // }
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -139,6 +147,7 @@ const EventForm = () => {
           </label>
           <input
             type="file"
+            name="image"
             id="images"
             className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700"
             accept="image/*"
