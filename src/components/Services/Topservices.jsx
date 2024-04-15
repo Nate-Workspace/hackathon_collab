@@ -84,8 +84,8 @@ function Topservices() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
   >
-    <span className="font-light text-lg">SERVICES</span><br />
-    <span className=" text-5xl">  Top Services</span>
+    <span className="font-light text-lg">Services</span><br />
+    <span className=" text-3xl">  Top Services</span>
   </p>
  <span style={lineStyle}></span>
 </div>

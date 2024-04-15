@@ -144,6 +144,7 @@ const EventForm = () => {
             accept="image/*"
             multiple
             onChange={handleImageUpload}
+            required
           />
           <div className="mt-2 flex space-x-4">
             {images.map((imageUrl, index) => (

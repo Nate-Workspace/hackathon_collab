@@ -9,6 +9,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { dotStream } from "ldrs";
 import { FaUserCircle } from "react-icons/fa";
 
+
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
@@ -72,11 +73,11 @@ function LeftNav() {
       } ${showExploreDropdown ? "hovered" : ""}`}
     >
       <div className="nav-links">
-        <p className="logo">LOGO</p>
+        <p className="logo">Logo</p>
 
         <ul className="ul">
           <li className="home">
-            <Link to="/">HOME</Link>
+            <Link to="/">Home</Link>
           </li>
           <li
             className="button"
@@ -84,7 +85,7 @@ function LeftNav() {
             onMouseEnter={handleExploreClick}
             onMouseLeave={handleEventLeave}
           >
-            EXPLORE
+            Explore
             {showExploreDropdown && (
               <ul
                 className="dropdown"
@@ -93,13 +94,13 @@ function LeftNav() {
               >
                 {/* <hr /> */}
                 <li>
-                  <Link to="/Products">PRODUCTS</Link>
+                  <Link to="/Products">Products</Link>
                 </li>
                 <li>
-                  <Link to="/Services">SERVICES</Link>
+                  <Link to="/Services">Services</Link>
                 </li>
                 <li>
-                  <Link to="/Events">EVENTS</Link>
+                  <Link to="/Events">Events</Link>
                 </li>
               </ul>
             )}
@@ -115,7 +116,7 @@ function LeftNav() {
               onMouseEnter={handleStudioClick}
               onMouseLeave={handleStudioLeave}
             >
-              STUDIO
+              Studio
               {showStudioDropdown && (
                 <ul
                   className="dropdown"
@@ -124,10 +125,10 @@ function LeftNav() {
                 >
                   {/* <hr /> */}
                   <li>
-                    <Link to="/Saved">SAVED</Link>
+                    <Link to="/Saved">Saved</Link>
                   </li>
                   <li>
-                    <Link to="/Create">CREATE</Link>
+                    <Link to="/Create">Create</Link>
                   </li>
                 </ul>
               )}
@@ -138,7 +139,9 @@ function LeftNav() {
           {!isAuthenticated && !isLoading && (
             <div className="flex flex-row gap-10 pr-10 ">
               <li>
+
                 <Link to="/register">REGISTER</Link>
+
               </li>
 
               <li className="w-auto">
