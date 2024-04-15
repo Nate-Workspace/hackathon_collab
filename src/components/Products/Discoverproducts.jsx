@@ -156,6 +156,7 @@ const handleCustomPriceFilterApply = () => {
       
 <div className="text-center font-bold text-3xl my-8 relative">
   <p className=" sm:inline-block relative group">
+
     <span className="font-light text-lg" style={{ color: '#000' }}>Shop by category</span><br />
     <span className=" text-5xl text-gray-900">Shop by category</span>
   </p>
@@ -197,7 +198,7 @@ const handleCustomPriceFilterApply = () => {
 <div className="hidden sm:block flex justify-end sm:mr-20 mb-6 relative">
   <button
     onClick={toggleCategories}
-    className="flex items-center font-bold py-1 px-2 rounded-full border-2 border-black transition-transform duration-300"
+    className="flex items-center font-bold py-1 px-2 rounded-full border-2 border-black transition-transform duration-300 text-gray-800"
     style={{
       zIndex: showCategories ? '30' : 'auto',
       transform: showCategories ? 'translateY(-7px)' : 'none',
@@ -215,60 +216,68 @@ const handleCustomPriceFilterApply = () => {
 
         <div className={`fixed bottom-0 right-0 left-0 top-0 h-full w-full max-w-sm bg-white border border-gray-300 rounded shadow-md py-8 px-16 z-10 transform transition-transform ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
           <img src={cancel} alt="Cancel" style={cancelIconStyle} onClick={handleCancelClick}/>
-       <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
+       <h2 className="text-xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
          <div  style={{ marginLeft: '-10px' }}>
+
       <h3 className="text-md font-semibold mb-1" style={{ color: '#000' }}>Categories</h3>
         <ul  style={{ color: '#000' }}>
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("FD")}>
+
             <input type="radio" id="Food" name="category" checked={selectedCategory === "FD"} onChange={() => handleCategoryChange("FD")} />
             <label htmlFor="Food">Food</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("ST")}>
+          <li className="cursor-pointer py-1 px-2  text-gray-700" onClick={() => handleCategoryChange("ST")}>
             <input type="radio" id="Stationery" name="category" checked={selectedCategory === "ST"} onChange={() => handleCategoryChange("ST")} />
             <label htmlFor="Stationery">Stationery</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("PC")}>
+          <li className="cursor-pointer py-1 px-2 text-gray-700" onClick={() => handleCategoryChange("PC")}>
             <input type="radio" id="Personal Computer" name="category" checked={selectedCategory === "PC"} onChange={() => handleCategoryChange("PC")} />
             <label htmlFor="Personal Computer">Personal Computer</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("MB")}>
+          <li className="cursor-pointer py-1 px-2 text-gray-700" onClick={() => handleCategoryChange("MB")}>
             <input type="radio" id="Mobile" name="category" checked={selectedCategory === "MB"}  onChange={() => handleCategoryChange("MB")}/>
             <label htmlFor="Mobile">Mobile</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("SK")}>
+          <li className="cursor-pointer py-1 px-2 text-gray-700 " onClick={() => handleCategoryChange("SK")}>
             <input type="radio" id="Sticker" name="category" checked={selectedCategory === "SK"} onChange={() => handleCategoryChange("SK")} />
             <label htmlFor="Sticker">Sticker</label>
           </li>
+
           <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("BG")}>
             <input type="radio" id="Bag" name="category" checked={selectedCategory === "BG"} onChange={() => handleCategoryChange("BG")} />
+
             <label htmlFor="Bag">Bag</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("CL")}>
+          <li className="cursor-pointer py-1 px-2 text-gray-700 " onClick={() => handleCategoryChange("CL")}>
             <input type="radio" id="Clothes" name="category" checked={selectedCategory === "CL"} onChange={() => handleCategoryChange("CL")} />
             <label htmlFor="Clothes">Clothes</label>
           </li>
+
            <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("OT")}>
             <input type="radio" id="Other Electronics" name="category" checked={selectedCategory === "OT"} onChange={() => handleCategoryChange("OT")} />
+
             <label htmlFor="Other Electronics">Other Electronics</label>
           </li>
         </ul>
       </div>
        <div  style={{ marginLeft: '-10px' }}>
+
     <h3 className="text-md font-semibold mb-1 mt-2" style={{ color: '#000' }}>Price (Birr)</h3>
     <ul style={{ color: '#000' }}>
       <li className="cursor-pointer py-1 px-2 " onClick={() => handlePriceFilterChange(  {price__lt: 300} )}>
+
             <input type="radio" id="under 300" name="category" />
             <label htmlFor="under 300">Under Birr 300</label>
           </li>
-      <li className="cursor-pointer py-1 px-2 " onClick={() => handlePriceFilterChange(  { price__gt: 500, price__lt: 1000 })}>
+      <li className="cursor-pointer py-1 px-2 text-gray-700" onClick={() => handlePriceFilterChange(  { price__gt: 500, price__lt: 1000 })}>
             <input type="radio" id="bwt 500&1000" name="category" />
             <label htmlFor="bwt 500&1000">Birr 500 to Birr 1000</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() =>handlePriceFilterChange( { price__gt: 1000 })}>
+          <li className="cursor-pointer py-1 px-2 text-gray-700" onClick={() =>handlePriceFilterChange( { price__gt: 1000 })}>
             <input type="radio" id="over 1000" name="category"  />
             <label htmlFor="over 1000">Over Birr 1000 </label>
       </li>
-      <li className="cursor-pointer py-1 px-2" onClick={() => setIsCustomPrice(true)}>
+      <li className="cursor-pointer py-1 px-2 text-gray-700" onClick={() => setIsCustomPrice(true)}>
       <input type="radio" id="custom" name="category" />
       <label htmlFor="custom">Custom</label>
        </li>

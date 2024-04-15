@@ -3,7 +3,7 @@ import PostForm from './EditedPostForm';
 import ServiceForm from './ServicePostForm';
 import EventForm from './EventPostForm';
 import backgroundImage from '../Assets/post_background.jpg';
-import logo from '../Assets/logo.png'; 
+import logo from '../Assets/logo.png'
 
 const MainContent = () => {
   const [selectedPage, setSelectedPage] = useState('product');

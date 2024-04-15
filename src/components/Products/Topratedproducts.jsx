@@ -94,7 +94,9 @@ function TopRatedProducts() {
         >
           <span className="font-light text-lg"  style={{ color: '#000' }}>PRODUCTS</span>
           <br />
-          <span className=" text-5xl text-gray-900"> Top Rated</span>
+          <span className="text-3xl text-gray-900">Top Rated</span>
+
+
          
         </p>
         <span style={lineStyle}></span>
