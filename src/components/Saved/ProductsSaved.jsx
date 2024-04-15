@@ -5,6 +5,8 @@ import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSaved } from "../../Context/SavedContext";
+
 
 function ProductsSaved() {
   const [products, setproducts] = useState([]);
@@ -12,22 +14,11 @@ function ProductsSaved() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
-
-  const getproducts = async () => {
-    try {
-      const response = await axios.get(
-        "https://aguero.pythonanywhere.com/product/0/save"
-      );
-      console.log(response.data); // Log the fetched data directly
-      setproducts(response.data);
-      console.log(products); // Log the state value in the next render cycle
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const { getproducts, saveProduct } = useSaved();
 
   useEffect(() => {
     getproducts();
+    // saveProduct();
   }, []);
 
   console.log(products);

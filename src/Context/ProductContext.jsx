@@ -70,6 +70,32 @@ function ProductProvider({ children }) {
       console.error("Error in rater", err);
     }
   }
+  async function raterService(service_id, rating) {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/service/${service_id}/rating/`,
+        { rate: rating },
+        config
+      );
+      console.log("Rated successfully:", res.data);
+      return res.data;
+    } catch (err) {
+      console.error("Error in rater", err);
+    }
+  }
+  async function raterEvent(event_id, rating) {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/event/${event_id}/rating/`,
+        { rate: rating },
+        config
+      );
+      console.log("Rated successfully:", res.data);
+      return res.data;
+    } catch (err) {
+      console.error("Error in rater", err);
+    }
+  }
 
   async function reviewer(product_id, review) {
     try {
@@ -84,6 +110,33 @@ function ProductProvider({ children }) {
       console.error("Error in reviewer", err);
     }
   }
+  async function reviewerService(service_id, review) {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/service/${service_id}/review/`,
+        { review: review },
+        config
+      );
+      console.log("Reviewd successfully:", res);
+      return res.data;
+    } catch (err) {
+      console.error("Error in reviewer", err);
+    }
+  }
+  async function reviewerEvent(event_id, review) {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/event/${event_id}/review/`,
+        { review: review },
+        config
+      );
+      console.log("Reviewd successfully:", res);
+      return res.data;
+    } catch (err) {
+      console.error("Error in reviewer", err);
+    }
+  }
+
   async function getReviews(product_id) {
     try {
       const res = await axios.get(
@@ -97,9 +150,34 @@ function ProductProvider({ children }) {
       console.error(err);
     }
   }
+
+  async function getRatings(product_id) {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/product/${product_id}/rating`,
+        config
+      );
+      if (!res) throw new Error("Errorn in getting ratings");
+      console.log("ratings", res.data);
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
   return (
     <ProductContext.Provider
-      value={{ rater, reviewer, uploadProduct,getReviews,getProduct }}
+      value={{
+        rater,
+        raterService,
+        raterEvent,
+        reviewer,
+        reviewerService,
+        reviewerEvent,
+        getRatings,
+        uploadProduct,
+        getReviews,
+        getProduct,
+      }}
     >
       {children}
     </ProductContext.Provider>

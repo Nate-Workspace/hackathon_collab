@@ -92,7 +92,7 @@ function TopRatedProducts() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="font-light text-lg">PRODUCTS</span>
+          <span className="font-light text-lg"  style={{ color: '#000' }}>PRODUCTS</span>
           <br />
           <span className="text-3xl text-gray-900">Top Rated</span>
 
@@ -116,7 +116,11 @@ function TopRatedProducts() {
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
           {topRatedProducts.map((product) => (
+
+            //--------------Single Product ---------------------
+
             <Link to={`/product/${product.id}`} key={product.id}>
+              
               <div
                 key={product.id}
                 className="w-64  rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
@@ -124,6 +128,14 @@ function TopRatedProducts() {
                 onMouseLeave={handleMouseLeave}
                 style={{ backgroundColor: isHovered && hoveredImage === product.id ? "#E5E7EB" : "white" }}
               >
+                {/* {isHovered && hoveredImage === product.id && (
+                      <img
+                        src={isSaved(product.id) ? savedIcon : saveIcon}
+                        alt="Save"
+                        style={saveIconStyle}
+                        onClick={() => toggleSaved(product.id)}
+                      />
+                    )} */}
                 <div className="flex flex-col items-center relative">
                   <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
                     <img
@@ -133,14 +145,16 @@ function TopRatedProducts() {
                     />
                     {isHovered && hoveredImage === product.id && (
                       <img
+                      className="z-3"
                         src={isSaved(product.id) ? savedIcon : saveIcon}
                         alt="Save"
                         style={saveIconStyle}
-                        onClick={() => toggleSaved(product.id)}
+                        onClick={() => toggleSaved(product.id)
+                        }
                       />
                     )}
                   </div>
-                  <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
+                  <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"  style={{ color: '#000' }}>
                     {product.title}
                   </p>
                   <p className="text-gray-600">{product.rating} stars</p>
@@ -151,6 +165,8 @@ function TopRatedProducts() {
               </div>
             </Link>
           ))}
+
+          {/* -----------------------Single product end----------------- */}
         </div>
         <button
           className="px-4 py-2 "

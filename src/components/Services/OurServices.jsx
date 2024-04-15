@@ -127,6 +127,7 @@ const cancelIconStyle = {
     className="sm:inline-block relative group"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          style={{ color: '#000' }}
   >
     <span className="font-light text-black text-lg">DISCOVER</span><br />
     <span className=" text-black text-3xl">Our Services</span>
@@ -155,6 +156,7 @@ const cancelIconStyle = {
     transform: showCategories ? 'translateY(-7px)' : 'none',
     boxShadow: 'none',
      marginLeft: 'auto',
+    color: '#000'
   }}
   onMouseEnter={(e) => e.target.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)'}
   onMouseLeave={(e) => e.target.style.boxShadow = 'none'}
@@ -167,18 +169,18 @@ const cancelIconStyle = {
          <img src={cancel} alt="Cancel" style={cancelIconStyle}  onClick={handleCancelClick} />
  <h2 className="text-2xl sm:text-4xl font-light mb-2 sm:mb-4 italic text-gray-900">Filters</h2>
          <div>
-      <h3 className="text-md font-semibold mb-1">Categories</h3>
+      <h3 className="text-md font-semibold mb-1"  style={{ color: '#000' }}>Categories</h3>
         <ul>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
+          <li className="cursor-pointer py-1 px-2 " style={{ color: '#000' }} onClick={() => handleCategoryChange("DL")}>
             <input type="radio" id="delivery" name="category" checked={selectedCategory === "DL"}  />
             <label htmlFor="delivery">Delivery</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
-            <input type="radio" id="Repair Electronics" name="category" checked={selectedCategory === "DL"}  />
+          <li className="cursor-pointer py-1 px-2 " style={{ color: '#000' }} onClick={() => handleCategoryChange("PC")}>
+            <input type="radio" id="Repair Electronics" name="category" checked={selectedCategory === "PC"}  />
             <label htmlFor="Repair Electronics">Repair Electronics</label>
           </li>
-          <li className="cursor-pointer py-1 px-2 " onClick={() => handleCategoryChange("DL")}>
-            <input type="radio" id="other" name="category" checked={selectedCategory === "DL"}  />
+          <li className="cursor-pointer py-1 px-2 "  style={{ color: '#000' }} onClick={() => handleCategoryChange("OT")}>
+            <input type="radio" id="other" name="category" checked={selectedCategory === "OT"}  />
             <label htmlFor="other">Other</label>
           </li>
         </ul>
@@ -205,7 +207,7 @@ const cancelIconStyle = {
                    {isHovered && hoveredImage==service.id ? <img src={isSaved(service.id) ? savedIcon : saveIcon} alt="Save" style={saveIconStyle} onClick={() => toggleSaved(service.id)}/> : ""}
 
                 </div>
-                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">{service.title}</p>
+                <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"  style={{ color: '#000' }}>{service.title}</p>
 
                 {service.rating && service.rating.rate !== undefined ? (
                   <p className="text-gray-600">{service.rating.rate} stars</p>
@@ -222,11 +224,11 @@ const cancelIconStyle = {
           <div key={`placeholder-${index}`} className="w-64 h-64"></div>
         ))}
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4"  style={{ color: '#000' }}>
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200 mr-4"
+          className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-200 mr-4" 
         >
           <FaCaretLeft /> 
         </button>
