@@ -83,8 +83,10 @@ function Latestproduct() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           >
+
     <span className="font-light text-lg"  style={{ color: '#000' }}>SHOP</span><br />
     <span className="text-5xl text-gray-900"> Latest Products</span>
+
   </p>
   <span style={lineStyle}></span>
 </div>

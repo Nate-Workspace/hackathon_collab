@@ -84,7 +84,7 @@ function UpcomingEvents() {
           onMouseLeave={handleMouseLeave}
   >
     <span className="font-light text-lg">EVENTS</span><br />
-    <span className=" text-5xl">Upcoming Events</span>
+    <span className=" text-3xl">Upcoming Events</span>
   </p>
  <span style={lineStyle}></span>
 </div>

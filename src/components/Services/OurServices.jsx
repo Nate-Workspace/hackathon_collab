@@ -129,8 +129,8 @@ const cancelIconStyle = {
           onMouseLeave={handleMouseLeave}
           style={{ color: '#000' }}
   >
-    <span className="font-light text-lg">DISCOVER</span><br />
-    <span className=" text-5xl">Our Services</span>
+    <span className="font-light text-black text-lg">DISCOVER</span><br />
+    <span className=" text-black text-3xl">Our Services</span>
   </p>
   <span style={lineStyle}></span>
   <div className="sm:hidden">
