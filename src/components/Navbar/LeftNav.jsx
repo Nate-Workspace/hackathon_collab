@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
-
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
@@ -13,18 +12,17 @@ import { FaUserCircle } from "react-icons/fa";
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
   const [showStudioDropdown, setShowStudioDropdown] = useState(false);
-
-  //--------------------NavBar scroll state--------------------
-  const { isAuthenticated, logout, isLoading } = useAuth();
-  // console.log(isAuthenticated, isLoading);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, logout, isLoading } = useAuth();
+  const menuRef = useRef(null);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
-      const threshold = 20; // Adjust this value to set the scroll threshold for changing the background color
-
+      const threshold = 20;
       setIsScrolled(scrollTop > threshold);
     };
 
@@ -35,7 +33,19 @@ function LeftNav() {
     };
   }, []);
 
-  //-------------------------------------------
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleExploreClick = () => {
     setShowExploreDropdown(true);
@@ -44,40 +54,47 @@ function LeftNav() {
   const handleStudioClick = () => {
     setShowStudioDropdown(true);
   };
+
   const handleEventLeave = () => {
     setShowExploreDropdown(false);
   };
+
   const handleStudioLeave = () => {
     setShowStudioDropdown(false);
   };
 
-
   const handleAccountClick = () => {
     setShowAccountDropdown(true);
   };
+
   const handleAccountLeave = () => {
     setShowAccountDropdown(false);
   };
+
   const handleClose = () => {
     setMenuOpen(false);
-    console.log(menuOpen);
   };
-  
+
+  const handleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   dotStream.register();
- 
 
   return (
     <nav
       className={`${isScrolled ? "scrolled" : ""} ${
-        showStudioDropdown ? "hovered" : ""
-      } ${showExploreDropdown ? "hovered" : ""}`}
+        showStudioDropdown || showExploreDropdown ? "hovered" : ""
+      }`}
     >
       <div className="nav-links">
         <p className="logo">Logo</p>
 
-        <ul className="ul">
+        <ul className={`ul ${menuOpen ? "show" : ""}`} ref={menuRef}>
           <li className="home">
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={handleClose}>
+              HOME
+            </Link>
           </li>
           <li
             className="button"
@@ -85,29 +102,25 @@ function LeftNav() {
             onMouseEnter={handleExploreClick}
             onMouseLeave={handleEventLeave}
           >
-            Explore
+            EXPLORE
             {showExploreDropdown && (
               <ul
                 className="dropdown"
                 onMouseEnter={handleExploreClick}
                 onMouseLeave={handleEventLeave}
               >
-                {/* <hr /> */}
                 <li>
-                  <Link to="/Products">Products</Link>
+                  <Link to="/Products">PRODUCTS</Link>
                 </li>
                 <li>
-                  <Link to="/Services">Services</Link>
+                  <Link to="/Services">SERVICES</Link>
                 </li>
                 <li>
-                  <Link to="/Events">Events</Link>
+                  <Link to="/Events">EVENTS</Link>
                 </li>
               </ul>
             )}
           </li>
-
-          
-
 
           {isAuthenticated && !isLoading && (
             <li
@@ -116,59 +129,62 @@ function LeftNav() {
               onMouseEnter={handleStudioClick}
               onMouseLeave={handleStudioLeave}
             >
-              Studio
+              STUDIO
               {showStudioDropdown && (
                 <ul
                   className="dropdown"
                   onMouseEnter={handleStudioClick}
                   onMouseLeave={handleStudioLeave}
                 >
-                  {/* <hr /> */}
                   <li>
-                    <Link to="/Saved">Saved</Link>
+                    <Link to="/Saved">SAVED</Link>
                   </li>
                   <li>
-                    <Link to="/Create">Create</Link>
+                    <Link to="/Create">CREATE</Link>
                   </li>
                 </ul>
               )}
             </li>
           )}
 
-          </ul>
+          <li className="about-us">
+            <Link to="/AboutUs" onClick={handleClose}>
+              ABOUT US
+            </Link>
+          </li>
+
           {!isAuthenticated && !isLoading && (
-            <div className="flex flex-row gap-10 pr-10 ">
+            <>
               <li>
-
-                <Link to="/register">REGISTER</Link>
-
+                <Link to="/register" onClick={handleClose}>
+                  REGISTER
+                </Link>
               </li>
-
-              <li className="w-auto">
-                <Link to="/SignIn">SIGNIN</Link>
+              <li>
+                <Link to="/SignIn" onClick={handleClose}>
+                  SIGN IN
+                </Link>
               </li>
-              </div>
+            </>
           )}
-          
+        </ul>
+
         {isAuthenticated && !isLoading && (
-            <li>
-              <Link to="/Profile" className="absolute right-10 bottom-3 ">
-                <FaUserCircle color="grey" size={40} />
-              </Link>
-            </li>
+          <Link to="/Profile" className="absolute right-5 bottom-3">
+            <FaUserCircle color="grey" size={40} />
+          </Link>
+        )}
+
+        <div className="menu-toggle" onClick={handleMenu}>
+          {menuOpen ? (
+            <MdClose size={30} onClick={handleClose} />
+          ) : (
+            <FiMenu size={30} />
           )}
+        </div>
       </div>
     </nav>
   );
 }
-
-// const Dropnav=()=>{
-//   return(
-//     <div className="flex flex-row justify-center items-center">
-//     <IoCartOutline size={20} color="gray"/>
-//     <p className="ml-1.5">PRODUCTS</p>
-//     </div>
-//   )
-// }
 
 export default LeftNav;

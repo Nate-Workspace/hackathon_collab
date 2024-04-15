@@ -1,4 +1,3 @@
-import LeftNav from "./components/Navbar/LeftNav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Product from "./Pages/Product";
 import Service from "./Pages/Service";
@@ -19,8 +18,10 @@ import Footer from "./components/Footer/Footer";
 
 import RegistrationForm from "./Pages/RegistrationForm";
 import NotFound from "./Pages/NotFound";
-import SignInForm from "./Pages/SignInForm";
+import SignInForm from "./Pages/signInForm";
 import { useAuth } from "./Context/AuthContext";
+
+import LeftNav from "./components/Navbar/LeftNav";
 
 function App() {
   const { isAuthenticated } = useAuth();

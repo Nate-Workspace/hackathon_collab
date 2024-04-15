@@ -93,7 +93,6 @@ function EventDetails() {
 
   return (
     <div>
-    
       <div className="p-8">
         <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
           <div className="">
@@ -106,12 +105,12 @@ function EventDetails() {
           <div className="w-1/2 pl-8 ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{event.title}</h3>
             {reviews.length > 6 && (
-              <p className="text-[#3C9B78] text-sm font-light mb-16">
+              <p className="text-[#fff] text-sm font-light mb-16">
                 {reviews[6].userName}
               </p>
             )}
 
-            <p className="text-[#222831] text-2xl font-bold mb-4">
+            <p className="text-[#f28424] text-2xl font-bold mb-4">
               Date:
               {event.event_date}
             </p>
@@ -123,7 +122,7 @@ function EventDetails() {
             <p className="text-xl font-bold mb-1">
               Location: {event.event_place}
             </p>
-            <p className="text-l text-[#11875C] font-bold mb-14">
+            <p className="text-l text-[#f28424] font-bold mb-14">
               Time: {event.event_time}
             </p>
             <div className="flex">
@@ -147,15 +146,12 @@ function EventDetails() {
             </div>
           </div>
         </div>
-
         {/* Reviews Section */}
         <div className="mt-20">
-          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
+          <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
             Reviews
           </h2>
-          <div className="flex overflow-x-scroll">
-
-            
+          <div className="flex overflow-x-scroll scrollbar-hide">
             {reviews.map((review, index) => (
               <ReviewsCard
                 key={index}
@@ -169,17 +165,12 @@ function EventDetails() {
 
         {/* Related Section */}
         <div className="mt-20 ">
-          
-          <h2 className="text-gray-900 text-3xl font-ubuntu font-bold mb-1">
+          <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
             Related Events
           </h2>
-          <div className="flex flex-wrap justify-center space-x-6 relative mt-4">
-
+          <div className="flex justify-center flex-wrap sm:grid-cols-4 space-x-6 space-y-6  relative p-4">
             {relatedEvents.map((relatedEvent) => (
-              <Link
-                to={`/Events/details/${relatedEvent.id}`}
-                key={relatedEvent.id}
-              >
+              <Link to={`/Event/${relatedEvent.id}`} key={relatedEvent.id}>
                 <div
                   key={relatedEvent.id}
                   className="w-64 rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
@@ -226,8 +217,7 @@ function EventDetails() {
           </div>
         </div>
       </div>
-      </div>
-    
+    </div>
   );
 }
 
